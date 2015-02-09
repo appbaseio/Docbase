@@ -6,18 +6,71 @@
 *
 */
 
-/**
-* Github offers an API with a very strict, non-increasable limit.
-* If your docs will be for internal use or would get limited hits per IP,
-* you can use this code to fetch your markdown files and itterate through them.
-* As this is a very limited option, the default method on this engine is a manual spec.
-*/
+!(function ($){
+    
+    var jWindow = $(window);
 
-//$.get('map.json', mapper);
-
-$(function(){
     var exports = this;
+    var DocBase = exports.DocBase = {};
+    var Render = DocBase.render = {};
+    var Events = DocBase.events = {};
 
+    /**
+    * Github offers an API with a very strict, non-increasable limit.
+    * If your docs will be for internal use or would get limited hits per IP,
+    * you can use gh to fetch your markdown files and itterate through them.
+    * As this is a very limited option, the default method on this engine is a manual spec.
+    */
+
+    DocBase.run = function(options) {
+        Events.bind();
+        var defaultOptions = {
+            method: 'file',
+            file: {
+                src: 'map.json',
+                path: 'docs'
+            },
+            github: {
+                user: 'user',
+                repo: 'docs',
+                path: 'docs',
+                branch: 'master'
+            }
+        };
+        options = options || defaultOptions;
+        DocBase[options.method]( options[options.method] || defaultOptions[options.method] );
+    }
+
+    DocBase.github = function(options) {
+        githubTree(options, Render.navbar);
+    }
+
+    DocBase.file = function(options) {
+        $.get(options.src).success(Render.navbar).error(function(error){
+            throw error;
+        });
+    }
+
+    Render.items = '[role~="flatdoc-content"], [role~="flatdoc-menu"]';
+
+    Render.hide = function(){
+        $(Render.items).addClass('hidden');
+    }
+
+    Render.show = function(){
+        $(Render.items).removeClass('hidden');
+    }
+
+    Render.navbar = function(tree){
+        var versions = [];
+        for(version in tree) {
+            versions.push(version);
+        }
+        Events.bind();
+        Flatdoc.run({
+          fetcher: Flatdoc.file('/bower_components/flatdoc/examples/examples.md'),
+        });
+    }
 
     /**
     * Parses title object, looking for specs such as three collums.
@@ -25,10 +78,9 @@ $(function(){
     * Use double quotes on the markdown.
     * Example: {"title": "Actual title", "threeCollums": false}
     */
-
-    $(this).bind('flatdoc:ready', function(){
+    Events.parseTitle = function(){
+        Render.hide();
         var element = $('[role~="flatdoc-content"] h1:first');
-        var menu = $('div[role~="flatdoc-menu"]');
         var menuTitle = $( '#' + element.attr('id') + '-link' );
 
         var content = element.html();
@@ -48,36 +100,45 @@ $(function(){
 
         } catch (e) {/* No JSON object found, keep title as-is */};
 
-        /**
-        * Default styling hides the title, display it when it's parsed.
-        */
-        element.addClass('visible');
-        menu.addClass('visible');
-    });
+        Render.show();
+    };
 
-    /**
-    * Dynamic URLs
-    */
+    Events.hashChange = function(){
+        var hash = window.location.hash;
+        if(hash) {
+            handleHash(hash);
+        }
+    };
 
-    var hash = window.location.hash;
-    
-    if(hash) {
-        hash = hash.substring(1);
-        if(hash.charAt(0) !== '/') {
-            //return splashPage();
-        } else {
-            var hashSplit = hash.split('/');
+    Events.switchBind = function(state){
+        jWindow[state]('flatdoc:ready', Events.parseTitle);
+        jWindow[state]('hashchange', Events.hashChange);
+    }
 
+    Events.bind = function(){
+        Events.switchBind('on');
+    };
+
+    Events.unbind = function(){
+        Events.switchBind('off');
+    }
+
+
+    function handleHash(hash){
+        if(hash) {
+            hash = hash.substring(1);
+            if(hash.charAt(0) !== '/') {
+                //return splashPage();
+            } else {
+                var hashSplit = hash.split('/');
+
+            }
         }
     }
 
-    Flatdoc.run({
-      fetcher: Flatdoc.file('/bower_components/flatdoc/examples/examples.md'),
-    });
-
-    function githubTree(callback){
+    function githubTree(options, callback){
         
-        var full_path = options.gh.src_folder;
+        var full_path = options.src;
         if(full_path.charAt(0) === '/') {
             full_path = full_path.substring(1);
         }
@@ -91,7 +152,7 @@ $(function(){
         deleted = deleted[0];
 
         var baseurl = 'https://api.github.com/repos/'
-                    + options.gh.user + '/' + options.gh.repo + '/';
+                    + options.user + '/' + options.repo + '/';
 
         var url = baseurl  + 'contents/' + path;
 
@@ -151,4 +212,6 @@ $(function(){
       var lastIndex = subjectString.indexOf(searchString, position);
       return lastIndex !== -1 && lastIndex === position;
     }
-});
+})(window.jQuery);
+
+DocBase.run();
