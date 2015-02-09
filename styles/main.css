@@ -7,18 +7,6 @@
 */
 
 /**
-* Parser
-*/
-div[role="flatdoc-content"] h1:first-of-type,
-div[role="flatdoc-menu"] {
-	display: none;
-}
-div[role="flatdoc-content"] h1:first-of-type.visible,
-div[role="flatdoc-menu"].visible {
-	display: block;
-}
-
-/**
 * Resets
 */
 pre {
@@ -54,6 +42,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 	text-shadow: none;
 }
 .navbar-default .navbar-brand{
+	text-shadow: none;
 	color: white;
 }
 .navbar-default .navbar-brand:hover{
