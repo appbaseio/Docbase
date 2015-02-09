@@ -15,6 +15,8 @@
     "tests"
   ],
   "dependencies": {
-    "flatdoc": "~0.9.0"
+    "flatdoc": "~0.9.0",
+    "jquery": "~2.1.3",
+    "bootstrap": "~3.3.2"
   }
 }
