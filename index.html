@@ -17,7 +17,7 @@
 
   <!-- Flatdoc theme -->
   <link  href="/bower_components/flatdoc/theme-white/style.css" rel="stylesheet">
-  <script src="/bower_components/flatdoc/theme-white/script.js"></script>
+  <script src="/scripts/flatdoc-theme-offset.js"></script>
 
   <!-- DocBase -->
   <link rel="stylesheet" type="text/css" href="/styles/main.css">
@@ -28,11 +28,48 @@
 </head>
 <body role="flatdoc">
 
-  <div class="header">
-    <div class="left">
-      <h1 role="flatdoc-title"></h1>
-    </div>
-  </div>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Documentation</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown</a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+              <li class="divider"></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li>
+        </ul>
+        
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> v2.0 <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">v1.0</a></li>
+              <li><a href="#">v2.0</a></li>
+              <li><a href="#">v3.0</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Github</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
 
   <div role="flatdoc" class="content-root">
     <div class="menubar">
@@ -41,5 +78,6 @@
     <div role="flatdoc-content" class="content"></div>
   </div>
 
+  <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
