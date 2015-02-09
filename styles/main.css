@@ -9,8 +9,13 @@
 /**
 * Parser
 */
-div[role="flatdoc-content"] h1:first-of-type {
+div[role="flatdoc-content"] h1:first-of-type,
+div[role="flatdoc-menu"] {
 	display: none;
+}
+div[role="flatdoc-content"] h1:first-of-type.visible,
+div[role="flatdoc-menu"].visible {
+	display: block;
 }
 
 /**
@@ -19,8 +24,61 @@ div[role="flatdoc-content"] h1:first-of-type {
 pre {
 	background: transparent;
 }
+.menubar.fixed {
+	padding-top: 35px;
+}
 
 /**
 * Header
 */
+body {
+	padding-top: 50px;
+}
+ul.nav li.dropdown:hover {
+	background: white;
+}
+ul.nav li.dropdown:hover > a {
+	color: #50BAEF;
+}
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;    
+}
+.dropdown-menu {
+	min-width: 68px;
+}
+.navbar-fixed-top {
+	background: #50BAEF;
+}
+.navbar-default .navbar-nav>li>a {
+	color: white;
+	text-shadow: none;
+}
+.navbar-default .navbar-brand{
+	color: white;
+}
+.navbar-default .navbar-brand:hover{
+	color: white;
+}
+.dropdown-menu {
+	border: 0;
+}
 
+/**
+* Buttons
+*/
+.button {
+	background: #50BAEF;
+	border: 2px solid transparent;
+}
+.button:hover, .button:active {
+	text-decoration: none;
+	color: #50BAEF;
+	background: white;
+	border: 2px solid #50BAEF;
+}
+.menu a, .menu a:visited {
+	color: #50BAEF;
+}
+.menu a.active:after {
+	background: #50BAEF;
+}
