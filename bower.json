@@ -17,6 +17,8 @@
   "dependencies": {
     "flatdoc": "~0.9.0",
     "jquery": "~2.1.3",
-    "bootstrap": "~3.3.2"
+    "bootstrap": "~3.3.2",
+    "angular": "~1.3.13",
+    "angular-route": "~1.3.13"
   }
 }
