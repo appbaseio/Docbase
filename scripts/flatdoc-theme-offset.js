@@ -1,77 +1,82 @@
-(function($) {
+(function($){
   var $window = $(window);
   var $document = $(document);
 
- /*
-  * Scrollspy.
-  */
+  $document.on('flatdoc:render', runTheme);
 
- $document.on('flatdoc:ready', function() {
-    $("h2, h3").scrollagent( {offset: 100}, function(cid, pid, currentElement, previousElement) {
-      if (pid) {
-       $("[href='#"+pid+"']").removeClass('active');
-      }
-      if (cid) {
-       $("[href='#"+cid+"']").addClass('active');
-      }
-    });
-  });
+  function runTheme(){
+   /*
+    * Scrollspy.
+    */
 
- /*
-  * Anchor jump links.
-  */
-
- $document.on('flatdoc:ready', function() {
-   $('.menu a').anchorjump({offset: -50});
- });
-
- /*
-  * Title card.
-  */
-
-  $(function() {
-    var $card = $('.title-card');
-    if (!$card.length) return;
-
-    var $header = $('.header');
-    var headerHeight = $header.length ? $header.outerHeight() : 0;
-
-    $window
-      .on('resize.title-card', function() {
-        var windowWidth = $window.width();
-
-        if (windowWidth < 480) {
-          $card.css('height', '');
-        } else {
-          var height = $window.height();
-          $card.css('height', height - headerHeight);
+   $document.on('flatdoc:ready', function() {
+      $("h2, h3").scrollagent( {offset: 100}, function(cid, pid, currentElement, previousElement) {
+        if (pid) {
+         $("[href='#"+pid+"']").removeClass('active');
         }
-      })
-      .trigger('resize.title-card');
-  });
+        if (cid) {
+         $("[href='#"+cid+"']").addClass('active');
+        }
+      });
+    });
 
-  /*
-   * Sidebar stick.
-   */
+   /*
+    * Anchor jump links.
+    */
 
-  $(function() {
-    var $sidebar = $('.menubar');
-    var elTop;
+   $document.on('flatdoc:ready', function() {
+     $('.menu a').anchorjump({offset: -50});
+   });
 
-    $window
-      .on('resize.sidestick', function() {
-        $sidebar.removeClass('fixed');
-        elTop = $sidebar.offset().top;
-        $window.trigger('scroll.sidestick');
-      })
-      .on('scroll.sidestick', function() {
-        var scrollY = $window.scrollTop();
-        $sidebar.toggleClass('fixed', (scrollY >= elTop-35));
-      })
-      .trigger('resize.sidestick');
-  });
+   /*
+    * Title card.
+    */
+
+    $(function() {
+      var $card = $('.title-card');
+      if (!$card.length) return;
+
+      var $header = $('.header');
+      var headerHeight = $header.length ? $header.outerHeight() : 0;
+
+      $window
+        .on('resize.title-card', function() {
+          var windowWidth = $window.width();
+
+          if (windowWidth < 480) {
+            $card.css('height', '');
+          } else {
+            var height = $window.height();
+            $card.css('height', height - headerHeight);
+          }
+        })
+        .trigger('resize.title-card');
+    });
+
+    /*
+     * Sidebar stick.
+     */
+
+    $(function() {
+      var $sidebar = $('.menubar');
+      var elTop;
+
+      $window
+        .on('resize.sidestick', function() {
+          $sidebar.removeClass('fixed');
+          elTop = $sidebar.offset().top;
+          $window.trigger('scroll.sidestick');
+        })
+        .on('scroll.sidestick', function() {
+          var scrollY = $window.scrollTop();
+          $sidebar.toggleClass('fixed', (scrollY >= elTop-35));
+        })
+        .trigger('resize.sidestick');
+    });
+  }
 
 })(jQuery);
+
 /*! jQuery.scrollagent (c) 2012, Rico Sta. Cruz. MIT License.
  *  https://github.com/rstacruz/jquery-stuff/tree/master/scrollagent */
 
