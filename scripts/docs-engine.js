@@ -126,10 +126,10 @@
     }
 
     /**
-    * Parses title object, looking for specs such as three collums.
+    * Parses title object, looking for specs such as three columns.
     * Simply make your fiirst markdown title an object to customize it.
     * Use double quotes on the markdown.
-    * Example: {"title": "Actual title", "threeCollums": false}
+    * Example: {"title": "Actual title", "threeColumns": false}
     */
     Events.parseTitle = function(){
         var element = $('[role~="flatdoc-content"] h1:first');
@@ -144,7 +144,7 @@
             element.html(content.title);
             menuTitle.html(content.title);
 
-            if(content.threeCollums) {
+            if(content.threeColumns) {
                 $('body').removeClass('no-literate');
             } else {
                 $('body').addClass('no-literate');
