@@ -1,7 +1,8 @@
 /**
 *
 * DocBase engine
-* Henrique Sa, Feb 2015
+* Appbase
+* Henrique Sa, Feb '15
 * MIT license
 *
 */
@@ -9,11 +10,10 @@
 !(function ($, angular){
     
     var jWindow = $(window);
-    var angApp = angular.module('docBaseApp', ['ngRoute']);
+    var angApp;
 
     var exports = this;
     var DocBase = exports.DocBase = {};
-    var Render = DocBase.render = {};
     var Events = DocBase.events = {};
     var Route = DocBase.route = {};
 
@@ -41,7 +41,8 @@
                 path: 'docs',
                 branch: 'master'
             },
-            html5mode: false
+            html5mode: false,
+            angularAppName: 'docBaseApp'
         };
 
         $.extend(defaultOptions, opts);
@@ -60,7 +61,8 @@
 
         DocBase.options = opts;
 
-        angApp
+        angApp = angular
+            .module(opts.angularAppName, ['ngRoute'])
             .controller('URLCtrl', ['$scope', '$routeParams', '$location', '$timeout', Route.URLCtrl])
             .config(['$routeProvider', '$locationProvider', Route.config]);
 
@@ -72,7 +74,7 @@
             if(checkSchema(map)){
                 DocBase.map = map;
                 jWindow.trigger('mapped');
-                Render.navbar(map);
+                Events.bind();
             } else {
                 throw 'GitHub tree fetching error.';
             }
@@ -87,7 +89,7 @@
                 if(v.length &&  map[v[0]][0].files.length && map[v[0]][0].files[0].name){
                     DocBase.map = map;
                     jWindow.trigger('mapped');
-                    Render.navbar(map);
+                    Events.bind();
                 } else {
                     throw 'Map does not have a file entry. Check the documentation';
                 }
@@ -100,23 +102,27 @@
         });
     }
 
-    Render.navbar = function(map){
-        var _elVersionList = $('[version-list]');
-        var _elCurrentVersion = $('[current-version]');
+    Events.switchBind = function(state){
+        jWindow[state]('flatdoc:ready', Events.parseTitle);
+        jWindow[state]('ajaxError', Events.ajaxError);
+    }
 
-        var versions = [];
-        for(version in map) {
-            versions.push(version);
+    Events.bind = function(){
+        Events.switchBind('on');
+    };
+
+    Events.unbind = function(){
+        Events.switchBind('off');
+    }
+
+    Events.ready = function(){
+        jWindow.trigger('docbase:ready');
+    }
+
+    Events.ajaxError = function(event, request){
+        if(request.status === 403 && DocBase.options.method === 'github') {
+            throw 'GitHub API quota exceeded.';
         }
-
-        _elVersionList.html(' ');
-        _elCurrentVersion.html(versions[versions.length-1]);
-
-        versions.forEach(function(version){
-            _elVersionList.append('<li><a href="#/'+version+'" ver>'+version+'</a></li>');
-        });
-
-        Events.bind();
     }
 
     /**
@@ -146,27 +152,8 @@
 
         } catch (e) {/* No JSON object found, keep title as-is */};
         
-        jWindow.trigger('docbase:ready');
+        Events.ready();
     };
-
-    Events.switchBind = function(state){
-        jWindow[state]('flatdoc:ready', Events.parseTitle);
-        jWindow[state]('ajaxError', Events.ajaxError);
-    }
-
-    Events.bind = function(){
-        Events.switchBind('on');
-    };
-
-    Events.unbind = function(){
-        Events.switchBind('off');
-    }
-
-    Events.ajaxError = function(event, request){
-        if(request.status === 403 && DocBase.options.method === 'github') {
-            throw 'GitHub API quota exceeded.';
-        }
-    }
 
     Route.config = function($routeProvider, $locationProvider){
         $routeProvider
@@ -184,7 +171,11 @@
         })
         .when('/', {
             templateUrl: '/html/main.html'
+        })
+        .otherwise({
+            redirectTo: '/'
         });
+
         $locationProvider.html5Mode(DocBase.options.html5mode);
     }
 
@@ -344,8 +335,12 @@
         });
     }
 
-    function endsWith(subjectString, searchString, position) {
-      if (position === undefined || position > subjectString.length) {
+    /**
+    * endsWith polyfill, from MDN
+    * Created by Ripter, last edited by Mathias Bynens
+    */
+    function endsWith(subjectString, searchString, position){
+      if(position === undefined || position > subjectString.length){
         position = subjectString.length;
       }
       position -= searchString.length;
