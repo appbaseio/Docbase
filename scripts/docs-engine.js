@@ -22,8 +22,6 @@
     * If your docs will be for internal use or would get limited hits per IP,
     * you can use gh to fetch your markdown files and itterate through them.
     * As this is a very limited option, the default method on this engine is a manual spec.
-    * IMPORTANT: As a limitation of Flatdoc, fetching the map file can be done on
-    * a different branch, but the markdown files must be on the repo's default branch.
     */
 
     DocBase.methods = ['file', 'github'];
@@ -45,7 +43,8 @@
             }
         };
 
-        opts = opts || defaultOptions;
+        $.extend(defaultOptions, opts);
+        opts = defaultOptions;
 
         // Removes trailing '/'s.
         DocBase.methods.forEach(function(method){
@@ -149,6 +148,7 @@
 
     Events.switchBind = function(state){
         jWindow[state]('flatdoc:ready', Events.parseTitle);
+        jWindow[state]('ajaxError', Events.ajaxError);
     }
 
     Events.bind = function(){
@@ -157,6 +157,14 @@
 
     Events.unbind = function(){
         Events.switchBind('off');
+    }
+
+    Events.ajaxError = function(event, request){
+        if(request.status === 403 && DocBase.options.method === 'github') {
+            console.error('GitHub API quota exceeded.');
+        } else if (request.status === 404 && DocBase.options.method === 'file') {
+            console.error('Mapped file not found.');
+        }
     }
 
     Route.config = function($routeProvider, $locationProvider){
@@ -186,9 +194,12 @@
     };
 
     Route.github = function(path){
-        var ghRepo = DocBase.options.github.user + '/' + DocBase.options.repo;
-        Flatdoc.github({
-            fetcher: Flatdoc.github(ghRepo + path + '.md')
+        var ghRepo = DocBase.options.github.user + '/' + DocBase.options.github.repo;
+        var ghPath = DocBase.options.github.path + path + '.md';
+        var branch = DocBase.options.github.branch;
+
+        Flatdoc.run({
+            fetcher: Flatdoc.github(ghRepo, ghPath, branch)
         }); 
     };
 
@@ -203,7 +214,7 @@
             Route[DocBase.options.method](path);
         } else {
             jWindow.on('mapped', function(){
-                var path = Route.updatePath( DocBase.map, version, folder);
+                var path = Route.updatePath(DocBase.map, version, folder);
                 $locationProvider.path(path);
                 Route[DocBase.options.method](path);
             });
@@ -215,16 +226,40 @@
     };
 
     Route.updatePath = function(map, version, folder, file){
+
+        if(!map[version]){
+            throw 'Version not mapped.';
+        }
+
+        var mapFolder;
+        if(folder){
+            mapFolder = map[version].filter(function(folders){
+                return folders.name === folder;
+            });
+            if(!mapFolder.length){
+                throw 'Folder not mapped.';
+            }
+        }
+        if(file){
+            var mapFile = mapFolder[0].files.filter(function(files){
+                return files.name === file;
+            });
+            console.log(file, map, mapFile, mapFolder)
+            if(!mapFile.length){
+                throw 'File not mapped.';
+            }
+        }
+
         var path = '/' + version + '/';
         path += folder || map[version][0].name;
         path += '/';
         path += file || map[version][0].files[0].name;
+
         return path;
     }
 
     function githubTree(options, callback){
-        
-        var full_path = options.src;
+        var full_path = options.path;
 
         var path = full_path.split('/');
         var deleted = path.splice(path.length-1, 1);
@@ -249,7 +284,6 @@
                 var map = {};
 
                 tree.forEach(function(each){
-                    console.log(each.path)
                     var sub_path = each.path.split('/');
                     /* assuming sub_path[0] is the version,
                      * sub_path[1] is the folder,
