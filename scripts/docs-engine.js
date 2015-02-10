@@ -18,7 +18,7 @@
     var Route = DocBase.route = {};
 
     /**
-    * Github offers an API with a very strict, non-increasable limit.
+    * Github offers an API with a very strict, non-increasable limit for the client side.
     * If your docs will be for internal use or would get limited hits per IP,
     * you can use gh to fetch your markdown files and itterate through them.
     * As this is a very limited option, the default method on this engine is a manual spec.
@@ -61,7 +61,7 @@
         DocBase.options = opts;
 
         angApp
-            .controller('URLCtrl', ['$scope', '$routeParams', '$location', Route.URLCtrl])
+            .controller('URLCtrl', ['$scope', '$routeParams', '$location', '$timeout', Route.URLCtrl])
             .config(['$routeProvider', '$locationProvider', Route.config]);
 
         DocBase[opts.method]( opts[opts.method] || defaultOptions[opts.method] );
@@ -100,16 +100,6 @@
         });
     }
 
-    Render.items = '[role~="flatdoc-content"], [role~="flatdoc-menu"]';
-
-    Render.hide = function(){
-        $(Render.items).addClass('hidden');
-    }
-
-    Render.show = function(){
-        $(Render.items).removeClass('hidden');
-    }
-
     Render.navbar = function(map){
         var _elVersionList = $('[version-list]');
         var _elCurrentVersion = $('[current-version]');
@@ -136,7 +126,6 @@
     * Example: {"title": "Actual title", "threeCollums": false}
     */
     Events.parseTitle = function(){
-        Render.hide();
         var element = $('[role~="flatdoc-content"] h1:first');
         var menuTitle = $( '#' + element.attr('id') + '-link' );
 
@@ -156,8 +145,8 @@
             }
 
         } catch (e) {/* No JSON object found, keep title as-is */};
-
-        Render.show();
+        
+        jWindow.trigger('docbase:ready');
     };
 
     Events.switchBind = function(state){
@@ -175,9 +164,7 @@
 
     Events.ajaxError = function(event, request){
         if(request.status === 403 && DocBase.options.method === 'github') {
-            console.error('GitHub API quota exceeded.');
-        } else if (request.status === 404 && DocBase.options.method === 'file') {
-            console.error('Mapped file not found.');
+            throw 'GitHub API quota exceeded.';
         }
     }
 
@@ -201,51 +188,60 @@
         $locationProvider.html5Mode(DocBase.options.html5mode);
     }
 
-    Route.file = function(path, $scope){
+    Route.file = function(path){
+        var options = DocBase.options.file;
         Flatdoc.run({
-          fetcher: Flatdoc.file(DocBase.options.file.path + path + '.md')
+          fetcher: Flatdoc.file(options.path + path + '.md')
         });
-        $scope.versions = Object.keys(DocBase.map);
-        $scope.currentVersion = $scope.versions[$scope.versions.length-1];
-        $scope.map = DocBase.map;
     };
 
     Route.github = function(path){
-        var ghRepo = DocBase.options.github.user + '/' + DocBase.options.github.repo;
-        var ghPath = DocBase.options.github.path + path + '.md';
-        var branch = DocBase.options.github.branch;
+        var options = DocBase.options.github;
+        var ghRepo = options.user + '/' + options.repo;
+        var ghPath = options.path + path + '.md';
+        var branch = options.branch;
 
         Flatdoc.run({
             fetcher: Flatdoc.github(ghRepo, ghPath, branch)
         }); 
     };
 
-    Route.URLCtrl = function($scope, $routeParams, $locationProvider){
-        var version = $routeParams.version;
-        var folder = $routeParams.folder;
-        var file = $routeParams.file;
-
+    Route.URLCtrl = function($scope, $routeParams, $location, $timeout){
         if(DocBase.map || file) {
-            var path = Route.updatePath(DocBase.map, version, folder, file);
-            $locationProvider.path(path);
-            Route[DocBase.options.method](path, $scope);
+            mapLoaded();
         } else {
-            jWindow.on('mapped', function(){
-                var path = Route.updatePath(DocBase.map, version, folder);
-                $locationProvider.path(path);
-                Route[DocBase.options.method](path, $scope);
+            jWindow.on('mapped', mapLoaded);
+        }
+
+        function mapLoaded(){
+            var map = DocBase.map;
+            var currentVersion = $routeParams.version;
+            var versions = Object.keys(map);
+
+            $timeout(function(){
+                $scope.versions = versions;
+                $scope.currentVersion = currentVersion || versions[versions.length-1];
+                $scope.map = map;
             });
+            
+            var location = Route.updatePath($routeParams);
+            $location.path(location.path);
+            if(!location.fail){
+                Route[DocBase.options.method](location.path);
+            }
         }
     };
 
-    Route.mainCtrl = function(){
+    Route.updatePath = function(params){
+        var map = DocBase.map;
+        var version = params.version;
+        var folder = params.folder;
+        var file = params.file;
 
-    };
-
-    Route.updatePath = function(map, version, folder, file){
         if(!map[version]){
-            throw 'Version not mapped.';
-        }
+            console.error('Version not mapped.');
+            return {path: '/', fail: true};
+        } 
 
         var mapFolder;
         if(folder){
@@ -253,7 +249,8 @@
                 return folders.name === folder;
             });
             if(!mapFolder.length){
-                throw 'Folder not mapped.';
+                console.error('Folder not mapped.');
+                return {path: '/' + version, fail: true};
             }
         }
         if(file){
@@ -261,7 +258,8 @@
                 return files.name === file;
             });
             if(!mapFile.length){
-                throw 'File not mapped.';
+                console.error('File not mapped.');
+                return {path: '/' + version + '/' + file, fail: true};
             }
         }
 
@@ -270,7 +268,7 @@
         path += '/';
         path += file || map[version][0].files[0].name;
 
-        return path;
+        return {path: path, fail: false};
     }
 
     function checkSchema(map) {
