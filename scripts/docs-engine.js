@@ -6,47 +6,83 @@
 *
 */
 
-!(function ($){
+!(function ($, angular){
     
     var jWindow = $(window);
+    var angApp = angular.module('docBaseApp', ['ngRoute']);
 
     var exports = this;
     var DocBase = exports.DocBase = {};
     var Render = DocBase.render = {};
     var Events = DocBase.events = {};
+    var Route = DocBase.route = {};
 
     /**
     * Github offers an API with a very strict, non-increasable limit.
     * If your docs will be for internal use or would get limited hits per IP,
     * you can use gh to fetch your markdown files and itterate through them.
     * As this is a very limited option, the default method on this engine is a manual spec.
+    * IMPORTANT: As a limitation of Flatdoc, fetching the map file can be done on
+    * a different branch, but the markdown files must be on the repo's default branch.
     */
 
-    DocBase.run = function(options) {
+    DocBase.methods = ['file', 'github'];
+
+    DocBase.run = function(opts) {
         Events.bind();
+
         var defaultOptions = {
             method: 'file',
             file: {
-                src: 'map.json',
-                path: 'docs'
+                src: '/map.json',
+                path: 'docs/'
             },
             github: {
                 user: 'user',
-                repo: 'docs',
-                path: 'docs',
+                repo: 'docs/',
+                path: '/docs',
                 branch: 'master'
             }
         };
-        options = options || defaultOptions;
-        DocBase[options.method]( options[options.method] || defaultOptions[options.method] );
+
+        opts = opts || defaultOptions;
+
+        // Removes trailing '/'s.
+        DocBase.methods.forEach(function(method){
+            var options = opts[method];
+            Object.keys(options).forEach(function(key){
+                var value = options[key];
+                value = value.charAt(0) === '/' ? value.substring(1) : value;
+                value = endsWith(value, '/') ? value.substring(0, value.length-1) : value;
+                options[key] = value;
+            });
+        });
+
+        DocBase.options = opts;
+
+        angApp
+            .controller('URLCtrl', ['$scope', '$routeParams', '$location', Route.URLCtrl])
+            .config(['$routeProvider', '$locationProvider', Route.config]);
+
+        DocBase[opts.method]( opts[opts.method] || defaultOptions[opts.method] );
     }
 
     DocBase.github = function(options) {
-        githubTree(options, Render.navbar);
+        githubTree(options, function(map){
+            DocBase.map = map;
+            jWindow.trigger('mapped');
+            Render.navbar(map);
+        });
     }
 
     DocBase.file = function(options) {
-        $.get(options.src).success(Render.navbar).error(function(error){
+        $.get(options.src)
+        .success(function(map){
+            DocBase.map = map;
+            jWindow.trigger('mapped');
+            Render.navbar(map);
+        })
+        .error(function(error){
             throw error;
         });
     }
@@ -61,15 +97,23 @@
         $(Render.items).removeClass('hidden');
     }
 
-    Render.navbar = function(tree){
+    Render.navbar = function(map){
+        var _elVersionList = $('[version-list]');
+        var _elCurrentVersion = $('[current-version]');
+
         var versions = [];
-        for(version in tree) {
+        for(version in map) {
             versions.push(version);
         }
-        Events.bind();
-        Flatdoc.run({
-          fetcher: Flatdoc.file('/bower_components/flatdoc/examples/examples.md'),
+
+        _elVersionList.html(' ');
+        _elCurrentVersion.html(versions[versions.length-1]);
+
+        versions.forEach(function(version){
+            _elVersionList.append('<li><a href="#/'+version+'" ver>'+version+'</a></li>');
         });
+
+        Events.bind();
     }
 
     /**
@@ -103,16 +147,8 @@
         Render.show();
     };
 
-    Events.hashChange = function(){
-        var hash = window.location.hash;
-        if(hash) {
-            handleHash(hash);
-        }
-    };
-
     Events.switchBind = function(state){
         jWindow[state]('flatdoc:ready', Events.parseTitle);
-        jWindow[state]('hashchange', Events.hashChange);
     }
 
     Events.bind = function(){
@@ -123,28 +159,72 @@
         Events.switchBind('off');
     }
 
+    Route.config = function($routeProvider, $locationProvider){
+        $routeProvider
+        .when('/:version/:folder/:file', {
+            templateUrl: '/html/flatdoc.html',
+            controller: 'URLCtrl'
+        })
+        .when('/:version/:folder', {
+            templateUrl: '/html/flatdoc.html',
+            controller: 'URLCtrl'
+        })
+        .when('/:version', {
+            templateUrl: '/html/flatdoc.html',
+            controller: 'URLCtrl'
+        })
+        .when('/', {
+            templateUrl: '/html/main.html'
+        });
+        //$locationProvider.html5Mode(true);
+    }
 
-    function handleHash(hash){
-        if(hash) {
-            hash = hash.substring(1);
-            if(hash.charAt(0) !== '/') {
-                //return splashPage();
-            } else {
-                var hashSplit = hash.split('/');
+    Route.file = function(path){
+        Flatdoc.run({
+          fetcher: Flatdoc.file(DocBase.options.file.path + path + '.md')
+        });
+    };
 
-            }
+    Route.github = function(path){
+        var ghRepo = DocBase.options.github.user + '/' + DocBase.options.repo;
+        Flatdoc.github({
+            fetcher: Flatdoc.github(ghRepo + path + '.md')
+        }); 
+    };
+
+    Route.URLCtrl = function($scope, $routeParams, $locationProvider){
+        var version = $routeParams.version;
+        var folder = $routeParams.folder;
+        var file = $routeParams.file;
+
+        if(DocBase.map || file) {
+            var path = Route.updatePath(DocBase.map, version, folder, file);
+            $locationProvider.path(path);
+            Route[DocBase.options.method](path);
+        } else {
+            jWindow.on('mapped', function(){
+                var path = Route.updatePath( DocBase.map, version, folder);
+                $locationProvider.path(path);
+                Route[DocBase.options.method](path);
+            });
         }
+    };
+
+    Route.mainCtrl = function(){
+
+    };
+
+    Route.updatePath = function(map, version, folder, file){
+        var path = '/' + version + '/';
+        path += folder || map[version][0].name;
+        path += '/';
+        path += file || map[version][0].files[0].name;
+        return path;
     }
 
     function githubTree(options, callback){
         
         var full_path = options.src;
-        if(full_path.charAt(0) === '/') {
-            full_path = full_path.substring(1);
-        }
-        if(full_path.charAt(full_path.length-1) === '/'){
-            full_path = full_path.substring(0, full_path.length-1);
-        }
 
         var path = full_path.split('/');
         var deleted = path.splice(path.length-1, 1);
@@ -212,6 +292,6 @@
       var lastIndex = subjectString.indexOf(searchString, position);
       return lastIndex !== -1 && lastIndex === position;
     }
-})(window.jQuery);
+})(window.jQuery, window.angular);
 
 DocBase.run();
