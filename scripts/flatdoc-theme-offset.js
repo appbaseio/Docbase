@@ -2,7 +2,7 @@
   var $window = $(window);
   var $document = $(document);
 
-  $document.on('flatdoc:render', runTheme);
+  $window.on('docbase:ready', runTheme);
 
   function runTheme(){
    /*
