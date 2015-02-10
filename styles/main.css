@@ -22,6 +22,9 @@ pre {
 body {
 	padding-top: 50px;
 }
+.root-view{
+	margin-top: -50px;
+}
 ul.nav li.dropdown:hover {
 	background: white;
 }
@@ -31,8 +34,9 @@ ul.nav li.dropdown:hover > a {
 ul.nav li.dropdown:hover > ul.dropdown-menu {
     display: block;    
 }
-.dropdown-menu {
-	min-width: 68px;
+.dropdown-menu.version-switcher {
+	min-width: 0;
+	width: 68px;
 }
 .navbar-fixed-top {
 	background: #50BAEF;
