@@ -1,5 +1,5 @@
 {
-    "v1.0" : [
+    "v1" : [
         {
             "label": "Folder 1",
             "name": "folder1",
@@ -25,7 +25,7 @@
             ]
         }
     ],
-    "v2.0" : [
+    "v2" : [
         {
             "label": "Folder 1",
             "name": "folder1",
