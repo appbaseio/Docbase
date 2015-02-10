@@ -32,15 +32,16 @@
         var defaultOptions = {
             method: 'file',
             file: {
-                src: '/map.json',
-                path: 'docs/'
+                src: 'map.json',
+                path: 'docs'
             },
             github: {
                 user: 'user',
-                repo: 'docs/',
-                path: '/docs',
+                repo: 'docs',
+                path: 'docs',
                 branch: 'master'
-            }
+            },
+            html5mode: false
         };
 
         $.extend(defaultOptions, opts);
@@ -68,18 +69,31 @@
 
     DocBase.github = function(options) {
         githubTree(options, function(map){
-            DocBase.map = map;
-            jWindow.trigger('mapped');
-            Render.navbar(map);
+            if(checkSchema(map)){
+                DocBase.map = map;
+                jWindow.trigger('mapped');
+                Render.navbar(map);
+            } else {
+                throw 'GitHub tree fetching error.';
+            }
         });
     }
 
     DocBase.file = function(options) {
         $.get(options.src)
         .success(function(map){
-            DocBase.map = map;
-            jWindow.trigger('mapped');
-            Render.navbar(map);
+            if(checkSchema(map)){
+                var v = Object.keys(map);
+                if(v.length &&  map[v[0]][0].files.length && map[v[0]][0].files[0].name){
+                    DocBase.map = map;
+                    jWindow.trigger('mapped');
+                    Render.navbar(map);
+                } else {
+                    throw 'Map does not have a file entry. Check the documentation';
+                }
+            } else {
+                throw 'Map file schema error. Check the documentation.';
+            }
         })
         .error(function(error){
             throw error;
@@ -184,13 +198,16 @@
         .when('/', {
             templateUrl: '/html/main.html'
         });
-        //$locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(DocBase.options.html5mode);
     }
 
-    Route.file = function(path){
+    Route.file = function(path, $scope){
         Flatdoc.run({
           fetcher: Flatdoc.file(DocBase.options.file.path + path + '.md')
         });
+        $scope.versions = Object.keys(DocBase.map);
+        $scope.currentVersion = $scope.versions[$scope.versions.length-1];
+        $scope.map = DocBase.map;
     };
 
     Route.github = function(path){
@@ -211,12 +228,12 @@
         if(DocBase.map || file) {
             var path = Route.updatePath(DocBase.map, version, folder, file);
             $locationProvider.path(path);
-            Route[DocBase.options.method](path);
+            Route[DocBase.options.method](path, $scope);
         } else {
             jWindow.on('mapped', function(){
                 var path = Route.updatePath(DocBase.map, version, folder);
                 $locationProvider.path(path);
-                Route[DocBase.options.method](path);
+                Route[DocBase.options.method](path, $scope);
             });
         }
     };
@@ -226,7 +243,6 @@
     };
 
     Route.updatePath = function(map, version, folder, file){
-
         if(!map[version]){
             throw 'Version not mapped.';
         }
@@ -244,7 +260,6 @@
             var mapFile = mapFolder[0].files.filter(function(files){
                 return files.name === file;
             });
-            console.log(file, map, mapFile, mapFolder)
             if(!mapFile.length){
                 throw 'File not mapped.';
             }
@@ -256,6 +271,19 @@
         path += file || map[version][0].files[0].name;
 
         return path;
+    }
+
+    function checkSchema(map) {
+        return validate = schema({
+            '*': Array.of(schema({
+                name: String,
+                label: String,
+                files: Array.of(schema({
+                    name: String,
+                    label: String
+                }))
+            }))
+        })(map);
     }
 
     function githubTree(options, callback){
@@ -327,5 +355,3 @@
       return lastIndex !== -1 && lastIndex === position;
     }
 })(window.jQuery, window.angular);
-
-DocBase.run();
