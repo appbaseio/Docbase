@@ -1,10 +1,11 @@
 <!doctype html>
-<html>
+<html ng-app="docBaseApp">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1" />
   <meta name="viewport" content="width=device-width">
-
+  <base href="/">
+  
   <title>Documentation</title>
 
   <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -21,6 +22,8 @@
 
   <!-- DocBase -->
   <link rel="stylesheet" type="text/css" href="/styles/main.css">
+  <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-route/angular-route.js"></script>
   <script src="/scripts/docs-engine.js"></script>
 
   <style>
@@ -58,11 +61,8 @@
         
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> v2.0 <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">v1.0</a></li>
-              <li><a href="#">v2.0</a></li>
-              <li><a href="#">v3.0</a></li>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span current-version></span> <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" version-list>
             </ul>
           </li>
           <li><a href="#">Github</a></li>
@@ -71,12 +71,7 @@
     </div><!-- /.container-fluid -->
   </nav>
 
-  <div role="flatdoc" class="content-root">
-    <div class="menubar">
-      <div class="menu section" role="flatdoc-menu"></div>
-    </div>
-    <div role="flatdoc-content" class="content"></div>
-  </div>
+  <div ng-view></div>
 
   <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
