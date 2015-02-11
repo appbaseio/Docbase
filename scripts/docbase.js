@@ -75,7 +75,7 @@
         angApp = angular
             .module(options.angularAppName, ['ngRoute'])
             .controller('URLCtrl', ['$scope', '$routeParams', '$location', '$timeout', Route.URLCtrl])
-            .controller('MainCtrl', Route.mainCtrl)
+            .controller('MainCtrl', ['$location', Route.mainCtrl])
             .config(['$routeProvider', '$locationProvider', Route.config]);
 
         Docbase[options.method](options[options.method]);
@@ -173,7 +173,7 @@
         var flatdocURL = Docbase.options.flatdocHtml;
         var mainURL = Docbase.options.indexSrc;
 
-        if(Docbase.indexType === 'markdown') {
+        if(Docbase.options.indexType === 'markdown') {
             mainURL = flatdocURL;
         }
 
@@ -246,16 +246,16 @@
         }
     };
 
-    Route.mainCtrl = function(){
-        if(Docbase.indexType === 'markdown') {
-            var path = Docbase.indexSrc;
+    Route.mainCtrl = function($location){
+        if(Docbase.options.indexType === 'markdown') {
+            var path = Docbase.options.indexSrc;
             if(endsWith(path, '.md')){
                 path = path.substring(0, path.length-3);
             }
             if(path.charAt(0) !== '/'){
                 path = '/' + path;
             }
-            Route.fetch(path);
+            $location.path(path);
         }
     }
 
