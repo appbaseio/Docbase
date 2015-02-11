@@ -19,70 +19,80 @@
 
     /**
     * Github offers an API with a very strict, non-increasable limit for the client side.
-    * If your docs will be for internal use or would get limited hits per IP,
-    * you can use gh to fetch your markdown files and itterate through them.
-    * As this is a very limited option, the default method on this engine is a manual spec.
+    * DocBase uses this API to make a map of your markdown files, and then fetches
+    * them through get requests to GitHub Pages, not the API. As there is a small chance
+    * the GitHub quota will be exceeded before the docs are mapped, keep a map file (JSON)
+    * in the root of your site so that can be fetched.
+    * Only use HTML5 mode if you're hosting it yourself, requires server config.
     */
 
     DocBase.methods = ['file', 'github'];
 
-    DocBase.run = function(opts) {
-        Events.bind();
-
-        var defaultOptions = {
-            method: 'file',
-            file: {
-                src: 'map.json',
+    DocBase.run = function(options) {
+        var defaults = {
+            method: 'github',
+            path: 'docs',
+            map: {
+                file: 'map.json',
                 path: 'docs'
             },
             github: {
-                user: 'user',
-                repo: 'docs',
-                path: 'docs',
-                branch: 'master'
+                /*user: 'user',
+                repo: 'repo',*/
+                path: '',
+                branch: 'gh-pages'
             },
             html5mode: false,
             angularAppName: 'docBaseApp'
         };
 
-        $.extend(defaultOptions, opts);
-        opts = defaultOptions;
+        options = $.extend({}, defaults, options);
+
+        if(options.method === 'github') {
+            if(!options.github.user || !options.github.repo) {
+                throw 'Missing GitHub user/repo info.';
+            }
+        }
 
         // Removes trailing '/'s.
         DocBase.methods.forEach(function(method){
-            var options = opts[method];
-            Object.keys(options).forEach(function(key){
-                var value = options[key];
+            var properties = options[method];
+            Object.keys(properties).forEach(function(key){
+                var value = properties[key];
                 value = value.charAt(0) === '/' ? value.substring(1) : value;
                 value = endsWith(value, '/') ? value.substring(0, value.length-1) : value;
-                options[key] = value;
+                properties[key] = value;
             });
         });
 
-        DocBase.options = opts;
+        DocBase.options = options;
+
+        Events.bind();
 
         angApp = angular
-            .module(opts.angularAppName, ['ngRoute'])
+            .module(options.angularAppName, ['ngRoute'])
             .controller('URLCtrl', ['$scope', '$routeParams', '$location', '$timeout', Route.URLCtrl])
             .config(['$routeProvider', '$locationProvider', Route.config]);
 
-        DocBase[opts.method]( opts[opts.method] || defaultOptions[opts.method] );
+        DocBase[options.method](options[options.method]);
     }
 
     DocBase.github = function(options) {
-        githubTree(options, function(map){
-            if(checkSchema(map)){
+        githubTree(options, function(error, map){
+            if(error) {
+                DocBase.file(DocBase.options.file);
+            } else if(checkSchema(map)){
                 DocBase.map = map;
                 jWindow.trigger('mapped');
                 Events.bind();
             } else {
-                throw 'GitHub tree fetching error.';
+                throw 'GitHub tree mapping error.';
             }
         });
     }
 
     DocBase.file = function(options) {
-        $.get(options.src)
+        $.get(options.path + '/' + options.file)
         .success(function(map){
             if(checkSchema(map)){
                 var v = Object.keys(map);
@@ -179,26 +189,26 @@
         $locationProvider.html5Mode(DocBase.options.html5mode);
     }
 
-    Route.file = function(path){
-        var options = DocBase.options.file;
+    Route.fetch = function(path){
+        var options = DocBase.options;
         Flatdoc.run({
           fetcher: Flatdoc.file(options.path + path + '.md')
         });
     };
 
-    Route.github = function(path){
-        var options = DocBase.options.github;
-        var ghRepo = options.user + '/' + options.repo;
-        var ghPath = options.path + path + '.md';
-        var branch = options.branch;
+    // Route.github = function(path){
+    //     var options = DocBase.options.github;
+    //     var ghRepo = options.user + '/' + options.repo;
+    //     var ghPath = options.path + path + '.md';
+    //     var branch = options.branch;
 
-        Flatdoc.run({
-            fetcher: Flatdoc.github(ghRepo, ghPath, branch)
-        }); 
-    };
+    //     Flatdoc.run({
+    //         fetcher: Flatdoc.github(ghRepo, ghPath, branch)
+    //     }); 
+    // };
 
     Route.URLCtrl = function($scope, $routeParams, $location, $timeout){
-        if(DocBase.map || file) {
+        if(DocBase.map) {
             mapLoaded();
         } else {
             jWindow.on('mapped', mapLoaded);
@@ -217,8 +227,9 @@
             
             var location = Route.updatePath($routeParams);
             $location.path(location.path);
+
             if(!location.fail){
-                Route[DocBase.options.method](location.path);
+                Route.fetch(location.path);
             }
         }
     };
@@ -227,7 +238,7 @@
         var map = DocBase.map;
         var version = params.version;
         var folder = params.folder;
-        var file = params.file;
+        var file = params.file;        
 
         if(!map[version]){
             console.error('Version not mapped.');
@@ -254,10 +265,13 @@
             }
         }
 
-        var path = '/' + version + '/';
-        path += folder || map[version][0].name;
-        path += '/';
-        path += file || map[version][0].files[0].name;
+        folder = folder || map[version][0].name;
+        var folderObj = map[version].filter(function(each){
+            return each.name === folder;
+        })[0];
+        file = file || folderObj.files[0].name;
+
+        var path = '/' + version + '/' + folder + '/' + file;
 
         return {path: path, fail: false};
     }
@@ -288,12 +302,14 @@
 
         var url = baseurl  + 'contents/' + path;
 
-        $.get(url, {ref: options.branch}, function(data){
+        $.get(url, {ref: options.branch})
+        .success(function(data){
             var sha = data.filter(function(each){
                 return each.name === deleted;
             })[0].sha;
 
-            $.get(baseurl + 'git/trees/' + sha + '?recursive=1', function(tree) {
+            $.get(baseurl + 'git/trees/' + sha + '?recursive=1')
+            .success(function(tree) {
                 tree = tree.tree.filter(function(each){
                     return endsWith(each.path, '.md');
                 });
@@ -328,10 +344,15 @@
 
                 });
                 
-                callback(map);
+                callback(null, map);
 
+            })
+            .error(function(error){
+                callback(error);
             });
-
+        })
+        .error(function(error){
+            callback(error);
         });
     }
 
