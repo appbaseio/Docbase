@@ -1,6 +1,6 @@
 /**
 *
-* DocBase engine
+* Docbase engine
 * Appbase
 * Henrique Sa, Feb '15
 * MIT license
@@ -13,22 +13,22 @@
     var angApp;
 
     var exports = this;
-    var DocBase = exports.DocBase = {};
-    var Events = DocBase.events = {};
-    var Route = DocBase.route = {};
+    var Docbase = exports.Docbase = {};
+    var Events = Docbase.events = {};
+    var Route = Docbase.route = {};
 
     /**
     * Github offers an API with a very strict, non-increasable limit for the client side.
-    * DocBase uses this API to make a map of your markdown files, and then fetches
+    * Docbase uses this API to make a map of your markdown files, and then fetches
     * them through get requests to GitHub Pages, not the API. As there is a small chance
     * the GitHub quota will be exceeded before the docs are mapped, keep a map file (JSON)
     * in the root of your site so that can be fetched.
     * Only use HTML5 mode if you're hosting it yourself, requires server config.
     */
 
-    DocBase.methods = ['file', 'github'];
+    Docbase.methods = ['file', 'github'];
 
-    DocBase.run = function(options) {
+    Docbase.run = function(options) {
         var defaults = {
             method: 'github',
             path: 'docs',
@@ -55,7 +55,7 @@
         }
 
         // Removes trailing '/'s.
-        DocBase.methods.forEach(function(method){
+        Docbase.methods.forEach(function(method){
             var properties = options[method];
             Object.keys(properties).forEach(function(key){
                 var value = properties[key];
@@ -65,7 +65,7 @@
             });
         });
 
-        DocBase.options = options;
+        Docbase.options = options;
 
         Events.bind();
 
@@ -74,15 +74,15 @@
             .controller('URLCtrl', ['$scope', '$routeParams', '$location', '$timeout', Route.URLCtrl])
             .config(['$routeProvider', '$locationProvider', Route.config]);
 
-        DocBase[options.method](options[options.method]);
+        Docbase[options.method](options[options.method]);
     }
 
-    DocBase.github = function(options) {
+    Docbase.github = function(options) {
         githubTree(options, function(error, map){
             if(error) {
-                DocBase.file(DocBase.options.file);
+                Docbase.file(Docbase.options.file);
             } else if(checkSchema(map)){
-                DocBase.map = map;
+                Docbase.map = map;
                 jWindow.trigger('mapped');
                 Events.bind();
             } else {
@@ -91,13 +91,13 @@
         });
     }
 
-    DocBase.file = function(options) {
+    Docbase.file = function(options) {
         $.get(options.path + '/' + options.file)
         .success(function(map){
             if(checkSchema(map)){
                 var v = Object.keys(map);
                 if(v.length &&  map[v[0]][0].files.length && map[v[0]][0].files[0].name){
-                    DocBase.map = map;
+                    Docbase.map = map;
                     jWindow.trigger('mapped');
                     Events.bind();
                 } else {
@@ -130,7 +130,7 @@
     }
 
     Events.ajaxError = function(event, request){
-        if(request.status === 403 && DocBase.options.method === 'github') {
+        if(request.status === 403 && Docbase.options.method === 'github') {
             throw 'GitHub API quota exceeded.';
         }
     }
@@ -186,18 +186,18 @@
             redirectTo: '/'
         });
 
-        $locationProvider.html5Mode(DocBase.options.html5mode);
+        $locationProvider.html5Mode(Docbase.options.html5mode);
     }
 
     Route.fetch = function(path){
-        var options = DocBase.options;
+        var options = Docbase.options;
         Flatdoc.run({
           fetcher: Flatdoc.file(options.path + path + '.md')
         });
     };
 
     // Route.github = function(path){
-    //     var options = DocBase.options.github;
+    //     var options = Docbase.options.github;
     //     var ghRepo = options.user + '/' + options.repo;
     //     var ghPath = options.path + path + '.md';
     //     var branch = options.branch;
@@ -208,14 +208,14 @@
     // };
 
     Route.URLCtrl = function($scope, $routeParams, $location, $timeout){
-        if(DocBase.map) {
+        if(Docbase.map) {
             mapLoaded();
         } else {
             jWindow.on('mapped', mapLoaded);
         }
 
         function mapLoaded(){
-            var map = DocBase.map;
+            var map = Docbase.map;
             var currentVersion = $routeParams.version;
             var versions = Object.keys(map);
 
@@ -235,7 +235,7 @@
     };
 
     Route.updatePath = function(params){
-        var map = DocBase.map;
+        var map = Docbase.map;
         var version = params.version;
         var folder = params.folder;
         var file = params.file;        

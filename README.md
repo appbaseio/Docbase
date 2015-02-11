@@ -1,4 +1,4 @@
-# DocBase
+# Docbase
 A fast and flexible single-page documentation engine.
 With your existing (or new) markdown files, organize them in a simpe version/category folder structure and have dynamically generated menus and links.
 
