@@ -39,11 +39,14 @@
             github: {
                 /*user: 'user',
                 repo: 'repo',*/
-                path: '',
+                path: '/',
                 branch: 'gh-pages'
             },
             html5mode: false,
-            angularAppName: 'docBaseApp'
+            indexType: 'html',
+            indexSrc: '/html/main.html',
+            flatdocHtml: '/html/flatdoc.html',
+            angularAppName: 'docbaseApp'
         };
 
         options = $.extend({}, defaults, options);
@@ -72,6 +75,7 @@
         angApp = angular
             .module(options.angularAppName, ['ngRoute'])
             .controller('URLCtrl', ['$scope', '$routeParams', '$location', '$timeout', Route.URLCtrl])
+            .controller('MainCtrl', Route.mainCtrl)
             .config(['$routeProvider', '$locationProvider', Route.config]);
 
         Docbase[options.method](options[options.method]);
@@ -166,21 +170,29 @@
     };
 
     Route.config = function($routeProvider, $locationProvider){
+        var flatdocURL = Docbase.options.flatdocHtml;
+        var mainURL = Docbase.options.indexSrc;
+
+        if(Docbase.indexType === 'markdown') {
+            mainURL = flatdocURL;
+        }
+
         $routeProvider
         .when('/:version/:folder/:file', {
-            templateUrl: '/html/flatdoc.html',
+            templateUrl: flatdocURL,
             controller: 'URLCtrl'
         })
         .when('/:version/:folder', {
-            templateUrl: '/html/flatdoc.html',
+            templateUrl: flatdocURL,
             controller: 'URLCtrl'
         })
         .when('/:version', {
-            templateUrl: '/html/flatdoc.html',
+            templateUrl: flatdocURL,
             controller: 'URLCtrl'
         })
         .when('/', {
-            templateUrl: '/html/main.html'
+            templateUrl: mainURL,
+            controller: 'MainCtrl'
         })
         .otherwise({
             redirectTo: '/'
@@ -189,10 +201,10 @@
         $locationProvider.html5Mode(Docbase.options.html5mode);
     }
 
-    Route.fetch = function(path){
+    Route.fetch = function(file){
         var options = Docbase.options;
         Flatdoc.run({
-          fetcher: Flatdoc.file(options.path + path + '.md')
+          fetcher: Flatdoc.file(options.path + file + '.md')
         });
     };
 
@@ -233,6 +245,19 @@
             }
         }
     };
+
+    Route.mainCtrl = function(){
+        if(Docbase.indexType === 'markdown') {
+            var path = Docbase.indexSrc;
+            if(endsWith(path, '.md')){
+                path = path.substring(0, path.length-3);
+            }
+            if(path.charAt(0) !== '/'){
+                path = '/' + path;
+            }
+            Route.fetch(path);
+        }
+    }
 
     Route.updatePath = function(params){
         var map = Docbase.map;
@@ -322,26 +347,27 @@
                      * sub_path[1] is the folder,
                      * and sub_path[2] is the file.
                      */
-                    var version = sub_path[0];
-                    var folder = sub_path[1];
-                    var file = sub_path[2].substring(0, sub_path[2].length-3);
+                    if(sub_path.length >= 3){
+                        var version = sub_path[0];
+                        var folder = sub_path[1];
+                        var file = sub_path[2].substring(0, sub_path[2].length-3);
 
-                    // Version is new
-                    if(!map[version]){
-                        map[version] = [];
+                        // Version is new
+                        if(!map[version]){
+                            map[version] = [];
+                        }
+                        
+                        // Folder is new
+                        if( !map[version].filter(function(a){ return a.name === folder }).length ) {
+                            map[version].push({ label: folder, name: folder, files: [] });
+                        }
+                        
+                        // Add file
+                        map[version].forEach(function(each){
+                            if(each.name === folder)
+                                each.files.push({name: file, label: file});
+                        });
                     }
-                    
-                    // Folder is new
-                    if( !map[version].filter(function(a){ return a.name === folder }).length ) {
-                        map[version].push({ label: folder, name: folder, files: [] });
-                    }
-                    
-                    // Add file
-                    map[version].forEach(function(each){
-                        if(each.name === folder)
-                            each.files.push({name: file, label: file});
-                    });
-
                 });
                 
                 callback(null, map);
