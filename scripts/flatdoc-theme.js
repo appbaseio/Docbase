@@ -10,31 +10,47 @@
   $window.on('docbase:ready', runTheme);
 
   function runTheme(){
-  	$("h2, h3").scrollagent( {offset: 100}, function(cid, pid, currentElement, previousElement) {
-    	if (pid) {
-			$("[pref='#"+pid+"']").removeClass('active');
-		}
-		if (cid) {
-			$("[pref='#"+cid+"']").addClass('active');
-		}
-	});
 
-  	$('.menu a').anchorjump({offset: -50});
+    $("h2, h3").scrollagent( {offset: 100}, function(cid, pid, currentElement, previousElement) {
+      if (pid) {
+         $("[pref='#"+pid+"']").removeClass('active');
+      }
+      if (cid) {
+         $("[pref='#"+cid+"']").addClass('active');
+      }
+    });
 
-  	var $sidebar = $('.menubar');
-  	var elTop;
+    $('.menu a').each(function(){
+      var el = $(this);
+      var href = el.attr('href');
 
-  	$window
-  	  .on('resize.sidestick', function() {
-  	    $sidebar.removeClass('fixed');
-  	    elTop = $sidebar.offset().top;
-  	    $window.trigger('scroll.sidestick');
-  	  })
-  	  .on('scroll.sidestick', function() {
-  	    var scrollY = $window.scrollTop();
-  	    $sidebar.toggleClass('fixed', (scrollY >= elTop-35));
-  	  })
-  	  .trigger('resize.sidestick');
+      if(href && !el.attr('pref')){
+        var location = window.location.href.split('#');
+        if(location.length <= 2) {
+          location = location.join('#') + href;
+        } else {
+          location[location.length-1] = href.substring(1);
+          location = location.join('#');
+        }
+        el.attr('href', location);
+        el.attr('pref', href);
+      }
+    });
+
+    var $sidebar = $('.menubar');
+    var elTop;
+
+    $window
+      .on('resize.sidestick', function() {
+        $sidebar.removeClass('fixed');
+        elTop = $sidebar.offset().top;
+        $window.trigger('scroll.sidestick');
+      })
+      .on('scroll.sidestick', function() {
+        var scrollY = $window.scrollTop();
+        $sidebar.toggleClass('fixed', (scrollY >= elTop-35));
+      })
+      .trigger('resize.sidestick');
 
   }
 
@@ -62,7 +78,7 @@
 (function($) {
 
   $.fn.scrollagent = function(options, callback) {
-  	var $window = $(window);
+    var $window = $(window);
 
     // Account for $.scrollspy(function)
     if (typeof callback === 'undefined') {
@@ -96,8 +112,8 @@
     // Save the height. Do this only whenever the window is resized so we don't
     // recalculate often.
     function refreshSize(){
-    	height = $parent.height();
-    	range = $(document).height();
+      height = $parent.height();
+      range = $(document).height();
     }
 
     // Find the current active section every scroll tick.
@@ -124,9 +140,9 @@
       }
 
       if(!last) {
-      	setTimeout(function(){
-      		refreshScroll(true);
-      	}, 250);
+        setTimeout(function(){
+          refreshScroll(true);
+        }, 250);
       }
     }
 
@@ -139,89 +155,6 @@
     return this;
   };
 
-})(jQuery);
-/*! Anchorjump (c) 2012, Rico Sta. Cruz. MIT License.
- *   http://github.com/rstacruz/jquery-stuff/tree/master/anchorjump */
-
-// Makes anchor jumps happen with smooth scrolling.
-//
-//    $("#menu a").anchorjump();
-//    $("#menu a").anchorjump({ offset: -30 });
-//
-//    // Via delegate:
-//    $("#menu").anchorjump({ for: 'a', offset: -30 });
-//
-// You may specify a parent. This makes it scroll down to the parent.
-// Great for tabbed views.
-//
-//     $('#menu a').anchorjump({ parent: '.anchor' });
-//
-// You can jump to a given area.
-//
-//     $.anchorjump('#bank-deposit', options);
-
-(function($) {
-  var defaults = {
-    'speed': 500,
-    'offset': 0,
-    'for': null,
-    'parent': null
-  };
-
-  $.fn.anchorjump = function(options) {
-    options = $.extend({}, defaults, options);
-    this.each(function(each){
-    	var el = $(this);
-    	var href = el.attr('href');
-    	if(href){
-    		el.attr('pref', href);
-    		el.attr('href', '');
-    	}
-    });
-    if (options['for']) {
-      this.on('click', options['for'], onClick);
-    } else {
-      this.on('click', onClick);
-    }
-
-    function onClick(e) {
-      var $a = $(e.target).closest('a');
-      if (e.ctrlKey || e.metaKey || e.altKey || $a.attr('target')) return;
-
-      e.preventDefault();
-      var href = $a.attr('pref');
-
-      $.anchorjump(href, options);
-    }
-  };
-
-  // Jump to a given area.
-  $.anchorjump = function(href, options) {
-    options = $.extend({}, defaults, options);
-
-    var top = 0;
-
-    if (href != '#') {
-      var $area = $(href);
-      // Find the parent
-      if (options.parent) {
-        var $parent = $area.closest(options.parent);
-        if ($parent.length) { $area = $parent; }
-      }
-      if (!$area.length) { return; }
-
-      // Determine the pixel offset; use the default if not available
-      var offset =
-        $area.attr('data-anchor-offset') ?
-        parseInt($area.attr('data-anchor-offset'), 10) :
-        options.offset;
-
-      top = Math.max(0, $area.offset().top + offset);
-    }
-
-    $('html, body').stop().animate({ scrollTop: top }, options.speed);
-    $('body').trigger('anchor', href);
-  };
 })(jQuery);
 
 /*
