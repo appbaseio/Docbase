@@ -40,12 +40,13 @@
                 /*user: 'user',
                 repo: 'repo',*/
                 path: '/',
-                branch: 'gh-pages'
+                branch: 'gh-pages',
+                editGithubBtn: true
             },
             html5mode: false,
             indexType: 'html',
-            indexSrc: '/html/main.html',
-            flatdocHtml: '/html/flatdoc.html',
+            indexSrc: 'html/main.html',
+            flatdocHtml: 'html/flatdoc.html',
             angularAppName: 'docbaseApp'
         };
 
@@ -61,12 +62,11 @@
         Docbase.methods.forEach(function(method){
             var properties = options[method];
             Object.keys(properties).forEach(function(key){
-                var value = properties[key];
-                value = value.charAt(0) === '/' ? value.substring(1) : value;
-                value = endsWith(value, '/') ? value.substring(0, value.length-1) : value;
-                properties[key] = value;
+                properties[key] = cutTrailingSlashes(properties[key]);
             });
         });
+        options.map.path = cutTrailingSlashes(options.map.path);
+        options.path = cutTrailingSlashes(options.path);
 
         Docbase.options = options;
 
@@ -74,9 +74,15 @@
 
         angApp = angular
             .module(options.angularAppName, ['ngRoute'])
-            .controller('URLCtrl', ['$scope', '$routeParams', '$location', '$timeout', Route.URLCtrl])
+            .controller('URLCtrl',
+                ['$scope', '$routeParams', '$location', '$timeout', '$anchorScroll', Route.URLCtrl]
+            )
             .controller('MainCtrl', ['$location', Route.mainCtrl])
-            .config(['$routeProvider', '$locationProvider', Route.config]);
+            .config(['$routeProvider', '$locationProvider', Route.config])
+            .run(
+                ['$rootScope', '$location', '$routeParams', '$anchorScroll',
+                '$route', Route.anchorConfig]
+            );
 
         Docbase[options.method](options[options.method]);
     }
@@ -84,7 +90,7 @@
     Docbase.github = function(options) {
         githubTree(options, function(error, map){
             if(error) {
-                Docbase.file(Docbase.options.file);
+                Docbase.file(Docbase.options.map);
             } else if(checkSchema(map)){
                 Docbase.map = map;
                 jWindow.trigger('mapped');
@@ -135,7 +141,7 @@
 
     Events.ajaxError = function(event, request){
         if(request.status === 403 && Docbase.options.method === 'github') {
-            throw 'GitHub API quota exceeded.';
+            console.error('Github API quota exceeded.');
         }
     }
 
@@ -164,12 +170,15 @@
                 $('body').addClass('no-literate');
             }
 
-        } catch (e) {/* No JSON object found, keep title as-is */};
+        } catch (e) {
+            // No JSON object found, keep title as-is, but disable three-collums
+            $('body').addClass('no-literate');
+        };
         
         Events.ready();
     };
 
-    Route.config = function($routeProvider, $locationProvider){
+    Route.config = function($routeProvider, $location, $rootScope, $anchorScroll){
         var flatdocURL = Docbase.options.flatdocHtml;
         var mainURL = Docbase.options.indexSrc;
 
@@ -198,11 +207,53 @@
             redirectTo: '/'
         });
 
-        $locationProvider.html5Mode(Docbase.options.html5mode);
+        $location.html5Mode(Docbase.options.html5mode);
+    }
+
+    Route.anchorConfig = function($rootScope, $location, $routeParams, $anchorScroll, $route){
+        
+        /**
+        * Hack to prevent route reload when hash is changed.
+        * Makes sure only the hash was change and intercepts the event.
+        */
+
+        $rootScope.$on('$locationChangeStart', function(evnt, newRoute, oldRoute){ 
+            var firstRoute = newRoute.split('#');
+            var hash = firstRoute[firstRoute.length-1];
+
+            firstRoute.splice(firstRoute.length-1, 1);
+            firstRoute = firstRoute.join('#');
+
+            var secondRoute = oldRoute.split('#');
+            secondRoute.splice(secondRoute.length === 2 ? 2 : secondRoute.length-1, 1);
+            secondRoute = secondRoute.join('#');
+
+            if(firstRoute === secondRoute && (newRoute !== oldRoute)) {
+                
+                $location.hash(hash);
+                var lastRoute = $route.current;
+                var unbind = $rootScope.$on('$locationChangeSuccess', function () {
+                    $route.current = lastRoute;
+                    unbind();
+                });
+                $anchorScroll();
+            }
+        });
+
+        /**
+        * Initial scroll to hash on page load.
+        */
+
+        $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
+            jWindow.on('docbase:ready', function(){
+                $anchorScroll();
+            });
+        });
     }
 
     Route.fetch = function(file){
         var options = Docbase.options;
+
         Flatdoc.run({
           fetcher: Flatdoc.file(options.path + file + '.md')
         });
@@ -219,7 +270,15 @@
     //     }); 
     // };
 
-    Route.URLCtrl = function($scope, $routeParams, $location, $timeout){
+    Route.URLCtrl = function($scope, $routeParams, $location, $timeout, $anchorScroll){
+        $scope.loading = true;
+
+        jWindow.on('docbase:ready', function(){
+            $timeout(function(){
+                $scope.loading = false;
+            });
+        });
+
         if(Docbase.map) {
             mapLoaded();
         } else {
@@ -230,18 +289,39 @@
             var map = Docbase.map;
             var currentVersion = $routeParams.version;
             var versions = Object.keys(map);
+            
+            var location = Route.updatePath($routeParams);
 
             $timeout(function(){
                 $scope.versions = versions;
                 $scope.currentVersion = currentVersion || versions[versions.length-1];
                 $scope.map = map;
             });
-            
-            var location = Route.updatePath($routeParams);
+
             $location.path(location.path);
 
             if(!location.fail){
+                $timeout(function(){
+                    var options = Docbase.options;
+                    var gh = Docbase.options.github;
+
+                    var url = 'https://github.com/'
+                    + gh.user + '/' + gh.repo
+                    + '/tree/' + gh.branch + '/'
+                    + options.path + location.path + '.md';
+
+                    $scope.github = url;
+                });
+
                 Route.fetch(location.path);
+
+                // jWindow.on('docbase:ready', function(){
+                //     $location.hash($routeParams.scrollTo);
+                //     $anchorScroll();
+                // });
+
+            } else {
+                $scope.github = false;
             }
         }
     };
@@ -257,7 +337,7 @@
             }
             $location.path(path);
         }
-    }
+    };
 
     Route.updatePath = function(params){
         var map = Docbase.map;
@@ -299,9 +379,18 @@
         var path = '/' + version + '/' + folder + '/' + file;
 
         return {path: path, fail: false};
+    };
+
+    function cutTrailingSlashes(value){
+        if(!angular.isString(value)){
+            return value;
+        }
+
+        value = value.charAt(0) === '/' ? value.substring(1) : value;
+        return endsWith(value, '/') ? value.substring(0, value.length-1) : value;
     }
 
-    function checkSchema(map) {
+    function checkSchema(map){
         return validate = schema({
             '*': Array.of(schema({
                 name: String,
