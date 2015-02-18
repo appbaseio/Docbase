@@ -117,7 +117,7 @@
     }
 
     // Find the current active section every scroll tick.
-    function refreshScroll(last){
+    function refreshScroll(){
       var y = $parent.scrollTop();
       y += height * (0.3 + 0.7 * Math.pow(y/range, 2));
 
@@ -138,15 +138,9 @@
           current ? current.el : null);
         current = latest;
       }
-
-      if(!last) {
-        setTimeout(function(){
-          refreshScroll(true);
-        }, 250);
-      }
     }
 
-    $window.on('scroll', $.throttle(250, refreshScroll));
+    $window.on('scroll', $.throttle(50, refreshScroll));
     $window.on('resize', $.throttle(250, refreshSize));
     
     refreshSize();
