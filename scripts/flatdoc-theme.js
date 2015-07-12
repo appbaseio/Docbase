@@ -11,16 +11,16 @@
 
   function runTheme(){
 
-    $("h2, h3").scrollagent( {offset: 100}, function(cid, pid, currentElement, previousElement) {
-      if (pid) {
-         $("[pref='#"+pid+"']").removeClass('active');
-      }
-      if (cid) {
-         $("[pref='#"+cid+"']").addClass('active');
-      }
-    });
+  	$("h2, h3").scrollagent( {offset: 100}, function(cid, pid, currentElement, previousElement) {
+    	if (pid) {
+			   $("[pref='#"+pid+"']").removeClass('active');
+		  }
+		  if (cid) {
+			   $("[pref='#"+cid+"']").addClass('active');
+		  }
+	  });
 
-    $('.menu a').each(function(){
+  	$('.menu a').each(function(){
       var el = $(this);
       var href = el.attr('href');
 
@@ -37,20 +37,20 @@
       }
     });
 
-    var $sidebar = $('.menubar');
-    var elTop;
+  	var $sidebar = $('.menubar');
+  	var elTop;
 
-    $window
-      .on('resize.sidestick', function() {
-        $sidebar.removeClass('fixed');
-        elTop = $sidebar.offset().top;
-        $window.trigger('scroll.sidestick');
-      })
-      .on('scroll.sidestick', function() {
-        var scrollY = $window.scrollTop();
-        $sidebar.toggleClass('fixed', (scrollY >= elTop-35));
-      })
-      .trigger('resize.sidestick');
+  	$window
+  	  .on('resize.sidestick', function() {
+  	    $sidebar.removeClass('fixed');
+  	    elTop = $sidebar.offset().top;
+  	    $window.trigger('scroll.sidestick');
+  	  })
+  	  .on('scroll.sidestick', function() {
+  	    var scrollY = $window.scrollTop();
+  	    $sidebar.toggleClass('fixed', (scrollY >= elTop-35));
+  	  })
+  	  .trigger('resize.sidestick');
 
   }
 
@@ -78,7 +78,7 @@
 (function($) {
 
   $.fn.scrollagent = function(options, callback) {
-    var $window = $(window);
+  	var $window = $(window);
 
     // Account for $.scrollspy(function)
     if (typeof callback === 'undefined') {
@@ -112,8 +112,8 @@
     // Save the height. Do this only whenever the window is resized so we don't
     // recalculate often.
     function refreshSize(){
-      height = $parent.height();
-      range = $(document).height();
+    	height = $parent.height();
+    	range = $(document).height();
     }
 
     // Find the current active section every scroll tick.

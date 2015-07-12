@@ -77,7 +77,7 @@
             .module(options.angularAppName, ['ngRoute'])
             .factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', Route.fetch])
             .controller('URLCtrl', ['$scope', '$location', 'data', Route.URLCtrl])
-            .controller('MainCtrl', ['$location', Route.mainCtrl])
+            .controller('MainCtrl', ['$scope', '$location', '$timeout', Route.mainCtrl])
             .config(['$routeProvider', '$locationProvider', Route.config])
             .run(
                 ['$rootScope', '$location', '$routeParams', '$anchorScroll',
@@ -93,12 +93,45 @@
                 Docbase.file(Docbase.options.map);
             } else if(checkSchema(map)){
                 Docbase.map = map;
-                jWindow.trigger('mapped');
-                Events.bind();
+
+                $.get(Docbase.options.map.path + '/' + Docbase.options.map.file)
+                .success(function(fileMap){
+                    var ghMap = Docbase.map;
+                    var fileMapVer = Object.keys(fileMap);
+
+                    fileMapVer.forEach(function(fileVer){
+                        if( ghMap[fileVer] ){
+                            ghMap[fileVer].forEach(function(category){
+                                var categoryM = fileMap[fileVer].filter(function(_category){
+                                    return _category.name === category.name;
+                                })[0];
+                                if(categoryM && categoryM.label) {
+                                    category.label = categoryM.label;
+
+                                    category.files.forEach(function(file){
+                                        var fileM = categoryM.files.filter(function(_file){
+                                            return _file.name === file.name;
+                                        })[0];
+                                        if(fileM && fileM.label) file.label = fileM.label;
+                                    });
+                                }
+
+                            });
+                        }
+                    });
+                    jWindow.trigger('mapped');
+                    Events.bind();
+                })
+                .error(function(error){
+                    // no map available for labels
+                    jWindow.trigger('mapped');
+                    Events.bind();
+                });
             } else {
                 throw 'GitHub tree mapping error.';
             }
         });
+
     }
 
     Docbase.file = function(options) {
@@ -123,7 +156,7 @@
     }
 
     Events.switchBind = function(state){
-        jWindow[state]('flatdoc:ready', Events.parseTitle);
+        jWindow[state]('flatdoc:ready', Events.ready);
         jWindow[state]('ajaxError', Events.ajaxError);
     }
 
@@ -144,43 +177,6 @@
             console.error('Github API quota exceeded.');
         }
     }
-
-    /**
-    * Parses title object, looking for specs such as three columns.
-    * Simply make your fiirst markdown title an object to customize it.
-    * Use double quotes on the markdown.
-    * Example: {"title": "Actual title", "threeColumns": false}
-    */
-    Events.parseTitle = function(){
-        var element = $('[role~="flatdoc-content"] h1:first');
-        var menuTitle = $( '#' + element.attr('id') + '-link' );
-
-        var content = element.html();
-        try {
-            content = content.replace(/\u201D/g, '"');
-            content = content.replace(/\u201C/g, '"');
-            content = JSON.parse(content);
-            
-            element.html(content.title);
-            menuTitle.html(content.title);
-
-            if(content.threeColumns) {
-                $('body').removeClass('no-literate');
-            } else {
-                $('body').addClass('no-literate');
-            }
-
-            Events.parsed = true;
-
-        } catch (e) {
-            // No JSON object found, keep title as-is, but disable three-collums
-            if(!Events.parsed) {
-                $('body').addClass('no-literate');
-            }
-        };
-        
-        Events.ready();
-    };
 
     Route.config = function($routeProvider, $location, $rootScope, $anchorScroll){
         var flatdocURL = Docbase.options.flatdocHtml;
@@ -301,6 +297,26 @@
                     Events.parsed = false;
 
                     Flatdoc.file(options.path + location.path + '.md')(function(err, markdown){
+                        markdown = markdown.split('\n');
+                        var obj = markdown.shift();
+                        obj = obj.replace(/\u201D/g, '"');
+                        obj = obj.replace(/\u201C/g, '"');
+
+                        try {
+                            obj = JSON.parse(obj);
+                        } catch(e) {
+                            markdown.unshift(obj);
+                            obj = { 'threeColumns': false };
+                        }
+
+                        markdown = markdown.join('\n');
+
+                        if(obj.threeColumns) {
+                            $('body').removeClass('no-literate');
+                        } else {
+                            $('body').addClass('no-literate');
+                        }
+
                         var data = Flatdoc.parser.parse(markdown, function(code){
                             return Flatdoc.highlighters.generic(code)
                         });
@@ -341,7 +357,7 @@
         }
     };
 
-    Route.mainCtrl = function($location){
+    Route.mainCtrl = function($scope, $location, $timeout){
         if(Docbase.options.indexType === 'markdown') {
             var path = Docbase.options.indexSrc;
             if(endsWith(path, '.md')){
@@ -352,6 +368,14 @@
             }
 
             $location.path(path);
+        } else {
+            jWindow.on('mapped', function(){
+                $timeout(function(){
+                    $scope.map = Docbase.map;
+                    $scope.versions = Object.keys($scope.map);
+                    $scope.currentVersion = $scope.versions[0];                    
+                });
+            });
         }
     };
 
