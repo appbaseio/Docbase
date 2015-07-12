@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="docBaseApp">
+<html ng-app="docbaseApp">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1" />
@@ -24,7 +24,7 @@
   <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
   <script type="text/javascript" src="/bower_components/angular-route/angular-route.js"></script>
   <script type="text/javascript" src="/bower_components/js-schema/js-schema.min.js"></script>
-  <script type="text/javascript" src="/scripts/docs-engine.js"></script>
+  <script type="text/javascript" src="/scripts/docbase.js"></script>
   <link rel="stylesheet" type="text/css" href="/styles/main.css">
   <link rel="stylesheet" type="text/css" href="/bower_components/components-font-awesome/css/font-awesome.min.css">
 
@@ -33,7 +33,7 @@
     Docbase.run({
       method: 'file',
       file: {
-          src: 'map.json',
+          src: '../map.json',
           path: 'docs'
       },
       html5mode: false

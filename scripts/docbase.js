@@ -102,7 +102,7 @@
     }
 
     Docbase.file = function(options) {
-        $.get(options.path + '/' + options.file)
+        $.get(options.path + '/' + options.src)
         .success(function(map){
             if(checkSchema(map)){
                 var v = Object.keys(map);
