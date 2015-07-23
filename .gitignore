@@ -29,3 +29,5 @@ node_modules
 
 # Bower files
 bower_components
+#Build files
+dist
