@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 			def: {
 				options: {
 					generatePath: "dist/",
-					urlToAccess : "http://localhost:9001/"
+					urlToAccess: "http://localhost:9001/"
 				}
 			}
 		},
@@ -15,12 +15,18 @@ module.exports = function(grunt) {
 					base: './'
 				}
 			}
+		},
+		'gh-pages': {
+			options: {
+				base: 'dist'
+			},
+			src: ['**']
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-docbase');
-
+	grunt.loadNpmTasks('grunt-gh-pages');
 	//grunt.loadTasks('node_modules/grunt-docbase/tasks');
 	// Default task.
 	grunt.registerTask('default', ['connect', 'docbase']);
