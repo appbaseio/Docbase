@@ -2,31 +2,31 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width">
-  <base href="/">
+  <base href="/Docbase/">
 
   <title>Documentation</title>
 
-  <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" type="text/css" href="/Docbase/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/Docbase/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 
   <!-- Flatdoc -->
-  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="/bower_components/flatdoc/legacy.js"></script>
-  <script src="/bower_components/flatdoc/flatdoc.js"></script>
+  <script src="/Docbase/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="/Docbase/bower_components/flatdoc/legacy.js"></script>
+  <script src="/Docbase/bower_components/flatdoc/flatdoc.js"></script>
 
   <!-- Flatdoc theme -->
-  <link href="/bower_components/flatdoc/theme-white/style.css" rel="stylesheet">
-  <script src="/scripts/flatdoc-theme.js"></script>
+  <link href="/Docbase/bower_components/flatdoc/theme-white/style.css" rel="stylesheet">
+  <script src="/Docbase/scripts/flatdoc-theme.js"></script>
   <!-- Polyfill -->
-  <script src="/scripts/polyfill.js"></script>
+  <script src="/Docbase/scripts/polyfill.js"></script>
   <!-- DocBase -->
-  <link rel="stylesheet" type="text/css" href="/styles/main.css">
-  <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
-  <script type="text/javascript" src="/bower_components/angular-route/angular-route.js"></script>
-  <script src="/bower_components/google-code-prettify/bin/prettify.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/Docbase/styles/main.css">
+  <script type="text/javascript" src="/Docbase/bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="/Docbase/bower_components/angular-route/angular-route.js"></script>
+  <script src="/Docbase/bower_components/google-code-prettify/bin/prettify.min.js"></script>
 
-  <script type="text/javascript" src="/bower_components/js-schema/js-schema.min.js"></script>
-  <script src="/scripts/docbase.js"></script>
+  <script type="text/javascript" src="/Docbase/bower_components/js-schema/js-schema.min.js"></script>
+  <script src="/Docbase/scripts/docbase.js"></script>
 
   <script type="text/javascript">
     Docbase.run({
@@ -63,16 +63,16 @@
       		<a ng-href="#/v1.0/folder1" class="dropdown-toggle ng-binding" data-toggle="dropdown" role="button" aria-expanded="false" ng-bind="folder.label" href="#/v1.0/folder1">Folder 1</a>
       		<ul class="dropdown-menu">
       		  <!-- ngRepeat: file in folder.files --><li ng-repeat="file in folder.files" class="ng-scope">
-      		  	<a ng-href=/Docbase//v1.0/folder1/file1.html ng-bind="file.label" class="ng-binding" href=/Docbase//v1.0/folder1/file1.html>File 1</a>
+      		  	<a ng-href=/Docbase/v1.0/folder1/file1.html ng-bind="file.label" class="ng-binding" href=/Docbase/v1.0/folder1/file1.html>File 1</a>
       		  </li><!-- end ngRepeat: file in folder.files -->
       		</ul>
       	</li><!-- end ngRepeat: folder in map[currentVersion] --><li class="dropdown ng-scope" ng-repeat="folder in map[currentVersion]">
       		<a ng-href="#/v1.0/folder2" class="dropdown-toggle ng-binding" data-toggle="dropdown" role="button" aria-expanded="false" ng-bind="folder.label" href="#/v1.0/folder2">Folder 2</a>
       		<ul class="dropdown-menu">
       		  <!-- ngRepeat: file in folder.files --><li ng-repeat="file in folder.files" class="ng-scope">
-      		  	<a ng-href=/Docbase//v1.0/folder2/file1.html ng-bind="file.label" class="ng-binding" href=/Docbase//v1.0/folder2/file1.html>File 1</a>
+      		  	<a ng-href=/Docbase/v1.0/folder2/file1.html ng-bind="file.label" class="ng-binding" href=/Docbase/v1.0/folder2/file1.html>File 1</a>
       		  </li><!-- end ngRepeat: file in folder.files --><li ng-repeat="file in folder.files" class="ng-scope">
-      		  	<a ng-href=/Docbase//v1.0/folder2/file2.html ng-bind="file.label" class="ng-binding" href=/Docbase//v1.0/folder2/file2.html>File 2</a>
+      		  	<a ng-href=/Docbase/v1.0/folder2/file2.html ng-bind="file.label" class="ng-binding" href=/Docbase/v1.0/folder2/file2.html>File 2</a>
       		  </li><!-- end ngRepeat: file in folder.files -->
       		</ul>
       	</li><!-- end ngRepeat: folder in map[currentVersion] -->
@@ -85,9 +85,9 @@
           </a>
           <ul class="dropdown-menu version-switcher" role="menu">
           	<!-- ngRepeat: version in versions --><li ng-repeat="version in versions" class="ng-scope">
-          		<a ng-href=/Docbase//v1.0.html ng-bind="version" class="ng-binding" href=/Docbase//v1.0.html>v1.0</a>
+          		<a ng-href=/Docbase/v1.0.html ng-bind="version" class="ng-binding" href=/Docbase/v1.0.html>v1.0</a>
           	</li><!-- end ngRepeat: version in versions --><li ng-repeat="version in versions" class="ng-scope">
-          		<a ng-href=/Docbase//v2.0.html ng-bind="version" class="ng-binding" href=/Docbase//v2.0.html>v2.0</a>
+          		<a ng-href=/Docbase/v2.0.html ng-bind="version" class="ng-binding" href=/Docbase/v2.0.html>v2.0</a>
           	</li><!-- end ngRepeat: version in versions -->
           </ul>
         </li>
@@ -103,6 +103,6 @@
   <div role="flatdoc-content" class="content"></div>
 </div></div>
 
-  <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/Docbase/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </body></html>
