@@ -63,16 +63,16 @@
       		<a ng-href="#/v1.0/folder1" class="dropdown-toggle ng-binding" data-toggle="dropdown" role="button" aria-expanded="false" ng-bind="folder.label" href="#/v1.0/folder1">Folder 1</a>
       		<ul class="dropdown-menu">
       		  <!-- ngRepeat: file in folder.files --><li ng-repeat="file in folder.files" class="ng-scope">
-      		  	<a ng-href=/v1.0/folder1/file1.html ng-bind="file.label" class="ng-binding" href=/v1.0/folder1/file1.html>File 1</a>
+      		  	<a ng-href=/Docbase//v1.0/folder1/file1.html ng-bind="file.label" class="ng-binding" href=/Docbase//v1.0/folder1/file1.html>File 1</a>
       		  </li><!-- end ngRepeat: file in folder.files -->
       		</ul>
       	</li><!-- end ngRepeat: folder in map[currentVersion] --><li class="dropdown ng-scope" ng-repeat="folder in map[currentVersion]">
       		<a ng-href="#/v1.0/folder2" class="dropdown-toggle ng-binding" data-toggle="dropdown" role="button" aria-expanded="false" ng-bind="folder.label" href="#/v1.0/folder2">Folder 2</a>
       		<ul class="dropdown-menu">
       		  <!-- ngRepeat: file in folder.files --><li ng-repeat="file in folder.files" class="ng-scope">
-      		  	<a ng-href=/v1.0/folder2/file1.html ng-bind="file.label" class="ng-binding" href=/v1.0/folder2/file1.html>File 1</a>
+      		  	<a ng-href=/Docbase//v1.0/folder2/file1.html ng-bind="file.label" class="ng-binding" href=/Docbase//v1.0/folder2/file1.html>File 1</a>
       		  </li><!-- end ngRepeat: file in folder.files --><li ng-repeat="file in folder.files" class="ng-scope">
-      		  	<a ng-href=/v1.0/folder2/file2.html ng-bind="file.label" class="ng-binding" href=/v1.0/folder2/file2.html>File 2</a>
+      		  	<a ng-href=/Docbase//v1.0/folder2/file2.html ng-bind="file.label" class="ng-binding" href=/Docbase//v1.0/folder2/file2.html>File 2</a>
       		  </li><!-- end ngRepeat: file in folder.files -->
       		</ul>
       	</li><!-- end ngRepeat: folder in map[currentVersion] -->
@@ -85,9 +85,9 @@
           </a>
           <ul class="dropdown-menu version-switcher" role="menu">
           	<!-- ngRepeat: version in versions --><li ng-repeat="version in versions" class="ng-scope">
-          		<a ng-href=/v1.0.html ng-bind="version" class="ng-binding" href=/v1.0.html>v1.0</a>
+          		<a ng-href=/Docbase//v1.0.html ng-bind="version" class="ng-binding" href=/Docbase//v1.0.html>v1.0</a>
           	</li><!-- end ngRepeat: version in versions --><li ng-repeat="version in versions" class="ng-scope">
-          		<a ng-href=/v2.0.html ng-bind="version" class="ng-binding" href=/v2.0.html>v2.0</a>
+          		<a ng-href=/Docbase//v2.0.html ng-bind="version" class="ng-binding" href=/Docbase//v2.0.html>v2.0</a>
           	</li><!-- end ngRepeat: version in versions -->
           </ul>
         </li>
