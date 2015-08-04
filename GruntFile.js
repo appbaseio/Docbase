@@ -1,33 +1,43 @@
 module.exports = function(grunt) {
+	var srcPath = "scripts/**/*.js"
 	grunt.initConfig({
-		docbase: {
-			def: {
+		concat: {
+			default: {
 				options: {
-					generatePath: "dist/",
-					baseUrl : "/Docbase/"
-				}
+					process: function(src, filepath) {
+						return '\n' + '// FILE: ' + filepath + '\n' + src;
+					}
+				},
+				src: [srcPath],
+				dest: 'dist/main.js',
 			}
 		},
-		connect: {
-			server: {
-				options: {
-					port: 9001,
-					base: './'
-				}
-			}
+		jshint: {
+			all: ['Gruntfile.js', srcPath]
 		},
-		'gh-pages': {
+		uglify: {
 			options: {
-				base: 'dist'
+				mangle: false,
+				compress: false,
+				report: 'min',
+				// the banner is inserted at the top of the output
+				banner: '/*! <%= grunt.template.today("dd-mm-yyyy") %> */\n'
 			},
-			src: ['**']
-		}
+			dist: {
+				files: {
+					'dist/main.min.js': [srcPath]
+				}
+			}
+		},
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-docbase');
 	grunt.loadNpmTasks('grunt-gh-pages');
-	//grunt.loadTasks('node_modules/grunt-docbase/tasks');
-	// Default task.
-	grunt.registerTask('default', ['connect', 'docbase']);
+	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	
+	grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
 };

@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "homepage": "https://github.com/appbaseio/DocBase",
   "authors": [
-    "Henrique Sa <henriquepss@gmail.com>"
+    "Henrique Sa <henriquepss@gmail.com>",
+    "Mateus Freira <mateus.freira@gmail.com>"
   ],
   "description": "A fast and flexible single-page documentation engine",
   "license": "MIT",

@@ -1,13 +1,13 @@
 if (!Function.prototype.bind) {
-Function.prototype.bind = function bind(that) { // .length is 1
+    Function.prototype.bind = function bind(that) { // .length is 1
         var slice = [].slice;
-        var Empty = function(){};
+        var Empty = function() {};
         var target = this;
         if (typeof target != "function") {
             throw new TypeError("Function.prototype.bind called on incompatible " + target);
         }
         var args = slice.call(arguments, 1); // for normal call
-        var bound = function () {
+        var bound = function() {
 
             if (this instanceof bound) {
 
@@ -29,11 +29,11 @@ Function.prototype.bind = function bind(that) { // .length is 1
             }
 
         };
-        if(target.prototype) {
+        if (target.prototype) {
             Empty.prototype = target.prototype;
             bound.prototype = new Empty();
             Empty.prototype = null;
         }
         return bound;
-    };  
+    };
 }
