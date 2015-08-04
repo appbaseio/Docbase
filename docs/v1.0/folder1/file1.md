@@ -1,4 +1,4 @@
-{"title": "DocBase / Flatdoc examples", "threeColumns": true}
+{"title": "DocBase / Flatdoc examples", "threeCollums": true}
 ================
 
 ### Large sidebar button
