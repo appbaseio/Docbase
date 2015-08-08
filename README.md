@@ -31,7 +31,11 @@ Simply change the parameters to your project's spec on the index.html file. The 
 
 ## History
 
-v0.1.0 Feb 10 '15
+v0.0.2 Aug 7 '15
+- All flatdoc theme options supported
+- Customizable root path
+
+v0.0.1 Feb 10 '15
 Initial release
 
 ## Credits
