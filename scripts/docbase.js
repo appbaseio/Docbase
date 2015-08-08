@@ -316,6 +316,16 @@
                         } else {
                             $('body').addClass('no-literate');
                         }
+                        if (obj.bigh3) {
+                            $('body').addClass('big-h3');
+                        } else {
+                            $('body').removeClass('big-h3');
+                        }
+                        if (obj.largeBrief) {
+                            $('body').addClass('large-brief');
+                        } else {
+                            $('body').removeClass('large-brief');
+                        }
 
                         var data = Flatdoc.parser.parse(markdown, function(code) {
                             return Flatdoc.highlighters.generic(code);
