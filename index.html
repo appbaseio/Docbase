@@ -18,26 +18,44 @@
 
   <!-- Flatdoc theme -->
   <link  href="/bower_components/flatdoc/theme-white/style.css" rel="stylesheet">
-  <script src="/scripts/flatdoc-theme.js"></script>
+  <script src="/bower_components/docbase/scripts/flatdoc-theme.js"></script>
   <!-- Polyfill -->
-  <script src="/scripts/polyfill.js"></script>
+  <script src="/bower_components/docbase/scripts/polyfill.js"></script>
   <!-- DocBase -->
-  <link rel="stylesheet" type="text/css" href="/styles/main.css">
+  <link rel="stylesheet" type="text/css" href="/bower_components/docbase/styles/main.css">
   <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
   <script type="text/javascript" src="/bower_components/angular-route/angular-route.js"></script>
-  <script src="/bower_components/google-code-prettify/bin/prettify.min.js"></script>
 
   <script type="text/javascript" src="/bower_components/js-schema/js-schema.min.js"></script>
-  <script src="/scripts/docbase.js"></script>
+  <script src="/bower_components/docbase/scripts/docbase.js"></script>
+  <link rel="stylesheet" type="text/css" href="bower_components/docbase/styles/docs.css">
+  <script src="/bower_components/google-code-prettify/bin/prettify.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/bower_components/google-code-prettify/bin/prettify.min.css">
 
+  <link rel="stylesheet" type="text/css" href="/bower_components/font-awesome/css/font-awesome.min.css">
   <script type="text/javascript">
     Docbase.run({
-      method: 'file',
+      method: 'generic',
+      map: {        // mapping file location relative to the project directory
+          file: 'map.json',
+          path: ''
+      },
+      github: {     // github option has to be present if method is github
+          user: 'appbaseio',
+          repo: 'Docs',
+          path: 'src',
+          branch: 'master',
+          editGithubBtn: true
+      },
       file: {
-          src: '../map.json',
           path: 'docs'
       },
-      indexHtml: 'html/flatdoc.html',
+      generic: {
+          baseurl: "https://raw.githubusercontent.com/appbaseio/Docs/master",
+          path: "src"
+      },
+      indexHtml: 'entry.html',
+      flatdocHtml: '/bower_components/docbase/html/flatdoc.html',
       html5mode: false
     });
   </script>

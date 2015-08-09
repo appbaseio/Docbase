@@ -1,0 +1,325 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700);
+
+.navbar-brand img{
+	display: block;
+	margin-top: -7px;
+	height: 34px;
+}
+.navbar-default {
+    z-index: 10000;
+    margin: 0px;
+    border: 0px;
+    box-shadow: none;
+}
+
+body {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 400;
+	font-size: 1em;
+}
+
+body:not(.no-literate) .content h1 {
+	display: block;
+	width: 550px;
+}
+
+.menu a.active:after {
+	top: 10px;
+	left: -15px;
+}
+
+.content {
+	max-width: 760px;
+}
+
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6, .menu {
+	font-family: 'Source Sans Pro';
+	font-weight: 700;
+}
+
+body.no-literate .content pre > code {
+	border: none;
+}
+
+.menu a.level-1 {
+	font-family: 'Source Sans Pro';
+	font-weight: 700;
+}
+
+.dropdown-menu.version-switcher {
+	min-width: 0;
+	width: 68px;
+}
+
+.edit {
+  border-bottom: 1px solid #eee;
+  display: block;
+  position: fixed;
+  top: 60px;
+  background: white;
+  left: 230px;
+  padding: 5px 5px 5px 8px;
+  line-height: 1.5em;
+  border-top: 1px solid #eee;
+  color: #aaa;
+  transition: all 0.3s ease;
+  border-right: 1px solid #eee;
+	opacity: 0.4;
+}
+
+@media (min-width: 1350px) {
+  body:not(.no-literate) .content-root {
+    background-color: #f3f6fb;
+    -webkit-box-shadow: inset 850px 0 #fff, inset 851px 0 #dfe2e7, inset 860px 0 5px -10px rgba(0,0,0,0.1);
+    box-shadow: inset 850px 0 #fff, inset 851px 0 #dfe2e7, inset 860px 0 50px -90px rgba(0,0,0,0.1);
+  }
+  body {
+    font-size: 1em;
+  }
+  .content-root {
+    padding-left: 300px;
+  }
+  .menubar {
+    width: 300px;
+  }
+  body:not(.no-literate) .content {
+    padding-left: 0;
+    padding-right: 0;
+    width: 930px;
+    max-width: none;
+  }
+  body:not(.no-literate) .content > p,
+  body:not(.no-literate) .content > ul,
+  body:not(.no-literate) .content > ol,
+  body:not(.no-literate) .content > h1,
+  body:not(.no-literate) .content > h2,
+  body:not(.no-literate) .content > h3,
+  body:not(.no-literate) .content > h4,
+  body:not(.no-literate) .content > h5,
+  body:not(.no-literate) .content > h6,
+  body:not(.no-literate) .content > pre,
+  body:not(.no-literate) .content > blockquote {
+    width: 550px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+  body:not(.no-literate) .content > h1,
+  body:not(.no-literate) .content > h2,
+  body:not(.no-literate) .content > h3 {
+    clear: both;
+    width: 100%;
+  }
+
+  body:not(.no-literate) .content > h1:first-child {
+    width: 500px;
+  }
+
+  body:not(.no-literate) .content > pre,
+  body:not(.no-literate) .content > blockquote {
+    width: 380px;
+    padding-left: 20px;
+    padding-right: 20px;
+    float: right;
+    clear: right;
+  }
+  body:not(.no-literate) .content > h4,
+  body:not(.no-literate) .content > h5,
+  body:not(.no-literate) .content > .small-heading,
+  body:not(.big-h3) body:not(.no-literate) .content > h3 {
+    margin-left: 40px;
+    width: 470px;
+    margin-bottom: 3px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  body:not(.no-literate) .content > table {
+    margin-left: 40px;
+    margin-right: 40px;
+    max-width: 470px;
+  }
+  body:not(.no-literate):not(.big-h3) .content > h3 {
+    margin-left: 40px;
+    width: 470px;
+    margin-bottom: 3px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .content h1:before, .content h2:before, .content .big-heading:before, body.big-h3 .content h3:before {
+  	width: 900px;
+  }
+
+  .edit {
+    border-left: 1px solid #eee;
+    left: 820px;
+  }
+
+  .edit:hover {
+    left: 815px!important;
+  }
+
+
+  body.no-literate .edit {
+    left: 300px!important;
+  }
+
+}
+
+@media (min-width: 1180px) {
+  body:not(.no-literate) .content {
+    width: 980px;
+  }
+  body:not(.no-literate) .content > pre {
+    width: 420px;
+  }
+}
+
+@media (max-width: 768px) {
+	body .edit {
+		right: 80px;
+		left: initial;
+		border-left: 1px solid #eee;
+	}
+	body.edit:hover {
+		left: initial !important;
+		right: 80px;
+	}
+}
+
+li.active {
+  text-decoration: underline;
+}
+.http-url {
+  color: #3ac;
+}
+.inline-heading {
+  color: #aaa;
+}
+.path-var {
+  color: #3ac;
+  border-bottom: 1px dotted #3ac;
+  padding: 0px 2px;
+}
+
+.request-type {
+  background: #008f00;
+  color: white;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 3px;
+  font-size: 0.8em;
+}
+.request-type > * {
+  color: white!important;
+}
+
+.edit:hover{
+  color: #444;
+	border: 1px solid #bbb !important;
+	opacity: 1;
+	padding-left: 10px;
+	-webkit-filter: brightness(110%);
+	filter: brightness(110%);
+}
+
+.edit:active, .edit:focus {
+  color: #aaa;
+  border-color: #eee;
+}
+
+body.no-literate .edit {
+  border-right: 1px solid #eee;
+}
+
+body.no-literate .edit:hover {
+  padding-left: 10px;
+}
+
+body.no-literate .content h1:first-child {
+  margin-left: 5px;
+}
+
+.push {
+  margin-top: -1px;
+  z-index: 2000;
+  position: relative;
+}
+
+.navbar .dropdown-menu{
+  z-index: 2001;
+}
+
+.landing{
+  height: 300px;
+  background-color: #50BAEF;
+  text-align: center;
+  color: white;
+  padding-top: 100px;
+}
+
+.landing h1{
+  font-size: 3em;
+  font-family: 'Source Sans Pro', serif;
+  font-weight: 300;
+}
+
+.landing h1 b {
+  font-family: 'Source Sans Pro', serif;
+  font-weight: 600;
+}
+
+.list {
+  padding: 0;
+}
+
+.list a {
+  position: block;
+  height: 100px;
+  line-height: 100px;
+  background-color: #eee;
+  color: #888;
+  cursor: pointer;
+  font-size: 1.4em;
+  font-weight: 200;
+  text-align: center;
+  border:1px solid #fff;
+  padding: 0;
+}
+
+.list a span {
+  font-family: 'Source Sans Pro';
+  font-weight: 200;
+}
+.list a span sub {
+  font-size: 0.5em;
+}
+.list a:hover, .list a:active, .list a:visited {
+  font-style: default;
+  text-decoration: none;
+}
+.list a:hover {
+  -webkit-filter: brightness(110%);
+  filter: brightness(110%);
+}
+
+.list i{
+  margin: 5px;
+}
+
+@media (min-width: 992px){
+  .list a:nth-child(3n+2) {
+    border-left:none;
+    border-right:none;
+
+  }
+  .list a:nth-child(1n+4){
+    border-top: none;
+  }
+}
+@media (max-width: 991px){
+  .list a:nth-child(1n+2) {
+    border-top: none;
+  }
+}
