@@ -26,14 +26,16 @@
      * Only use HTML5 mode if you're hosting it yourself, requires server config.
      */
 
-    Docbase.methods = ['file', 'github'];
+    Docbase.methods = ['file', 'github', 'generic'];
 
     Docbase.run = function(options) {
         var defaults = {
             method: 'github',
-            path: 'docs',
             map: {
                 file: 'map.json',
+                path: ''
+            },
+            file: {
                 path: 'docs'
             },
             github: {
@@ -43,11 +45,15 @@
                 branch: 'gh-pages',
                 editGithubBtn: true
             },
+            generic: {
+                baseurl: '',
+                path: '/'
+            },
             html5mode: false,
             indexType: 'html',
             indexSrc: 'v1/path/index.md',
-            indexHtml: 'html/main.html',
-            flatdocHtml: 'html/flatdoc.html',
+            indexHtml: 'html/main.html',       // dochub entry page
+            flatdocHtml: 'html/flatdoc.html',  // top navbar, and markdown layouts
             angularAppName: 'docbaseApp'
         };
 
@@ -67,7 +73,6 @@
             });
         });
         options.map.path = cutTrailingSlashes(options.map.path);
-        options.path = cutTrailingSlashes(options.path);
 
         Docbase.options = options;
 
@@ -85,7 +90,13 @@
                 ]
             );
 
-        Docbase[options.method](options[options.method]);
+        if (options.method === 'file') {
+          Docbase.file(options.map);
+        } else if (options.method === 'github') {
+          Docbase.github(options.github);
+        } else {
+          Docbase.file(options.map);
+        }
     };
 
     Docbase.github = function(options) {
@@ -94,12 +105,10 @@
                 Docbase.file(Docbase.options.map);
             } else if (checkSchema(map)) {
                 Docbase.map = map;
-
                 $.get(Docbase.options.map.path + '/' + Docbase.options.map.file)
                     .success(function(fileMap) {
                         var ghMap = Docbase.map;
                         var fileMapVer = Object.keys(fileMap);
-
                         fileMapVer.forEach(function(fileVer) {
                             if (ghMap[fileVer]) {
                                 ghMap[fileVer].forEach(function(category) {
@@ -135,8 +144,8 @@
 
     };
 
-    Docbase.file = function(options) {
-        $.get(options.path + '/' + (options.src || options.file))
+    Docbase.file = Docbase.generic = function(options) {
+        $.get(options.path + '/' + options.file)
             .success(function(map) {
                 if (checkSchema(map)) {
                     var v = Object.keys(map);
@@ -155,6 +164,7 @@
                 throw error;
             });
     };
+
 
     Events.switchBind = function(state) {
         jWindow[state]('flatdoc:ready', Events.ready);
@@ -287,14 +297,18 @@
                 if (!location.fail) {
                     var options = Docbase.options;
                     var gh = Docbase.options.github;
+                    var url = 'https://github.com/' + gh.user + '/' + gh.repo + '/tree/' + gh.branch + '/' + gh.path + location.path + '.md';
 
-                    var url = 'https://github.com/' + gh.user + '/' + gh.repo + '/tree/' + gh.branch + '/' + options.path + location.path + '.md';
-
+                    // file URL should be fetched remotely if hosted on github or elsewhere.
+                    var fileURL = options.file.path + location.path + '.md';
+                    if (options.method === 'github')
+                        fileURL = 'https://raw.githubusercontent.com/' + gh.user + '/' + gh.repo + '/' + gh.branch + '/' + gh.path + location.path + '.md';
+                    else if (options.method === 'generic')
+                        fileURL = options.generic.baseurl + '/' + options.generic.path + location.path + '.md';
                     retObj.github = url;
 
                     Events.parsed = false;
-
-                    Flatdoc.file(options.path + location.path + '.md')(function(err, markdown) {
+                    Flatdoc.file(fileURL)(function(err, markdown) {
                         markdown = markdown.split('\n');
                         var obj = markdown.shift();
                         obj = obj.replace(/\u201D/g, '"');
@@ -438,9 +452,12 @@
         var folderObj = map[version].filter(function(each) {
             return each.name === folder;
         })[0];
-        file = file || folderObj.files[0].name;
 
+        // allow files in TL menu
+        file = file || (folderObj.files && folderObj.files[0].name);
         var path = '/' + version + '/' + folder + '/' + file;
+        if (typeof(file) === "undefined")
+            path = '/' + version + '/' + folder;
 
         return {
             path: path,
@@ -461,11 +478,11 @@
         return schema({
             '*': Array.of(schema({
                 name: String,
-                label: String,
+                label: String/*,
                 files: Array.of(schema({
                     name: String,
                     label: String
-                }))
+                }))*/
             }))
         })(map);
     }
