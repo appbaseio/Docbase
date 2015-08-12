@@ -7,7 +7,9 @@ A fast and flexible single-page documentation engine. Create documentation hubs 
 
 ## Usage
 
-### Step 1: Simply change the parameters to your project's spec on the index.html file.
+### Step 1: Configuring Index.html
+
+Copy the index.html file from docbase's root folder. You can change the parameters for your project's spec in this file.
 
 ```js
   <script type="text/javascript">
@@ -38,9 +40,18 @@ A fast and flexible single-page documentation engine. Create documentation hubs 
   </script>
 ```
 
-### Step 2: Mapping Menus
+where,  
+* ``method`` indicates the source of markdown files and can be one of "github", "file" or "generic".
+* ``map`` is the mapping file location - A map is like a sitemap, showing the directory structure layout and allows adding pretty labels to folder and file names.
+* ``github`` is a top level field that is relevant when the selected method is ``github``. It has obvious parameters such as ``user``, ``repo``, ``branch`` and ``editGithubBtn``.
+* ``file`` similarly is a top level field that is relevant when the selected method is ``file``. It only has one parameter ``path``, a relative / absolute location from the root directory where the docs are hosted.
+* ``generic`` is a top level field that is relevant when the selected method is ``generic``. This can take markdown files hosted anywhere - github, bitbucket, dropbox, your own servers. It only needs a ``baseurl`` and a relative path under which the docs are kept.
 
-Docbase works with zero configs. It fetches the directory structure from your github repository by default, but can be overriden by editing the ``map.json`` file.
+### Step 2: Configuring map.json
+
+map.json is an optional file (if you host docs on github) that allows specifying the docs directory structure and adding pretty labels, specified under the ``map`` field in the index.html configs.
+
+It looks something like this:
 
 ```js
 map.json
