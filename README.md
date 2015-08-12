@@ -1,6 +1,5 @@
-# DocBase
-A fast and flexible single-page documentation engine.
-With your existing (or new) markdown files, organize them in a simpe version/category folder structure and have dynamically generated menus and links.
+# Docbase
+A fast and flexible single-page documentation engine. Create documentation hubs with versioning and beautifully rendered menus; works with your existing (or new) Github hosted markdown files.
 
 ## Installation
 
@@ -8,18 +7,68 @@ With your existing (or new) markdown files, organize them in a simpe version/cat
 
 ## Usage
 
-Simply change the parameters to your project's spec on the index.html file. The map.json structure is the following:
+### Step 1: Simply change the parameters to your project's spec on the index.html file.
 
-    { "version_name": [
+```js
+  <script type="text/javascript">
+    Docbase.run({
+      method: 'github',
+      map: {        // mapping file location relative to the project directory
+          file: 'map.json',
+          path: ''
+      },
+      github: {     // github option has to be present if method is github
+          user: 'appbaseio',
+          repo: 'Docs',
+          path: 'src',
+          branch: 'master',
+          editGithubBtn: true
+      },
+      file: {
+          path: 'docs'
+      },
+      generic: {
+          baseurl: "https://raw.githubusercontent.com/appbaseio/Docs/master",
+          path: "src"
+      },
+      indexHtml: 'entry.html',
+      flatdocHtml: '/bower_components/docbase/html/flatdoc.html',
+      html5mode: false
+    });
+  </script>
+```
+
+### Step 2: Mapping Menus
+
+Docbase works with zero configs. It fetches the directory structure from your github repository by default, but can be overriden by editing the ``map.json`` file.
+
+```js
+map.json
+
+{ 
+  "version_name": [
       {
         "name": "folder1_name",
-        "label": "folder1_label"
+        "label": "folder1_label",
+        "files": [
+            {
+                "name": "innerFile1_name",
+                "label": "innerFile1_label"
+            }
+        ]
       }, {
-        "name": "folder2_name",
-        "label": "folder2_label"
-      }],
-      "other_version_name": [ ... ]
-    }
+        "name": "rootFile1_name",
+        "label": "rootFile1_label"
+      }
+  ],
+  "other_version_name": [ ... 
+  ]
+}
+```
+
+where,  
+``version_name`` is the top level field indicating the mapping for a particular documentation version, like v1.0.  
+A version can contain folders and files. ``name`` is the actual 
 
 ## Contributing
 
