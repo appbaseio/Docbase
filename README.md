@@ -1,6 +1,10 @@
 # Docbase
 A fast and flexible single-page documentation engine. Create documentation hubs with versioning and beautifully rendered menus; works with your existing (or new) Github hosted markdown files.
 
+### Used by:
+
+[![](http://app.zeedhi.com/teknisa/docs/images/log.png)](http://app.zeedhi.com/teknisa/docs/#/) [![](http://i.imgur.com/0MwyOZL.png?1)](http://docs.appbase.io)
+
 ## Installation
 
     bower install docbase
