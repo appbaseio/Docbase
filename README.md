@@ -12,6 +12,11 @@ A fast and flexible single-page documentation engine. Create documentation hubs 
 Copy the index.html file from docbase's root folder. You can change the parameters for your project's spec in this file.
 
 ```js
+index.html
+
+.
+.
+.
   <script type="text/javascript">
     Docbase.run({
       method: 'github',
