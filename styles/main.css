@@ -153,3 +153,43 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
   pre .atn, code .atn { color: #404; }
   pre .atv, code .atv { color: #060; }
 }
+.contributor-container{
+	background: #f7f7f7;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	width: 100%;
+	float: left;
+}
+.contributor-container .contributor{
+	width: 50px;
+    height: 50px;
+    display: inline-block;
+    margin: 5px;
+    float: left;
+    margin-right: 0;
+}
+.contributors_header, .modified-date{
+	background: #eee;
+    border: 1px solid #ccc;
+    padding: 0 5px;
+    float: left;
+    width: 100%;
+}
+.contributors_header{
+	font-size: 20px;
+	line-height: 34px;
+}
+.contributor-container .contributor:last-child{
+	margin-right:0;	
+}
+.contributor-container .contributor img{
+    width: 100%;
+}
+.extra_container{
+	float: left;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.clearFix{
+	clear: both;
+}

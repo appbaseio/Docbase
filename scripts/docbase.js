@@ -80,8 +80,8 @@
 
         angApp = angular
             .module(options.angularAppName, ['ngRoute'])
-            .factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', Route.fetch])
-            .controller('URLCtrl', ['$scope', '$location', 'data', Route.URLCtrl])
+            .factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', '$http', Route.fetch])
+            .controller('URLCtrl', ['$scope', '$location','$filter', 'data', 'commits','contributors', Route.URLCtrl])
             .controller('MainCtrl', ['$scope', '$location', '$timeout', Route.mainCtrl])
             .config(['$routeProvider', '$locationProvider', Route.config])
             .run(
@@ -197,6 +197,12 @@
                 return FlatdocService.getData().then(function(data) {
                     return data;
                 });
+            },
+            commits:function(FlatdocService){
+                return FlatdocService.getCommits();
+            },
+            contributors:function(FlatdocService){
+                return FlatdocService.getContributors();
             }
         };
 
@@ -271,7 +277,7 @@
         });
     };
 
-    Route.fetch = function($q, $route, $location, $anchorScroll) {
+    Route.fetch = function($q, $route, $location, $anchorScroll, $http) {
         function fetcher() {
             var deferred = $q.defer();
             var options = Docbase.options;
@@ -308,6 +314,7 @@
                     retObj.github = url;
 
                     Events.parsed = false;
+                    console.log(fileURL);
                     Flatdoc.file(fileURL)(function(err, markdown) {
                         markdown = markdown.split('\n');
                         var obj = markdown.shift();
@@ -348,7 +355,8 @@
                         deferred.resolve(retObj);
                     });
 
-                } else {
+                } 
+                else {
                     retObj.github = false;
                     deferred.resolve(retObj);
                 }
@@ -359,13 +367,20 @@
         return {
             getData: function() {
                 return new fetcher();
+            },
+            getCommits: function(){
+                var options = Docbase.options;
+                return $http.get('https://api.github.com/repos/'+ options.github.user +'/'+ options.github.repo+'/commits');
+            },
+            getContributors: function(){
+                var options = Docbase.options;
+                return $http.get('https://api.github.com/repos/'+ options.github.user +'/'+options.github.repo+'/contributors');
             }
         };
     };
 
-    Route.URLCtrl = function($scope, $location, data) {
+    Route.URLCtrl = function($scope, $location,$filter, data, commits, contributors) {
         $location.path(data.locationPath);
-
         if (!data.fail) {
             $scope.versions = data.versions;
             $scope.currentVersion = data.currentVersion;
@@ -373,12 +388,40 @@
             $scope.github = data.github;
 
             var content = data.markdown;
-
-            $('[role="flatdoc-content"]').html(content.content.find('>*'));
+            var clearFix = $('<div>').addClass('clearFix').html(content.content.find('>*'));
+            $('[role="flatdoc-content"]').html(clearFix);
             $('[role="flatdoc-menu"]').html(Flatdoc.menuView(content.menu));
 
             jWindow.trigger('flatdoc:ready');
         }
+
+        var extra_container = $("<div>").addClass('extra_container');
+        if(commits.status == 200){
+            var commits_data = commits.data;
+            var commiter_data = $filter('date')(commits.data[0].commit.committer.date, 'mediumDate');
+            var last_date = $('<div>').html('Last Modified On : <a class="pull-right" href="'+commits.data[0].html_url+'">'+commiter_data+'</a>').addClass('modified-date');
+            $(extra_container).prepend(last_date);
+        }
+        if(contributors.status == 200){
+            var contributors_data = contributors.data;
+            var contributors = $('<div>').addClass('contributor-container');
+            for(var i =0; i < contributors_data.length; i++ ){
+                var contributor_d = contributors_data[i];
+                var contributor_img = $('<img>').addClass('contributor_img img-rounded').attr({
+                    'src':contributor_d.avatar_url,
+                    'alt':contributor_d.login
+                });
+                var contributor = $('<a>').addClass('contributor').attr({
+                    'href':contributor_d.html_url,
+                    'title':contributor_d.login
+                }).append(contributor_img);
+                contributors.append(contributor);            
+            }
+            var contributors_header = $('<div>').addClass('contributors_header').text('Contributors');
+            $(extra_container).prepend(contributors).prepend(contributors_header);
+        }
+        $('[role="flatdoc-content"]').prepend(extra_container);
+
     };
 
     Route.mainCtrl = function($scope, $location, $timeout) {
