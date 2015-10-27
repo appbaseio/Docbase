@@ -81,7 +81,7 @@
         angApp = angular
             .module(options.angularAppName, ['ngRoute'])
             .factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', '$http', Route.fetch])
-            .controller('URLCtrl', ['$scope', '$location','$filter', 'data', 'commits','contributors', Route.URLCtrl])
+            .controller('URLCtrl', ['$scope', '$location','$filter', 'data', 'commits', Route.URLCtrl])
             .controller('MainCtrl', ['$scope', '$location', '$timeout', Route.mainCtrl])
             .config(['$routeProvider', '$locationProvider', Route.config])
             .run(
@@ -200,9 +200,6 @@
             },
             commits:function(FlatdocService){
                 return FlatdocService.getCommits();
-            },
-            contributors:function(FlatdocService){
-                return FlatdocService.getContributors();
             }
         };
 
@@ -370,16 +367,14 @@
             },
             getCommits: function(){
                 var options = Docbase.options;
-                return $http.get('https://api.github.com/repos/'+ options.github.user +'/'+ options.github.repo+'/commits');
-            },
-            getContributors: function(){
-                var options = Docbase.options;
-                return $http.get('https://api.github.com/repos/'+ options.github.user +'/'+options.github.repo+'/contributors');
+                var file_path = $route.current.params;
+                var full_path = options.github.path+'/'+file_path.version+'/'+file_path.folder+'/'+file_path.file;
+                return $http.get('https://api.github.com/repos/'+ options.github.user +'/'+ options.github.repo+'/commits?path='+full_path+'.md');
             }
         };
     };
 
-    Route.URLCtrl = function($scope, $location,$filter, data, commits, contributors) {
+    Route.URLCtrl = function($scope, $location,$filter, data, commits) {
         $location.path(data.locationPath);
         if (!data.fail) {
             $scope.versions = data.versions;
@@ -388,8 +383,8 @@
             $scope.github = data.github;
 
             var content = data.markdown;
-            var clearFix = $('<div>').addClass('clearFix').html(content.content.find('>*'));
-            $('[role="flatdoc-content"]').html(clearFix);
+            var contribut_array = [];
+            $('[role="flatdoc-content"]').html(content.content.find('>*'));
             $('[role="flatdoc-menu"]').html(Flatdoc.menuView(content.menu));
 
             jWindow.trigger('flatdoc:ready');
@@ -399,28 +394,35 @@
         if(commits.status == 200){
             var commits_data = commits.data;
             var commiter_data = $filter('date')(commits.data[0].commit.committer.date, 'mediumDate');
-            var last_date = $('<div>').html('Last Modified On : <a class="pull-right" href="'+commits.data[0].html_url+'">'+commiter_data+'</a>').addClass('modified-date');
-            $(extra_container).prepend(last_date);
-        }
-        if(contributors.status == 200){
-            var contributors_data = contributors.data;
+            var last_date = $('<span>').addClass('pull-right modified-date').html('Last Modified On : <a href="'+commits.data[0].html_url+'">'+commiter_data+'</a>');
+        
+            var contributors_data = commits_data;
             var contributors = $('<div>').addClass('contributor-container');
             for(var i =0; i < contributors_data.length; i++ ){
-                var contributor_d = contributors_data[i];
-                var contributor_img = $('<img>').addClass('contributor_img img-rounded').attr({
-                    'src':contributor_d.avatar_url,
-                    'alt':contributor_d.login
-                });
-                var contributor = $('<a>').addClass('contributor').attr({
-                    'href':contributor_d.html_url,
-                    'title':contributor_d.login
-                }).append(contributor_img);
-                contributors.append(contributor);            
+                var contributor_d = contributors_data[i].committer;
+                if(jQuery.inArray(contributor_d.login, contribut_array) == -1)
+                {
+                    contribut_array.push(contributor_d.login);
+                    var contributor_img = $('<img>').addClass('contributor_img img-rounded').attr({
+                        'src':contributor_d.avatar_url,
+                        'alt':contributor_d.login
+                    });
+                    var contributor = $('<a>').addClass('contributor').attr({
+                        'href':contributor_d.html_url,
+                        'title':contributor_d.login,
+                        'target':'_blank'
+                    }).append(contributor_img);
+                    contributors.append(contributor);            
+                }
             }
-            var contributors_header = $('<div>').addClass('contributors_header').text('Contributors');
+            var contributors_header = $('<div>').addClass('contributors_header').append('<strong>Contributors<strong>').append(last_date);
             $(extra_container).prepend(contributors).prepend(contributors_header);
+        
+
         }
-        $('[role="flatdoc-content"]').prepend(extra_container);
+            
+        var div2 = $('<div>').addClass('clearFix');
+        $('[role="flatdoc-content"]').prepend(div2).prepend(extra_container);
 
     };
 
