@@ -52,8 +52,8 @@
             html5mode: false,
             indexType: 'html',
             indexSrc: 'v1/path/index.md',
-            indexHtml: 'html/main.html',       // dochub entry page
-            flatdocHtml: 'html/flatdoc.html',  // top navbar, and markdown layouts
+            indexHtml: 'html/main.html', // dochub entry page
+            flatdocHtml: 'html/flatdoc.html', // top navbar, and markdown layouts
             angularAppName: 'docbaseApp'
         };
 
@@ -81,7 +81,7 @@
         angApp = angular
             .module(options.angularAppName, ['ngRoute'])
             .factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', '$http', Route.fetch])
-            .controller('URLCtrl', ['$scope', '$location','$filter', 'data', 'commits', Route.URLCtrl])
+            .controller('URLCtrl', ['$scope', '$location', '$filter', 'data', 'commits','searchIndex', Route.URLCtrl])
             .controller('MainCtrl', ['$scope', '$location', '$timeout', Route.mainCtrl])
             .config(['$routeProvider', '$locationProvider', Route.config])
             .run(
@@ -91,11 +91,11 @@
             );
 
         if (options.method === 'file') {
-          Docbase.file(options.map);
+            Docbase.file(options.map);
         } else if (options.method === 'github') {
-          Docbase.github(options.github);
+            Docbase.github(options.github);
         } else {
-          Docbase.file(options.map);
+            Docbase.file(options.map);
         }
     };
 
@@ -198,8 +198,11 @@
                     return data;
                 });
             },
-            commits:function(FlatdocService){
+            commits: function(FlatdocService) {
                 return FlatdocService.getCommits();
+            },
+            searchIndex:function(FlatdocService){
+                return FlatdocService.searchIndex();
             }
         };
 
@@ -352,8 +355,7 @@
                         deferred.resolve(retObj);
                     });
 
-                } 
-                else {
+                } else {
                     retObj.github = false;
                     deferred.resolve(retObj);
                 }
@@ -365,64 +367,102 @@
             getData: function() {
                 return new fetcher();
             },
-            getCommits: function(){
+            getCommits: function() {
                 var options = Docbase.options;
                 var file_path = $route.current.params;
-                var full_path = options.github.path+'/'+file_path.version+'/'+file_path.folder+'/'+file_path.file;
-                return $http.get('https://api.github.com/repos/'+ options.github.user +'/'+ options.github.repo+'/commits?path='+full_path+'.md');
+                var full_path = options.github.path + '/' + file_path.version + '/' + file_path.folder + '/' + file_path.file;
+                return $http.get('https://api.github.com/repos/' + options.github.user + '/' + options.github.repo + '/commits?path=' + full_path + '.md');
+            },
+            searchIndex:function(){
+                return $http.get('bower_components/docbase/scripts/search-index.json');
             }
         };
     };
 
-    Route.URLCtrl = function($scope, $location,$filter, data, commits) {
+    Route.URLCtrl = function($scope, $location, $filter, data, commits, searchIndex) {
         $location.path(data.locationPath);
+
         if (!data.fail) {
             $scope.versions = data.versions;
             $scope.currentVersion = data.currentVersion;
             $scope.map = data.map;
             $scope.github = data.github;
-
+            
             var content = data.markdown;
             var contribut_array = [];
+            var menu_view = Flatdoc.menuView(content.menu);
+            //$scope.doc_content = getMenuObject(menu_view);
             $('[role="flatdoc-content"]').html(content.content.find('>*'));
-            $('[role="flatdoc-menu"]').html(Flatdoc.menuView(content.menu));
-
+            $('[role="flatdoc-menu"]').html(menu_view);
             jWindow.trigger('flatdoc:ready');
         }
 
+        //search functionality will work only on http://localhost/appbase-work/Docs/index.html#/scalr/javascript/javascript-intro this page
+        if(searchIndex.status == 200){
+            $scope.doc_content = searchIndex.data;
+        }
+
         var extra_container = $("<div>").addClass('extra_container');
-        if(commits.status == 200){
+        if (commits.status == 200) {
             var commits_data = commits.data;
             var commiter_data = $filter('date')(commits.data[0].commit.committer.date, 'mediumDate');
-            var last_date = $('<span>').addClass('pull-right modified-date').html('Last Modified On : <a href="'+commits.data[0].html_url+'">'+commiter_data+'</a>');
-        
+            var last_date = $('<span>').addClass('pull-right modified-date').html('Last Modified On : <a href="' + commits.data[0].html_url + '">' + commiter_data + '</a>');
+
             var contributors_data = commits_data;
             var contributors = $('<div>').addClass('contributor-container');
-            for(var i =0; i < contributors_data.length; i++ ){
+            for (var i = 0; i < contributors_data.length; i++) {
                 var contributor_d = contributors_data[i].committer;
-                if(jQuery.inArray(contributor_d.login, contribut_array) == -1)
-                {
+                if (jQuery.inArray(contributor_d.login, contribut_array) == -1) {
                     contribut_array.push(contributor_d.login);
                     var contributor_img = $('<img>').addClass('contributor_img img-rounded').attr({
-                        'src':contributor_d.avatar_url,
-                        'alt':contributor_d.login
+                        'src': contributor_d.avatar_url,
+                        'alt': contributor_d.login
                     });
                     var contributor = $('<a>').addClass('contributor').attr({
-                        'href':contributor_d.html_url,
-                        'title':contributor_d.login,
-                        'target':'_blank'
+                        'href': contributor_d.html_url,
+                        'title': contributor_d.login,
+                        'target': '_blank'
                     }).append(contributor_img);
-                    contributors.append(contributor);            
+                    contributors.append(contributor);
                 }
             }
             var contributors_header = $('<div>').addClass('contributors_header').append('<strong>Contributors<strong>').append(last_date);
             $(extra_container).prepend(contributors).prepend(contributors_header);
-        
-
         }
-            
+
         var div2 = $('<div>').addClass('clearFix');
         $('[role="flatdoc-content"]').prepend(div2).prepend(extra_container);
+        
+
+        function getMenuObject(menu_view){
+            var menu_arr = [];
+            $(menu_view).find('.level-2').each(function(k2, v2) {
+                var obj = {};
+                var menu_length = $(menu_view).find('.level-2').length;
+                var current_li = $(menu_view).find('li.level-2').eq(k2);
+                var current_li_a = $(current_li).find('a').attr('href');
+                if (k2 != menu_length - 1) {
+                    var next_li = $(menu_view).find('li.level-2').eq(k2 + 1);
+                    var next_li_a = $(next_li).find('a').attr('href');
+                } else{
+                    var next_li_a = '.edit';
+                }
+                var li_title = $(current_li).find('a').html();
+                if(typeof li_title != 'undefined')
+                {
+                    var split_name = current_li[0]['baseURI'].split("#");
+                    var create_link = split_name[0]+'#'+split_name[1]+current_li_a;
+                    var content_between = $('<div>').html($(current_li_a).nextUntil(next_li_a).andSelf().clone());
+                    obj.title = li_title;
+                    obj.link = create_link;
+                    obj.version = $scope.currentVersion;
+                    obj.document_path = $scope.github;
+                    obj.content = content_between.html();
+                    menu_arr.push(obj);
+                }
+            });
+            return menu_arr;
+        }
 
     };
 
@@ -523,11 +563,12 @@
         return schema({
             '*': Array.of(schema({
                 name: String,
-                label: String/*,
-                files: Array.of(schema({
-                    name: String,
-                    label: String
-                }))*/
+                label: String
+                    /*,
+                                    files: Array.of(schema({
+                                        name: String,
+                                        label: String
+                                    }))*/
             }))
         })(map);
     }
