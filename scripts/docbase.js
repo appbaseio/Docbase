@@ -426,7 +426,7 @@
                     contributors.append(contributor);
                 }
             }
-            var contributors_header = $('<div>').addClass('contributors_header').append('<strong>Contributors<strong>').append(last_date);
+            var contributors_header = $('<div>').addClass('contributors_header').append('Contributors').append(last_date);
             $(extra_container).prepend(contributors).prepend(contributors_header);
         }
 
