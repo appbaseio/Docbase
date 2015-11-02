@@ -374,7 +374,7 @@
                 return $http.get('https://api.github.com/repos/' + options.github.user + '/' + options.github.repo + '/commits?path=' + full_path + '.md');
             },
             searchIndex:function(){
-                return $http.get('bower_components/docbase/scripts/search-index.json');
+                return $http.get('bower_components/docbase/scripts/search-index-v2.json');
             }
         };
     };
@@ -399,7 +399,7 @@
 
         //search functionality will work only on http://localhost/appbase-work/Docs/index.html#/scalr/javascript/javascript-intro this page
         if(searchIndex.status == 200){
-            $scope.doc_content = searchIndex.data;
+            $scope.doc_content = searchIndex.data[0]['child'];
         }
 
         var extra_container = $("<div>").addClass('extra_container');
@@ -426,7 +426,7 @@
                     contributors.append(contributor);
                 }
             }
-            var contributors_header = $('<div>').addClass('contributors_header').append('Contributors').append(last_date);
+            var contributors_header = $('<div>').addClass('contributors_header').append('<strong>Contributors<strong>').append(last_date);
             $(extra_container).prepend(contributors).prepend(contributors_header);
         }
 
