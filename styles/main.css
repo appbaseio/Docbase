@@ -228,6 +228,13 @@ ul.nav li.dropdown.search-dropdown:hover{
 .search-form.open .search-box li{
     border-bottom: 1px solid #eee;
 }
+.menu a.level-1,
+.menu a.level-2{
+	font-size: 1.08em
+}
+.menu a.level-3{
+	font-size: 1.05em
+}
 @media (min-width: 1180px) {
 	.extra_container{
 		width: 550px;
