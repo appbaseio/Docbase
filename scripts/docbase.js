@@ -374,7 +374,7 @@
                 return $http.get('https://api.github.com/repos/' + options.github.user + '/' + options.github.repo + '/commits?path=' + full_path + '.md');
             },
             searchIndex:function(){
-                return $http.get('bower_components/docbase/scripts/search-index-v2.json');
+                return $http.get('https://raw.githubusercontent.com/appbaseio/Docs/gh-pages/search-index.json');
             }
         };
     };
@@ -387,19 +387,19 @@
             $scope.currentVersion = data.currentVersion;
             $scope.map = data.map;
             $scope.github = data.github;
-            
             var content = data.markdown;
             var contribut_array = [];
             var menu_view = Flatdoc.menuView(content.menu);
-            //$scope.doc_content = getMenuObject(menu_view);
             $('[role="flatdoc-content"]').html(content.content.find('>*'));
             $('[role="flatdoc-menu"]').html(menu_view);
             jWindow.trigger('flatdoc:ready');
         }
 
-        //search functionality will work only on http://localhost/appbase-work/Docs/index.html#/scalr/javascript/javascript-intro this page
         if(searchIndex.status == 200){
-            $scope.doc_content = searchIndex.data[0]['child'];
+            $scope.doc_content = searchIndex.data;
+            $scope.doc_content.forEach(function(val){
+                val.content = val.content.replace(/<\/?[^>]+(>|$)/g, "");
+            });    
         }
 
         var extra_container = $("<div>").addClass('extra_container');
@@ -433,36 +433,6 @@
         var div2 = $('<div>').addClass('clearFix');
         $('[role="flatdoc-content"]').prepend(div2).prepend(extra_container);
         
-
-        function getMenuObject(menu_view){
-            var menu_arr = [];
-            $(menu_view).find('.level-2').each(function(k2, v2) {
-                var obj = {};
-                var menu_length = $(menu_view).find('.level-2').length;
-                var current_li = $(menu_view).find('li.level-2').eq(k2);
-                var current_li_a = $(current_li).find('a').attr('href');
-                if (k2 != menu_length - 1) {
-                    var next_li = $(menu_view).find('li.level-2').eq(k2 + 1);
-                    var next_li_a = $(next_li).find('a').attr('href');
-                } else{
-                    var next_li_a = '.edit';
-                }
-                var li_title = $(current_li).find('a').html();
-                if(typeof li_title != 'undefined')
-                {
-                    var split_name = current_li[0]['baseURI'].split("#");
-                    var create_link = split_name[0]+'#'+split_name[1]+current_li_a;
-                    var content_between = $('<div>').html($(current_li_a).nextUntil(next_li_a).andSelf().clone());
-                    obj.title = li_title;
-                    obj.link = create_link;
-                    obj.version = $scope.currentVersion;
-                    obj.document_path = $scope.github;
-                    obj.content = content_between.html();
-                    menu_arr.push(obj);
-                }
-            });
-            return menu_arr;
-        }
 
     };
 
