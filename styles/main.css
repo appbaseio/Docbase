@@ -207,11 +207,17 @@ ul.nav li.dropdown.search-dropdown:hover{
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+.search-form.open-in
+{
+	background: #fff;
+	padding-left: 5px;
+    padding-right: 5px;
+}
 .search-form.open input{
-	border: 0;
+	/*border: 0;
 	border-bottom: 1px solid #ccc;
     border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0;*/
 }
 .search-form .search-box li a{
 	display: block;
