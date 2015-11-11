@@ -412,7 +412,8 @@
             var contributors = $('<div>').addClass('contributor-container');
             for (var i = 0; i < contributors_data.length; i++) {
                 var contributor_d = contributors_data[i].committer;
-                if (jQuery.inArray(contributor_d.login, contribut_array) == -1) {
+                if(contributor_d && jQuery.inArray(contributor_d.login, contribut_array) == -1)
+                {
                     contribut_array.push(contributor_d.login);
                     var contributor_img = $('<img>').addClass('contributor_img img-rounded').attr({
                         'src': contributor_d.avatar_url,
