@@ -311,7 +311,6 @@
                     retObj.github = url;
 
                     Events.parsed = false;
-                    console.log(fileURL);
                     Flatdoc.file(fileURL)(function(err, markdown) {
                         markdown = markdown.split('\n');
                         var obj = markdown.shift();
@@ -366,10 +365,18 @@
                 return new fetcher();
             },
             getCommits: function(){
+                var resultPromise = null;
                 var options = Docbase.options;
                 var file_path = $route.current.params;
-                var full_path = options.github.path+'/'+file_path.version+'/'+file_path.folder+'/'+file_path.file;
-                return $http.get('https://api.github.com/repos/'+ options.github.user +'/'+ options.github.repo+'/commits?path='+full_path+'.md');
+                if(options.github.path){
+                    var full_path = options.github.path+'/'+file_path.version+'/'+file_path.folder+'/'+file_path.file;
+                    resultPromise =  $http.get('https://api.github.com/repos/'+ options.github.user +'/'+ options.github.repo+'/commits?path='+full_path+'.md');
+                }else{
+                    deferred = $q.defer();
+                    resultPromise = deferred.promise;
+                    deferred.resolve([]);
+                }
+                return resultPromise;
             }
         };
     };
