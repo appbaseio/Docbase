@@ -191,6 +191,13 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 .clearFix{
 	clear: both;
 }
+.menu a.level-1,
+.menu a.level-2{
+	font-size: 18px
+}
+.menu a.level-3{
+	font-size: 16px
+}
 @media (min-width: 1180px) {
 	.extra_container{
 		width: 550px;
