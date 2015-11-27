@@ -8,7 +8,7 @@
 			var result_div = $('<div>').addClass('result_record').append(result_a);
 			return result_div;
 		}
-		var fail = function() {
+		var fail = function(e) {
 			console.error("Your search index wasn't loaded, please check the following error", e);
 		};
 		var success = function(searchData) {
