@@ -31,6 +31,7 @@
     Docbase.run = function(options) {
         var defaults = {
             method: 'github',
+            searchIndexUrl: 'search-index.json',
             map: {
                 file: 'map.json',
                 path: ''
@@ -256,6 +257,12 @@
                     unbind();
                 });
                 $anchorScroll();
+            }
+        });
+
+        $rootScope.$on("$includeContentLoaded", function(event, templateName) {
+            if($.fn.searchAppbase){
+                $('.search_field').searchAppbase(Docbase.options.searchIndexUrl);
             }
         });
 
@@ -559,7 +566,7 @@
                     return each.name === deleted;
                 });
                 if (commitData[0]) {
-                    var sha  = commitData[0].sha;
+                    var sha = commitData[0].sha;
                     $.get(baseurl + 'git/trees/' + sha + '?recursive=1')
                         .success(function(tree) {
                             tree = tree.tree.filter(function(each) {
