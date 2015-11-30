@@ -56,10 +56,10 @@
 			$.get(searchIndexUrl)
 				.then(success)
 				.fail(fail);
-		}
+		};
 
 		//Load typeahead.js
-		var Loader = function() {}
+		var Loader = function() {};
 		Loader.prototype = {
 			require: function(scripts, callback) {
 				this.loadCount = 0;
@@ -103,7 +103,7 @@
 				var head = document.getElementsByTagName('head')[0];
 				head.appendChild(s);
 			}
-		}
+		};
 
 		var jquery_js = new Loader();
 		jquery_js.require([
@@ -113,5 +113,5 @@
 				intializeCall();
 			});
 
-	}
+	};
 }(jQuery));

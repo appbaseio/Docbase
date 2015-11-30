@@ -389,6 +389,7 @@
 
     Route.URLCtrl = function($scope, $location, $filter, data, commits) {
         $location.path(data.locationPath);
+        var contribut_array = [];
         if (!data.fail) {
             $scope.versions = data.versions;
             $scope.currentVersion = data.currentVersion;
@@ -396,7 +397,6 @@
             $scope.github = data.github;
 
             var content = data.markdown;
-            var contribut_array = [];
             $('[role="flatdoc-content"]').html(content.content.find('>*'));
             $('[role="flatdoc-menu"]').html(Flatdoc.menuView(content.menu));
 
