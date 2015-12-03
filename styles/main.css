@@ -203,3 +203,65 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 		width: 550px;
 	}
 }
+
+/*Search CSS*/
+.result_record a{
+    background: #fff;
+    display: block;
+    padding: 7px 10px;
+    font-size: 0.9em;
+    line-height: 1.1em;
+}
+.result_record a:hover,
+.result_record.tt-cursor a{
+	text-decoration: none;
+	background: #eee;
+}
+.result_record,
+.appbase-search{
+    border-bottom: 1px solid #ccc;	
+}
+.tt-menu .result_record:last-child{
+    border: none;
+}
+.tt-menu{
+    overflow: auto;
+    position: relative !important;
+    top: 8px;
+}
+.tt-menu .tt-dataset{
+    padding: 5px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 21px;
+}
+.tt-menu:before{
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 81px;
+    width: 28px;
+    height: 28px;
+    display: block;
+    border: 14px solid #50BAEF;
+    border-color: transparent transparent #50BAEF transparent;
+}
+.tt-menu:after{
+   content: "";
+    position: absolute;
+    top: -5px;
+    left: 82px;
+    width: 26px;
+    height: 27px;
+    display: block;
+    border: 13px solid #000;
+    border-color: transparent transparent #fff transparent;
+}
+.search-form{
+    display: none;
+    top: 8px !important;    
+    position: absolute !important;
+    width: 200px;
+    right: 0; 
+}
