@@ -258,8 +258,8 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
     border: 13px solid #000;
     border-color: transparent transparent #fff transparent;
 }
+
 .search-form{
-    display: none;
     top: 8px !important;    
     position: absolute !important;
     width: 200px;
