@@ -29,15 +29,21 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		watch: {
+			scripts: {
+				files: [srcPath],
+				tasks: ['jshint', 'uglify', 'concat' ],
+				options: {
+					spawn: false,
+				},
+			},
+		},
 	});
 
-	grunt.loadNpmTasks('grunt-contrib-connect');
-	grunt.loadNpmTasks('grunt-docbase');
-	grunt.loadNpmTasks('grunt-gh-pages');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	
+
 	grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
 };
