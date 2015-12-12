@@ -71,7 +71,9 @@
         properties[key] = cutTrailingSlashes(properties[key]);
       });
     });
-    options.map.path = cutTrailingSlashes(options.map.path);
+    if(options.map){
+      options.map.path = cutTrailingSlashes(options.map.path);
+    }
 
     Docbase.options = options;
 
@@ -103,8 +105,7 @@
         Docbase.file(Docbase.options.map);
       } else if (checkSchema(map)) {
         Docbase.map = map;
-        $.get(Docbase.options.map.path + '/' + Docbase.options.map.file)
-        .success(function(fileMap) {
+        var prepareMapFile = function(fileMap){
           var ghMap = Docbase.map;
           var fileMapVer = Object.keys(fileMap);
           fileMapVer.forEach(function(fileVer) {
@@ -129,12 +130,18 @@
           });
           jWindow.trigger('mapped');
           Events.bind();
-        })
-        .error(function(error) {
-          // no map available for labels
-          jWindow.trigger('mapped');
-          Events.bind();
-        });
+        };
+        if(!Docbase.versions){
+          $.get(Docbase.options.map.path + '/' + Docbase.options.map.file)
+          .success(prepareMapFile)
+          .error(function(error) {
+            // no map available for labels
+            jWindow.trigger('mapped');
+            Events.bind();
+          });
+        }else{
+          prepareMapFile(Docbase.options.versions);
+        }
       } else {
         throw 'GitHub tree mapping error.';
       }
@@ -143,24 +150,30 @@
   };
 
   Docbase.file = Docbase.generic = function(options) {
-    $.get(options.path + '/' + options.file)
-    .success(function(map) {
-      if (checkSchema(map)) {
-        var v = Object.keys(map);
-        if (v.length && map[v[0]][0].files.length && map[v[0]][0].files[0].name) {
-          Docbase.map = map;
-          jWindow.trigger('mapped');
-          Events.bind();
+    var prepareMapFile = function(map){
+        if (checkSchema(map)) {
+          var v = Object.keys(map);
+          if (v.length && map[v[0]][0].files.length && map[v[0]][0].files[0].name) {
+            Docbase.map = map;
+            jWindow.trigger('mapped');
+            Events.bind();
+          } else {
+            throw 'Map does not have a file entry. Check the documentation';
+          }
         } else {
-          throw 'Map does not have a file entry. Check the documentation';
+          throw 'Map file schema error. Check the documentation.';
         }
-      } else {
-        throw 'Map file schema error. Check the documentation.';
-      }
-    })
-    .error(function(error) {
-      throw error;
-    });
+    }
+    if(!Docbase.options.versions){
+      $.get(options.map.path + '/' + options.map.file)
+      .success(prepareMapFile)
+      .error(function(error) {
+        throw error;
+      });
+    }else{
+      prepareMapFile(Docbase.options.versions);
+    }
+
   };
 
 
@@ -623,27 +636,27 @@ function githubTree(options, callback) {
   });
 }
 
-  /**
-  * endsWith polyfill, from MDN
-  * Created by Ripter, last edited by Mathias Bynens
-  */
-  function endsWith(subjectString, searchString, position) {
-    if (position === undefined || position > subjectString.length) {
-      position = subjectString.length;
-    }
-    position -= searchString.length;
-    var lastIndex = subjectString.indexOf(searchString, position);
-    return lastIndex !== -1 && lastIndex === position;
+/**
+* endsWith polyfill, from MDN
+* Created by Ripter, last edited by Mathias Bynens
+*/
+function endsWith(subjectString, searchString, position) {
+  if (position === undefined || position > subjectString.length) {
+    position = subjectString.length;
   }
+  position -= searchString.length;
+  var lastIndex = subjectString.indexOf(searchString, position);
+  return lastIndex !== -1 && lastIndex === position;
+}
 
-  var angApp = angular.module('docbaseApp', ['ngRoute'])
-  .factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', '$http', Route.fetch])
-  .controller('URLCtrl', ['$scope', '$location', '$filter', 'data', 'commits', Route.URLCtrl])
-  .controller('MainCtrl', ['$scope', '$location', '$timeout', Route.mainCtrl])
-  .config(['$routeProvider', '$locationProvider', Route.config])
-  .run(
-    ['$rootScope', '$location', '$routeParams', '$anchorScroll',
-    '$route', Route.anchorConfig
-  ]
-  );
+var angApp = angular.module('docbaseApp', ['ngRoute'])
+.factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', '$http', Route.fetch])
+.controller('URLCtrl', ['$scope', '$location', '$filter', 'data', 'commits', Route.URLCtrl])
+.controller('MainCtrl', ['$scope', '$location', '$timeout', Route.mainCtrl])
+.config(['$routeProvider', '$locationProvider', Route.config])
+.run(
+  ['$rootScope', '$location', '$routeParams', '$anchorScroll',
+  '$route', Route.anchorConfig
+]
+);
 })(window.jQuery, window.angular, window.q);
