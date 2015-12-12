@@ -37,8 +37,7 @@
 (function($, angular) {
 
     var jWindow = $(window);
-    var angApp = angular.module('docbaseApp', ['ngRoute']);
-
+  
     var exports = this;
     var Docbase = exports.Docbase = {};
     var Events = Docbase.events = {};
@@ -104,17 +103,6 @@
       Docbase.options = options;
 
       Events.bind();
-
-        angApp.factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', '$http', Route.fetch])
-          .controller('URLCtrl', ['$scope', '$location', '$filter', 'data', 'commits', Route.URLCtrl])
-          .controller('MainCtrl', ['$scope', '$location', '$timeout', Route.mainCtrl])
-          .config(['$routeProvider', '$locationProvider', Route.config])
-          .run(
-              ['$rootScope', '$location', '$routeParams', '$anchorScroll',
-                  '$route', Route.anchorConfig
-              ]
-          );
-
       if (options.method === 'file') {
           Docbase.file(options.map);
       } else if (options.method === 'github') {
@@ -671,6 +659,17 @@
         var lastIndex = subjectString.indexOf(searchString, position);
         return lastIndex !== -1 && lastIndex === position;
     }
+
+    var angApp = angular.module('docbaseApp', ['ngRoute'])
+      .factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', '$http', Route.fetch])
+      .controller('URLCtrl', ['$scope', '$location', '$filter', 'data', 'commits', Route.URLCtrl])
+      .controller('MainCtrl', ['$scope', '$location', '$timeout', Route.mainCtrl])
+      .config(['$routeProvider', '$locationProvider', Route.config])
+      .run(
+          ['$rootScope', '$location', '$routeParams', '$anchorScroll',
+              '$route', Route.anchorConfig
+          ]
+      );
 })(window.jQuery, window.angular);
 
 
