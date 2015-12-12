@@ -404,7 +404,7 @@
         }
 
         var extra_container = $("<div>").addClass('extra_container');
-        if (commits.status == 200) {
+        if (commits.status == 200 && commits.data && commits.data.length) {
             var commits_data = commits.data;
             var commiter_data = $filter('date')(commits.data[0].commit.committer.date, 'mediumDate');
             var last_date = $('<span>').addClass('pull-right modified-date').html('Last Modified On : <a href="' + commits.data[0].html_url + '">' + commiter_data + '</a>');
