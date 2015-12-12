@@ -37,7 +37,7 @@
 (function($, angular) {
 
     var jWindow = $(window);
-    var angApp;
+    var angApp = angular.module('docbaseApp', ['ngRoute']);
 
     var exports = this;
     var Docbase = exports.Docbase = {};
@@ -54,76 +54,82 @@
      */
 
     Docbase.methods = ['file', 'github', 'generic'];
+    var _run = function(options){
+      var defaults = {
+          method: 'github',
+          searchIndexUrl: 'search-index.json',
+          map: {
+              file: 'map.json',
+              path: ''
+          },
+          file: {
+              path: 'docs'
+          },
+          github: {
+              /*user: 'user',
+              repo: 'repo',*/
+              path: '/',
+              branch: 'gh-pages',
+              editGithubBtn: true
+          },
+          generic: {
+              baseurl: '',
+              path: '/'
+          },
+          html5mode: false,
+          indexType: 'html',
+          indexSrc: 'v1/path/index.md',
+          indexHtml: 'html/main.html', // dochub entry page
+          flatdocHtml: 'html/flatdoc.html', // top navbar, and markdown layouts
+          angularAppName: 'docbaseApp'
+      };
 
+      options = $.extend({}, defaults, options);
+
+      if (options.method === 'github') {
+          if (!options.github.user || !options.github.repo) {
+              throw 'Missing GitHub user/repo info.';
+          }
+      }
+
+      // Removes trailing '/'s.
+      Docbase.methods.forEach(function(method) {
+          var properties = options[method];
+          Object.keys(properties).forEach(function(key) {
+              properties[key] = cutTrailingSlashes(properties[key]);
+          });
+      });
+      options.map.path = cutTrailingSlashes(options.map.path);
+
+      Docbase.options = options;
+
+      Events.bind();
+
+        angApp.factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', '$http', Route.fetch])
+          .controller('URLCtrl', ['$scope', '$location', '$filter', 'data', 'commits', Route.URLCtrl])
+          .controller('MainCtrl', ['$scope', '$location', '$timeout', Route.mainCtrl])
+          .config(['$routeProvider', '$locationProvider', Route.config])
+          .run(
+              ['$rootScope', '$location', '$routeParams', '$anchorScroll',
+                  '$route', Route.anchorConfig
+              ]
+          );
+
+      if (options.method === 'file') {
+          Docbase.file(options.map);
+      } else if (options.method === 'github') {
+          Docbase.github(options.github);
+      } else {
+          Docbase.file(options.map);
+      }
+    };
     Docbase.run = function(options) {
-        var defaults = {
-            method: 'github',
-            searchIndexUrl: 'search-index.json',
-            map: {
-                file: 'map.json',
-                path: ''
-            },
-            file: {
-                path: 'docs'
-            },
-            github: {
-                /*user: 'user',
-                repo: 'repo',*/
-                path: '/',
-                branch: 'gh-pages',
-                editGithubBtn: true
-            },
-            generic: {
-                baseurl: '',
-                path: '/'
-            },
-            html5mode: false,
-            indexType: 'html',
-            indexSrc: 'v1/path/index.md',
-            indexHtml: 'html/main.html', // dochub entry page
-            flatdocHtml: 'html/flatdoc.html', // top navbar, and markdown layouts
-            angularAppName: 'docbaseApp'
-        };
-
-        options = $.extend({}, defaults, options);
-
-        if (options.method === 'github') {
-            if (!options.github.user || !options.github.repo) {
-                throw 'Missing GitHub user/repo info.';
-            }
-        }
-
-        // Removes trailing '/'s.
-        Docbase.methods.forEach(function(method) {
-            var properties = options[method];
-            Object.keys(properties).forEach(function(key) {
-                properties[key] = cutTrailingSlashes(properties[key]);
-            });
-        });
-        options.map.path = cutTrailingSlashes(options.map.path);
-
-        Docbase.options = options;
-
-        Events.bind();
-
-        angApp = angular
-            .module(options.angularAppName, ['ngRoute'])
-            .factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', '$http', Route.fetch])
-            .controller('URLCtrl', ['$scope', '$location', '$filter', 'data', 'commits', Route.URLCtrl])
-            .controller('MainCtrl', ['$scope', '$location', '$timeout', Route.mainCtrl])
-            .config(['$routeProvider', '$locationProvider', Route.config])
-            .run(
-                ['$rootScope', '$location', '$routeParams', '$anchorScroll',
-                    '$route', Route.anchorConfig
-                ]
-            );
-
-        if (options.method === 'file') {
-            Docbase.file(options.map);
-        } else if (options.method === 'github') {
-            Docbase.github(options.github);
-        } else {
-            Docbase.file(options.map);
+        if(options instanceof String || options === undefined){
+          $.get(options || 'docbase.json').then(function(data){
+            _run(data);
+          });
+        }else{
+          _run(options);
         }
     };
 

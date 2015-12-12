@@ -34,26 +34,7 @@
 
   <link rel="stylesheet" type="text/css" href="/bower_components/font-awesome/css/font-awesome.min.css">
   <script type="text/javascript">
-    Docbase.run({
-      method: 'file',
-      map: {        // mapping file location relative to the project directory
-          file: 'map.json',
-          path: ''
-      },
-      github: {     // github option has to be present if method is github
-          user: 'appbaseio',
-          repo: 'Docs',
-          path: 'src',
-          branch: 'master',
-          editGithubBtn: true
-      },
-      file: {
-          path: 'docs'
-      },
-      indexHtml: 'html/main.html',
-      flatdocHtml: 'html/flatdoc.html',
-      html5mode: false
-    });
+    Docbase.run();
   </script>
 
   <style>
