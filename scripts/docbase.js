@@ -7,7 +7,7 @@
 *
 */
 
-(function($, angular) {
+(function($, angular, docbaseConfig) {
 
   var jWindow = $(window);
 
@@ -29,6 +29,7 @@
   var _run = function(options){
     var defaults = {
       method: 'github',
+      useSearch: true,
       searchIndexUrl: 'search-index.json',
       map: {
         file: 'map.json',
@@ -166,18 +167,18 @@
 
   Docbase.file = Docbase.generic = function(options) {
     var prepareMapFile = function(map){
-        if (checkSchema(map)) {
-          var v = Object.keys(map);
-          if (v.length && map[v[0]][0].files.length && map[v[0]][0].files[0].name) {
-            Docbase.map = map;
-            jWindow.trigger('mapped');
-            Events.bind();
-          } else {
-            throw 'Map does not have a file entry. Check the documentation';
-          }
+      if (checkSchema(map)) {
+        var v = Object.keys(map);
+        if (v.length && map[v[0]][0].files.length && map[v[0]][0].files[0].name) {
+          Docbase.map = map;
+          jWindow.trigger('mapped');
+          Events.bind();
         } else {
-          throw 'Map file schema error. Check the documentation.';
+          throw 'Map does not have a file entry. Check the documentation';
         }
+      } else {
+        throw 'Map file schema error. Check the documentation.';
+      }
     };
     if(!Docbase.options.versions){
       $.get(options.path + '/' + options.file)
@@ -215,7 +216,14 @@
     }
   };
 
-  Route.config = function($routeProvider, $location, $rootScope, $anchorScroll) {
+  Route.config = function($routeProvider, $location, $rootScope, $anchorScroll, FlatdocService) {
+    if(!Docbase.options){
+      if(angular.isUndefined(docbaseConfig)){
+          throw Error("docbaseConfig var is not defined! Check if your condif file is included in index.html");
+      }else{
+        Docbase.run(docbaseConfig);
+      }
+    }
     var flatdocURL = Docbase.options.flatdocHtml;
     var mainURL = Docbase.options.indexHtml;
     var resolve = {
@@ -286,7 +294,7 @@
     });
 
     $rootScope.$on("$includeContentLoaded", function(event, templateName) {
-      if($.fn.searchAppbase){
+      if($.fn.searchAppbase && Docbase.options.useSearch){
         $('.search_field').searchAppbase(Docbase.options.searchIndexUrl);
       }
     });
@@ -403,7 +411,7 @@
           var full_path = options.github.path + '/' + file_path.version + '/' + file_path.folder + '/' + file_path.file;
           var urlToCommits = 'https://api.github.com/repos/' + options.github.user + '/' + options.github.repo + '/commits?path=' + full_path + '.md';
           if(options.github.client_id && options.github.client_secret){
-              urlToCommits += '&client_id='+options.github.client_id+'&client_secret='+options.github.client_secret;
+            urlToCommits += '&client_id='+options.github.client_id+'&client_secret='+options.github.client_secret;
           }
           resultPromise = $http.get(urlToCommits);
         } else {
@@ -424,6 +432,8 @@
       $scope.currentVersion = data.currentVersion;
       $scope.map = data.map;
       $scope.github = data.github;
+      $scope.navbarHtml = Docbase.options.navbarHtml;
+      $scope.logoSrc = Docbase.options.logoSrc;
 
       var content = data.markdown;
       $('[role="flatdoc-content"]').html(content.content.find('>*'));
@@ -467,7 +477,7 @@
 
   };
 
-  Route.mainCtrl = function($scope, $location, $timeout) {
+  Route.mainCtrl = function($scope, $location, $timeout, $rootScope) {
     if (Docbase.options.indexType === 'markdown') {
       var path = Docbase.options.indexSrc;
       if (endsWith(path, '.md')) {
@@ -481,8 +491,8 @@
     } else {
       var onMapped = function() {
         $timeout(function() {
-          $scope.navbarHtml = Docbase.options.navbarHtml;
-          $scope.logoSrc = Docbase.options.logoSrc;
+          $rootScope.navbarHtml = Docbase.options.navbarHtml;
+          $rootScope.logoSrc = Docbase.options.logoSrc;
           $scope.map = Docbase.map;
           $scope.versions = Object.keys($scope.map);
           $scope.currentVersion = $scope.versions[0];
@@ -670,14 +680,13 @@ function endsWith(subjectString, searchString, position) {
   return lastIndex !== -1 && lastIndex === position;
 }
 
-var angApp = angular.module('docbaseApp', ['ngRoute'])
+var angApp = angular.module('docbaseApp', ['ngRoute'], function(){})
 .factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', '$http', Route.fetch])
 .controller('URLCtrl', ['$scope', '$location', '$filter', 'data', 'commits', Route.URLCtrl])
-.controller('MainCtrl', ['$scope', '$location', '$timeout', Route.mainCtrl])
+.controller('MainCtrl', ['$scope', '$location', '$timeout', '$rootScope', Route.mainCtrl])
 .config(['$routeProvider', '$locationProvider', Route.config])
 .run(
   ['$rootScope', '$location', '$routeParams', '$anchorScroll',
-  '$route', Route.anchorConfig
-]
+  '$route', Route.anchorConfig]
 );
-})(window.jQuery, window.angular, window.q);
+})(window.jQuery, window.angular, window.docbaseConfig);
