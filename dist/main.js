@@ -426,7 +426,11 @@
         var file_path = $route.current.params;
         if (options.github.path) {
           var full_path = options.github.path + '/' + file_path.version + '/' + file_path.folder + '/' + file_path.file;
-          resultPromise = $http.get('https://api.github.com/repos/' + options.github.user + '/' + options.github.repo + '/commits?path=' + full_path + '.md');
+          var urlToCommits = 'https://api.github.com/repos/' + options.github.user + '/' + options.github.repo + '/commits?path=' + full_path + '.md';
+          if(options.github.client_id && options.github.client_secret){
+              urlToCommits += '&client_id='+options.github.client_id+'&client_secret='+options.github.client_secret;
+          }
+          resultPromise = $http.get(urlToCommits);
         } else {
           deferred = $q.defer();
           resultPromise = deferred.promise;
