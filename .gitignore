@@ -30,4 +30,3 @@ node_modules
 # Bower files
 bower_components
 bin/
-/dist/

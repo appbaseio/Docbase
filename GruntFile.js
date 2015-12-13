@@ -12,15 +12,6 @@ module.exports = function(grunt) {
 				},
 				src: [srcPath],
 				dest: 'dist/main.js',
-			},
-			uniqueFile: {
-				options: {
-					process: function(src, filepath) {
-						return '\n' + '// FILE: ' + filepath + '\n' + src;
-					}
-				},
-				src: libPaths.concat([srcPath]),
-				dest: 'dist/main.unique.js',
 			}
 		},
 		jshint: {
@@ -38,8 +29,13 @@ module.exports = function(grunt) {
 				files: {
 					'dist/main.min.js': [srcPath]
 				}
-			}
-		},
+			},
+			unicfile: {
+					files: {
+						'dist/main.unique.js': libPaths.concat([srcPath])
+					}
+				}
+			},
 		jasmine: {
 	     pivotal: {
 	       src: [srcPath],
@@ -70,9 +66,19 @@ module.exports = function(grunt) {
 				},
 			},
 		},
+		bump: {
+		    scripts: {
+		        files: [srcPath, testePath],
+						commitFiles: ['package.json', 'bower.json'],
+		        updateConfigs: ["pkg"],
+		        commitFiles: ["-a"],
+		        push: false
+		    }
+		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+grunt.loadNpmTasks('grunt-bump');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-watch');
