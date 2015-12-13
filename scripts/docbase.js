@@ -163,7 +163,7 @@
         } else {
           throw 'Map file schema error. Check the documentation.';
         }
-    }
+    };
     if(!Docbase.options.versions){
       $.get(options.map.path + '/' + options.map.file)
       .success(prepareMapFile)

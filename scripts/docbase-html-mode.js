@@ -3,7 +3,6 @@
  * Docbase engine
  * Appbase
  * MIT license
- *
  */
 
 (function($, angular) {
