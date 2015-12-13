@@ -1,6 +1,6 @@
 {
   "name": "docbase",
-  "version": "1.0.0-rc2",
+  "version": "1.0.2",
   "homepage": "https://github.com/appbaseio/Docbase",
   "authors": [
     "Henrique Sa <henriquepss@gmail.com>",
