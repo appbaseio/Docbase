@@ -64,7 +64,7 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: [srcPath, testePath],
-				tasks: ['jshint', 'uglify', 'concat:default','jasmine' ],
+				tasks: ['jshint', 'uglify', 'concat','jasmine' ],
 				options: {
 					spawn: false,
 				},
