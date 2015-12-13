@@ -7,7 +7,7 @@
   "description": "A fast and flexible single-page documentation engine",
   "contributors": [],
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt"
   },
   "repository": {
     "type": "git",
