@@ -1,4 +1,5 @@
 # Docbase
+[![Build Status](https://travis-ci.org/appbaseio/Docbase.svg?branch=master)](https://travis-ci.org/appbaseio/Docbase)
 A fast and flexible single-page documentation engine. Create documentation hubs with versioning and beautifully rendered menus; works with your existing (or new) Github hosted markdown files.
 
 ### Used by:
@@ -65,7 +66,7 @@ It looks something like this:
 ```js
 map.json
 
-{ 
+{
   "version_name": [
       {
         "name": "folder1_name",
@@ -81,14 +82,14 @@ map.json
         "label": "rootFile1_label"
       }
   ],
-  "other_version_name": [ ... 
+  "other_version_name": [ ...
   ]
 }
 ```
 
 where,  
 ``version_name`` is the top level field indicating the mapping for a particular documentation version, like v1.0.  
-A version can contain folders and files. ``name`` is the actual 
+A version can contain folders and files. ``name`` is the actual
 
 ## Contributing
 
