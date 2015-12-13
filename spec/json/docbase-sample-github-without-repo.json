@@ -1,9 +1,8 @@
 {
-  "name" : "defaultConfig",
-  "method": "file",
+  "name" : "github",
+  "method": "github",
   "github": {
     "user": "appbaseio",
-    "repo": "Docs",
     "path": "src",
     "branch": "master",
     "editGithubBtn": true

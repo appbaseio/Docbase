@@ -59,8 +59,11 @@
     options = $.extend({}, defaults, options);
 
     if (options.method === 'github') {
-      if (!options.github.user || !options.github.repo) {
-        throw 'Missing GitHub user/repo info.';
+      if (!options.github.user) {
+        throw Error('Missing GitHub user info.');
+      }
+      if (!options.github.repo) {
+        throw Error('Missing GitHub repo info.');
       }
     }
 
@@ -87,13 +90,23 @@
     }
   };
   Docbase.run = function(options) {
-    if(options instanceof String || options === undefined){
-      options = JSON.parse($.ajax({
+    if(angular.isString(options) || angular.isUndefined(options)){
+      var fileName = options || 'docbase.json';
+      var configFileResponse = $.ajax({
         type: "GET",
-        url: (options || 'docbase.json'),
+        url: fileName,
         async: false
-      }).responseText);
-      _run(options);
+      });
+      if(configFileResponse.status === 200){
+        try {
+          options = JSON.parse(configFileResponse.responseText);
+        } catch (e) {
+          throw Error("File "+fileName+" is an invalid JSON file!");
+        }
+        _run(options);
+      }else{
+        throw Error("File "+fileName+" doesn't exists or could not be read!");
+      }
     }else{
       _run(options);
     }
@@ -165,7 +178,7 @@
         }
     };
     if(!Docbase.options.versions){
-      $.get(options.map.path + '/' + options.map.file)
+      $.get(options.path + '/' + options.file)
       .success(prepareMapFile)
       .error(function(error) {
         throw error;

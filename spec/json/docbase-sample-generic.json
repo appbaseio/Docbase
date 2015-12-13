@@ -1,6 +1,6 @@
 {
-  "name" : "defaultConfig",
-  "method": "file",
+  "name" : "generic",
+  "method": "generic",
   "github": {
     "user": "appbaseio",
     "repo": "Docs",

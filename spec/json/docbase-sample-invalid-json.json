@@ -1,6 +1,6 @@
 {
-  "name" : "defaultConfig",
-  "method": "file",
+  "name" : "testeFile",
+  "method": "file"
   "github": {
     "user": "appbaseio",
     "repo": "Docs",
