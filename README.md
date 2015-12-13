@@ -23,6 +23,11 @@ Copy the index.html file from docbase's root folder. You can change the paramete
 ```
 Now Copy the sample-docbase-config.js to your project, it is the configeration file of your documentation project!
 
+
+```bash
+ mv bower_components/docbase/sample-docbase-config.js docbase-config.js
+```
+
 where,  
 * ``method`` indicates the source of markdown files and can be one of "github", "file" or "generic".
 * ``github`` is a top level field that is relevant when the selected method is ``github``. It has obvious parameters such as ``user``, ``repo``, ``branch`` and ``editGithubBtn``.
