@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
-	var srcPath = "scripts/**/*.js"
+	var srcPath = ["scripts/**/*.js"]
 	var testePath = "spec/*Spec.js";
-	var libPaths = ['bower_components/jquery/dist/jquery.min.js', 'bower_components/flatdoc/legacy.js' ,'bower_components/flatdoc/flatdoc.js', 'scripts/flatdoc-theme.js', 'bower_components/angular/angular.js', 'bower_components/angular-route/angular-route.js', 'bower_components/js-schema/js-schema.min.js', 'bower_components/google-code-prettify/bin/prettify.min.js', 'bower_components/bootstrap/dist/js/bootstrap.min.js']
+	var libPaths = ['polyfills/polyfill.js','bower_components/jquery/dist/jquery.min.js', 'bower_components/flatdoc/legacy.js' ,'bower_components/flatdoc/flatdoc.js', 'scripts/flatdoc-theme.js', 'bower_components/angular/angular.js', 'bower_components/angular-route/angular-route.js', 'bower_components/js-schema/js-schema.min.js', 'bower_components/google-code-prettify/bin/prettify.min.js', 'bower_components/bootstrap/dist/js/bootstrap.min.js']
 	grunt.initConfig({
 		concat: {
 			default: {
@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 						return '\n' + '// FILE: ' + filepath + '\n' + src;
 					}
 				},
-				src: [srcPath],
+				src: srcPath,
 				dest: 'dist/main.js',
 			}
 		},
