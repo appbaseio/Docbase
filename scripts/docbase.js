@@ -51,6 +51,8 @@
       html5mode: false,
       indexType: 'html',
       indexSrc: 'v1/path/index.md',
+      navbarHtml: 'html/navbar.html',
+      logoSrc: '/images/logo.png',
       indexHtml: 'html/main.html', // dochub entry page
       flatdocHtml: 'html/flatdoc.html', // top navbar, and markdown layouts
       angularAppName: 'docbaseApp'
@@ -479,6 +481,8 @@
     } else {
       var onMapped = function() {
         $timeout(function() {
+          $scope.navbarHtml = Docbase.options.navbarHtml;
+          $scope.logoSrc = Docbase.options.logoSrc;
           $scope.map = Docbase.map;
           $scope.versions = Object.keys($scope.map);
           $scope.currentVersion = $scope.versions[0];

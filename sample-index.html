@@ -1,0 +1,48 @@
+<!doctype html>
+<html ng-app="docbaseApp">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="viewport" content="width=device-width">
+  <base href="/">
+
+  <title>Documentation</title>
+
+  <link rel="stylesheet" type="text/css" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+
+  <!-- Flatdoc -->
+  <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="./bower_components/flatdoc/legacy.js"></script>
+  <script src="./bower_components/flatdoc/flatdoc.js"></script>
+
+  <!-- Flatdoc theme -->
+  <!-- DocBase -->
+  <link rel="stylesheet" type="text/css" href="./bower_components/docbase/styles/main.css">
+  <script type="text/javascript" src="./bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="./bower_components/angular-route/angular-route.js"></script>
+
+  <script type="text/javascript" src="./bower_components/js-schema/js-schema.min.js"></script>
+  <link  href="./bower_components/flatdoc/theme-white/style.css" rel="stylesheet">
+
+  <script src="./bower_components/docbase/dist/main.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="styles/docs.css">
+  <script src="./bower_components/google-code-prettify/bin/prettify.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./bower_components/google-code-prettify/bin/prettify.min.css">
+
+  <link rel="stylesheet" type="text/css" href="./bower_components/font-awesome/css/font-awesome.min.css">
+  <script type="text/javascript">
+    Docbase.run();
+  </script>
+
+  <style>
+  </style>
+</head>
+<body role="flatdoc">
+
+  <div ng-view></div>
+
+  <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
