@@ -323,3 +323,41 @@ body.no-literate .content h1:first-child {
     border-top: none;
   }
 }
+.appbase-search{
+  /*border-radius: 0;
+  border: 0;*/
+}
+.result_record a{
+    background: #fff;
+    display: block;
+    padding: 7px 10px;
+    font-size: 0.9em;
+    line-height: 1.1em;
+}
+.result_record a:hover,
+.result_record.tt-cursor a{
+  text-decoration: none;
+  background: #eee;
+}
+.result_record,
+.appbase-search{
+    border-bottom: 1px solid #ccc;  
+}
+.tt-menu{
+  z-index: 2;
+  top: 40px !important;
+  width: 100%;
+  max-height: 230px;
+  overflow:auto; 
+}
+.search-form.open{
+  position: absolute !important;
+    display: inline-block;
+    width: 200px;
+    right: 0;
+    height: 280px;
+    padding: 5px;
+    top: 8px;
+    background: #fff;
+    border: 1px solid #ccc;
+}

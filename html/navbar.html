@@ -1,0 +1,65 @@
+<div class="container-fluid">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a id="docs-appbase-logo" class="navbar-brand" href="/">
+      <img ng-src="{{logoSrc}}" />
+    </a>
+  </div>
+
+  <div class="collapse navbar-collapse" id="navbar-collapse">
+    <ul class="nav navbar-nav">
+      <li class="dropdown" ng-repeat="folder in map[currentVersion]">
+        <a ng-href="#/{{currentVersion}}/{{folder.name}}"
+           class="dropdown-toggle"
+           data-toggle="dropdown"
+           role="button"
+           aria-expanded="false"
+           ng-bind="folder.label"></a>
+        <ul class="dropdown-menu">
+          <li ng-repeat="file in folder.files">
+            <a ng-href="#/{{currentVersion}}/{{folder.name}}/{{file.name}}" ng-bind="file.label"></a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+       <li class="dropdown search-dropdown">
+        <div class="form-group search-form"  data-ng-class="{'open-in':search.length > 0}" >
+          <input data-ng-model="search" type="text" class="search_field form-control dropdown-toggle"
+             data-toggle="dropdown"
+             aria-expanded="false"
+             placeholder="search.." />
+          <ul class="dropdown-menu search-box" role="menu" data-ng-show="search.length > 0">
+            <li data-ng-repeat="doc in doc_content | filter:search">
+              <a href="{{prefixPath}}{{doc.link}}">{{doc.title}}</a>
+              <span class="hide">{{doc.content}}</span>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="dropdown">
+        <a href=""
+           class="dropdown-toggle"
+           data-toggle="dropdown"
+           role="button"
+           aria-expanded="false">
+           <span ng-bind="currentVersion"></span> <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu version-switcher" role="menu">
+          <li ng-repeat="version in versions">
+            <a ng-href="#/{{version}}" ng-bind="version"></a>
+          </li>
+        </ul>
+      </li>
+      <li class="github-star">
+        <iframe src="https://ghbtns.com/github-btn.html?user=appbaseio&repo=Docs&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+      </li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->

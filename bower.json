@@ -1,6 +1,6 @@
 {
   "name": "docbase",
-  "version": "0.1.0",
+  "version": "0.2.3",
   "homepage": "https://github.com/appbaseio/Docbase",
   "authors": [
     "Henrique Sa <henriquepss@gmail.com>",
@@ -22,6 +22,7 @@
     "angular": "~1.3.13",
     "angular-route": "~1.3.13",
     "google-code-prettify": "~1.0.4",
-    "js-schema": "~0.7.2"
+    "js-schema": "~0.7.2",
+    "font-awesome": "~4.5.0"
   }
 }
