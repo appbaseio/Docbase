@@ -361,3 +361,4 @@ body.no-literate .content h1:first-child {
     background: #fff;
     border: 1px solid #ccc;
 }
+.highlight { background-color: yellow }
