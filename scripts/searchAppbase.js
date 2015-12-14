@@ -4,7 +4,11 @@
 		$search.addClass('appbase-search');
 
 		function searchTag(data) {
-			var result_a = $('<a>').addClass('result_record_a').attr('href', data.link).text(data.title);
+			var link_part =  data.link.split('/');
+			data.version = link_part.length > 1 ? '<span class="result_record_version">'+link_part[1]+'</span>' : null;
+			data.folder = link_part.length > 2 ? '<span class="result_record_folder">'+link_part[2]+'</span>' : null;
+			var	result_info = link_part.length > 1 ? $("<div>").addClass('result_record_info').append(data.folder).append(data.version) : null;	
+			var result_a = $('<a>').addClass('result_record_a').attr('href', data.link).text(data.title).append(result_info);
 			var result_div = $('<div>').addClass('result_record').append(result_a);
 			return result_div;
 		}

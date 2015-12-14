@@ -362,3 +362,13 @@ body.no-literate .content h1:first-child {
     border: 1px solid #ccc;
 }
 .highlight { background-color: yellow }
+.result_record_info{
+  color: #999;
+  padding-top: 10px;
+}
+.result_record_folder{
+  padding-right: 10px;
+    border-right: 1px solid;
+    margin-right: 10px;
+    float: left;
+}
