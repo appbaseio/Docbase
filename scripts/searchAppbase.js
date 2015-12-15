@@ -155,12 +155,10 @@
 
 (function($) {
 	$.fn.removeHighlight = function() {
-		return this.find("span.highlight").each(function() {
-			this.parentNode.firstChild.nodeName;
-			with(this.parentNode) {
-				replaceChild(this.firstChild, this);
-				normalize();
-			}
-		}).end();
+		return $(this).find('span.highlight').each(function(){
+		   $(this).replaceWith($(this).text());     
+		}).end().each(function() {
+		    this.normalize();
+		});
 	};
 }(jQuery));
