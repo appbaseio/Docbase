@@ -4,7 +4,11 @@
 		$search.addClass('appbase-search');
 
 		function searchTag(data) {
-			var result_a = $('<a>').addClass('result_record_a').attr('href', data.link).text(data.title);
+			var link_part =  data.link.split('/');
+			data.version = link_part.length > 1 ? '<span class="result_record_version">'+link_part[1]+'</span>' : null;
+			data.folder = link_part.length > 2 ? '<span class="result_record_folder">'+link_part[2]+'</span>' : null;
+			var	result_info = link_part.length > 1 ? $("<div>").addClass('result_record_info').append(data.folder).append(data.version) : null;	
+			var result_a = $('<a>').addClass('result_record_a').attr('href', data.link).text(data.title).append(result_info);
 			var result_div = $('<div>').addClass('result_record').append(result_a);
 			return result_div;
 		}
@@ -48,6 +52,10 @@
 			});
 			$search.bind('typeahead:close', function(ev, suggestion) {
 				$search.parents('.search-form').removeClass('open');
+			});
+			$search.on('keyup', function() {
+				var searchText = $(this).val();
+				$('.content').removeHighlight().highlight(searchText);
 			});
 		};
 
@@ -113,5 +121,44 @@
 				intializeCall();
 			});
 
+	};
+}(jQuery));
+
+(function($) {
+	$.fn.highlight = function(pat) {
+		function innerHighlight(node, pat) {
+			var skip = 0;
+			if (node.nodeType == 3) {
+				var pos = node.data.toUpperCase().indexOf(pat);
+				if (pos >= 0) {
+					var spannode = document.createElement('span');
+					spannode.className = 'highlight';
+					var middlebit = node.splitText(pos);
+					var endbit = middlebit.splitText(pat.length);
+					var middleclone = middlebit.cloneNode(true);
+					spannode.appendChild(middleclone);
+					middlebit.parentNode.replaceChild(spannode, middlebit);
+					skip = 1;
+				}
+			} else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)) {
+				for (var i = 0; i < node.childNodes.length; ++i) {
+					i += innerHighlight(node.childNodes[i], pat);
+				}
+			}
+			return skip;
+		}
+		return this.length && pat && pat.length ? this.each(function() {
+			innerHighlight(this, pat.toUpperCase());
+		}) : this;
+	};
+}(jQuery));
+
+(function($) {
+	$.fn.removeHighlight = function() {
+		return $(this).find('span.highlight').each(function(){
+		   $(this).replaceWith($(this).text());     
+		}).end().each(function() {
+		    this.normalize();
+		});
 	};
 }(jQuery));
