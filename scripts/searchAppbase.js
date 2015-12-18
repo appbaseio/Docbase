@@ -8,8 +8,11 @@
 			data.version = link_part.length > 1 ? '<span class="result_record_version">'+link_part[1]+'</span>' : null;
 			data.folder = link_part.length > 2 ? '<span class="result_record_folder">'+link_part[2]+'</span>' : null;
 			var	result_info = link_part.length > 1 ? $("<div>").addClass('result_record_info').append(data.folder).append(data.version) : null;	
-			var result_a = $('<a>').addClass('result_record_a').attr('href', data.link).text(data.title).append(result_info);
+			var result_a = $('<a>').addClass('result_record_a pointer').attr('link',data.link).text(data.title).append(result_info);
 			var result_div = $('<div>').addClass('result_record').append(result_a);
+			result_a.on('click',function(){
+				gotoLink(this);
+			});
 			return result_div;
 		}
 		var fail = function(e) {
@@ -44,9 +47,9 @@
 				}
 			});
 
-			$search.bind('typeahead:select', function(ev, suggestion) {
-				window.location.href = suggestion.link;
-			});
+			// $search.bind('typeahead:select', function(ev, suggestion) {
+			// 	window.location.href = suggestion.link;
+			// });
 			$search.bind('typeahead:open', function(ev, suggestion) {
 				$search.parents('.search-form').addClass('open');
 			});
@@ -57,8 +60,19 @@
 				var searchText = $(this).val();
 				$('.content').removeHighlight().highlight(searchText);
 			});
+			setQueryText();
 		};
-
+		//goto page with query string
+		var gotoLink = function(eve){
+			var fullLink = $(eve).attr('link')+'?q='+$search.val();
+			window.location.href = fullLink;
+		}
+		//set initial higlhight according to previous page query
+		var setQueryText = function(){
+			var queryText = window.location.href.split('?q=')[1];
+			$search.val(queryText);
+			$search.trigger('keyup');
+		}
 		//Fetch search index json data
 		var intializeCall = function() {
 			$.get(searchIndexUrl)

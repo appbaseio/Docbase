@@ -372,3 +372,6 @@ body.no-literate .content h1:first-child {
     margin-right: 10px;
     float: left;
 }
+.pointer{
+  cursor: pointer;
+}
