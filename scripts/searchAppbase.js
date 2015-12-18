@@ -66,13 +66,13 @@
 		var gotoLink = function(eve){
 			var fullLink = $(eve).attr('link')+'?q='+$search.val();
 			window.location.href = fullLink;
-		}
+		};
 		//set initial higlhight according to previous page query
 		var setQueryText = function(){
 			var queryText = window.location.href.split('?q=')[1];
 			$search.val(queryText);
 			$search.trigger('keyup');
-		}
+		};
 		//Fetch search index json data
 		var intializeCall = function() {
 			$.get(searchIndexUrl)
