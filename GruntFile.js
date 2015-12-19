@@ -1,3 +1,4 @@
+
 module.exports = function(grunt) {
 	var srcPath = ["scripts/**/*.js"]
 	var testePath = "spec/*Spec.js";
@@ -47,12 +48,12 @@ module.exports = function(grunt) {
 					 templateOptions: {
 							 coverage: 'bin/coverage/coverage.json',
 							 report: 'bin/coverage',
-							 /*thresholds: {// we will use this soon
-									 lines: 75,
-									 statements: 75,
-									 branches: 75,
-									 functions: 90
-							 }*/
+							 thresholds: {// we will use this soon
+									 lines: 100,
+									 statements: 100,
+									 branches: 100,
+									 functions: 100
+							 }
 					 }
 	       }
 	     }
