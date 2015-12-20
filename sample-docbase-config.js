@@ -2,6 +2,7 @@ var docbaseConfig = {
   "method" : "file",
   "indexHtml": "/bower_components/docbase/html/main.html",
   "navbarHtml": "/bower_components/docbase/html/navbar.html",
+  "flatdocHtml": "/bower_components/docbase/html/flatdoc.html",
   "logoSrc" : "/bower_components/docbase/images/logo.png",
   "versions" : {
     "v1.0" : [
