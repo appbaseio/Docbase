@@ -265,3 +265,34 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
     width: 200px;
     right: 0; 
 }
+.result_record a{
+    background: #fff;
+    display: block;
+    padding: 7px 10px;
+    font-size: 0.9em;
+    line-height: 1.1em;
+}
+.result_record a:hover,
+.result_record.tt-cursor a{
+  text-decoration: none;
+  background: #eee;
+}
+.result_record,
+.appbase-search{
+    border-bottom: 1px solid #ccc;  
+}
+
+.highlight { background-color: yellow }
+.result_record_info{
+  color: #999;
+  padding-top: 10px;
+}
+.result_record_folder{
+  padding-right: 10px;
+    border-right: 1px solid;
+    margin-right: 10px;
+    float: left;
+}
+.pointer{
+  cursor: pointer;
+}
