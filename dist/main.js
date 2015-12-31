@@ -296,7 +296,12 @@
     * Hack to prevent route reload when hash is changed.
     * Makes sure only the hash was change and intercepts the event.
     */
-
+    $rootScope.getVersionLink = function(version, map){
+      var folder = map[version][0];
+      var file   = folder.files[0];
+      var link = version+"/"+folder.name+"/"+file.name;
+      return link;
+    };
     $rootScope.$on('$locationChangeStart', function(evnt, newRoute, oldRoute) {
       var firstRoute = newRoute.split('#');
       var hash = firstRoute[firstRoute.length - 1];
@@ -454,6 +459,7 @@
   Route.URLCtrl = function($scope, $location, $filter, data, commits) {
     $location.path(data.locationPath);
     var contribut_array = [];
+
     if (!data.fail) {
       $scope.versions = data.versions;
       $scope.currentVersion = data.currentVersion;
@@ -995,16 +1001,26 @@ var angApp = angular.module('docbaseApp', ['ngRoute'], function(){})
 			setQueryText();
 		};
 		//goto page with query string
+		var isFromSearchResult = false; 
 		var gotoLink = function(eve){
-			var fullLink = $(eve).attr('link')+'?q='+$search.val();
+			var queryString = $search.val();
+			sessionStorage.setItem('queryString',queryString);
+			isFromSearchResult = true;
+			var fullLink = $(eve).attr('link');
 			window.location.href = fullLink;
 		};
+		$(window).unbind('hashchange').on('hashchange', function() {
+			if(!isFromSearchResult){
+				sessionStorage.removeItem('queryString');
+			}
+		});
 		//set initial higlhight according to previous page query
 		var setQueryText = function(){
-			var queryText = window.location.href.split('?q=')[1];
+			var queryText = sessionStorage.getItem('queryString');
 			$search.val(queryText);
 			$search.trigger('keyup');
 		};
+
 		//Fetch search index json data
 		var intializeCall = function() {
 			$.get(searchIndexUrl)

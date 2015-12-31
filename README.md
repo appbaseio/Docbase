@@ -9,7 +9,7 @@ A fast and flexible single-page documentation engine. Create documentation hubs 
 
 ## Installation
 
-    bower install docbase
+    bower install docbase --save
 
 ## Usage
 

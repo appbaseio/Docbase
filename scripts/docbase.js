@@ -269,7 +269,12 @@
     * Hack to prevent route reload when hash is changed.
     * Makes sure only the hash was change and intercepts the event.
     */
-
+    $rootScope.getVersionLink = function(version, map){
+      var folder = map[version][0];
+      var file   = folder.files[0];
+      var link = version+"/"+folder.name+"/"+file.name;
+      return link;
+    };
     $rootScope.$on('$locationChangeStart', function(evnt, newRoute, oldRoute) {
       var firstRoute = newRoute.split('#');
       var hash = firstRoute[firstRoute.length - 1];
@@ -427,6 +432,7 @@
   Route.URLCtrl = function($scope, $location, $filter, data, commits) {
     $location.path(data.locationPath);
     var contribut_array = [];
+
     if (!data.fail) {
       $scope.versions = data.versions;
       $scope.currentVersion = data.currentVersion;

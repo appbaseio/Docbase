@@ -53,7 +53,7 @@
         </a>
         <ul class="dropdown-menu version-switcher" role="menu">
           <li ng-repeat="version in versions">
-            <a ng-href="#/{{version}}" ng-bind="version"></a>
+            <a ng-href="#/{{getVersionLink(version, map)}}" ng-bind="version"></a>
           </li>
         </ul>
       </li>
