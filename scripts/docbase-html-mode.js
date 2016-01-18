@@ -12,10 +12,10 @@
     $(function() {
         $("h2, h3").scrollagent(function(cid, pid, currentElement, previousElement) {
             if (pid) {
-                $("[href*='#" + pid + "']").removeClass('active');
+                $("[pref='#" + pid + "']").removeClass('active');
             }
             if (cid) {
-                $("[href*='#" + cid + "']").addClass('active');
+                $("[pref='#" + cid + "']").addClass('active');
             }
         });
     });
