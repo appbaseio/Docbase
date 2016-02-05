@@ -130,8 +130,11 @@
     }
     for (var v in versions) {
       var version = versions[v];
-      if(version !== null)
-        version.forEach(folderIn);
+      if (version !== null) {
+        for (var i = 0; i < version.length; i++) {
+          folderIn(version[i]);
+        }
+      }
     }
     return versions;
   };
@@ -367,14 +370,8 @@
         retObj.locationPath = location.path;
 
         //If index file
-        if (typeof($route.current.params.file) === 'undefined') {
-          $location.path(retObj.locationPath);
-        }
 
-        var pathCheck = location.path.split('/');
-        var lastPath = pathCheck[pathCheck.length-1];
-        
-        if ($route.current.params.file === 'index' || lastPath === 'index') {
+        if ($route.current.params.file === 'index') {
           retObj.index = true;
           retObj.currentFolder = $route.current.params.folder;
           deferred.resolve(retObj);
@@ -474,7 +471,7 @@
     $scope.github = data.github;
     $scope.navbarHtml = Docbase.options.navbarHtml;
     $scope.logoSrc = Docbase.options.logoSrc;
- 
+
     function versionIn(folder) {
       if (folder.name === data.currentFolder) {
         $scope.indexList = folder.files;
@@ -488,8 +485,10 @@
 
       for (var version in data.map) {
         if (version === data.currentVersion) {
-          if(data.map[version] !== null)
-            data.map[version].forEach(versionIn);
+          if (data.map[version] !== null)
+            for (var j = 0; j < data.map[version].length; j++) {
+              versionIn(data.map[version][j]);
+            }
         }
       }
     } else {
@@ -613,7 +612,7 @@
     })[0];
 
     // allow files in TL menu
-    file = file || (folderObj.files && 'index');
+    file = file || (folderObj.files && folderObj.files[0].name);
     var path = '/' + version + '/' + folder + '/' + file;
     if (typeof(file) === "undefined")
       path = '/' + version + '/' + folder;
