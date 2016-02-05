@@ -327,7 +327,7 @@
 
     $rootScope.$on("$includeContentLoaded", function(event, templateName) {
       if($.fn.searchAppbase && Docbase.options.useSearch){
-        $('.search_field').searchAppbase(Docbase.options.searchIndexUrl);
+        $('.search_form').searchAppbase(Docbase.options.searchIndexUrl);
       }
     });
 
@@ -938,7 +938,14 @@ var angApp = angular.module('docbaseApp', ['ngRoute'], function(){})
 // FILE: scripts/searchAppbase.js
 (function($) {
 	$.fn.searchAppbase = function(searchIndexUrl) {
-		var $search = this;
+		
+		//Create the search input element and insert it into html
+		var $search = $('<input>').attr({
+			'class':"search_field form-control dropdown-toggle",
+			'type':'text',
+			'placeholder':'search'
+		});
+		$(this).html($search);
 		$search.addClass('appbase-search');
 
 		function searchTag(data) {
@@ -1001,26 +1008,16 @@ var angApp = angular.module('docbaseApp', ['ngRoute'], function(){})
 			setQueryText();
 		};
 		//goto page with query string
-		var isFromSearchResult = false; 
 		var gotoLink = function(eve){
-			var queryString = $search.val();
-			sessionStorage.setItem('queryString',queryString);
-			isFromSearchResult = true;
-			var fullLink = $(eve).attr('link');
+			var fullLink = $(eve).attr('link')+'?q='+$search.val();
 			window.location.href = fullLink;
 		};
-		$(window).unbind('hashchange').on('hashchange', function() {
-			if(!isFromSearchResult){
-				sessionStorage.removeItem('queryString');
-			}
-		});
 		//set initial higlhight according to previous page query
 		var setQueryText = function(){
-			var queryText = sessionStorage.getItem('queryString');
+			var queryText = window.location.href.split('?q=')[1];
 			$search.val(queryText);
 			$search.trigger('keyup');
 		};
-
 		//Fetch search index json data
 		var intializeCall = function() {
 			$.get(searchIndexUrl)

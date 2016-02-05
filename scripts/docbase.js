@@ -300,7 +300,7 @@
 
     $rootScope.$on("$includeContentLoaded", function(event, templateName) {
       if($.fn.searchAppbase && Docbase.options.useSearch){
-        $('.search_field').searchAppbase(Docbase.options.searchIndexUrl);
+        $('.search_form').searchAppbase(Docbase.options.searchIndexUrl);
       }
     });
 

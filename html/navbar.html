@@ -30,17 +30,7 @@
 
     <ul class="nav navbar-nav navbar-right">
        <li class="dropdown search-dropdown">
-        <div class="form-group search-form"  data-ng-class="{'open-in':search.length > 0}" >
-          <input data-ng-model="search" type="text" class="search_field form-control dropdown-toggle"
-             data-toggle="dropdown"
-             aria-expanded="false"
-             placeholder="search.." />
-          <ul class="dropdown-menu search-box" role="menu" data-ng-show="search.length > 0">
-            <li data-ng-repeat="doc in doc_content | filter:search">
-              <a href="{{prefixPath}}{{doc.link}}">{{doc.title}}</a>
-              <span class="hide">{{doc.content}}</span>
-            </li>
-          </ul>
+        <div class="form-group search-form">
         </div>
       </li>
       <li class="dropdown">
