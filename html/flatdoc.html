@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default navbar-fixed-top" ng-include="navbarHtml">
 </nav>
-<div role="flatdoc" class="content-root">
+<div role="flatdoc" class="content-root" data-ng-if="!index">
   <div class="menubar">
     <div class="menu section" role="flatdoc-menu"></div>
   </div>
@@ -8,4 +8,18 @@
   <a class="edit" ng-href="{{github}}" target="_blank">
     <span class="fa fa-pencil"> Edit</span>
   </a>
+</div>
+<div class="index-container" data-ng-if="index">
+	<div class="container">
+		<div class="row">
+			<h1 class="col-xs-12">
+				{{currentFolder}}
+			</h1>
+		</div>
+		<ul class="row">
+			<li class="col-xs-12" data-ng-repeat="file in indexList">
+				<a href="{{file.name}}" class="col-xs-12">{{file.name}}</a>
+			</li>
+		</ul>
+	</div>
 </div>
