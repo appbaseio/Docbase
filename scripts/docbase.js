@@ -130,7 +130,8 @@
     }
     for (var v in versions) {
       var version = versions[v];
-      version.forEach(folderIn);
+      if(version !== null)
+        version.forEach(folderIn);
     }
     return versions;
   };
@@ -370,7 +371,10 @@
           $location.path(retObj.locationPath);
         }
 
-        if ($route.current.params.file === 'index') {
+        var pathCheck = location.path.split('/');
+        var lastPath = pathCheck[pathCheck.length-1];
+        
+        if ($route.current.params.file === 'index' || lastPath === 'index') {
           retObj.index = true;
           retObj.currentFolder = $route.current.params.folder;
           deferred.resolve(retObj);
@@ -484,7 +488,8 @@
 
       for (var version in data.map) {
         if (version === data.currentVersion) {
-          data.map[version].forEach(versionIn);
+          if(data.map[version] !== null)
+            data.map[version].forEach(versionIn);
         }
       }
     } else {
