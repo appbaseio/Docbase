@@ -76,14 +76,17 @@
 		};
 		//goto page with query string
 		var gotoLink = function(eve){
-			var fullLink = $(eve).attr('link')+'#'+$(eve).attr('sectionId')+'?q='+$search.val();
+			var fullLink = $(eve).attr('link')+'?q='+$search.val()+'#'+$(eve).attr('sectionId');
 			window.location.href = fullLink;
 		};
 		//set initial higlhight according to previous page query
 		var setQueryText = function(){
-			var queryText = window.location.href.split('?q=')[1];
-			$search.val(queryText);
-			$search.trigger('keyup');
+			var winhref = window.location.href;
+			if(winhref.indexOf('?q=') != -1){
+				var queryText = winhref.substring(winhref.indexOf('?q=')+3,winhref.lastIndexOf('#'));
+				$search.val(queryText);
+				$search.trigger('keyup');
+			}
 		};
 		//Fetch search index json data
 		var intializeCall = function() {
