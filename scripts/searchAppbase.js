@@ -83,7 +83,7 @@
 		var setQueryText = function(){
 			var winhref = window.location.href;
 			if(winhref.indexOf('?q=') != -1){
-				var queryText = winhref.substring(winhref.indexOf('?q=')+3,winhref.lastIndexOf('#'));
+				var queryText = winhref.substring(winhref.indexOf('?q=')+3,winhref.lastIndexOf('#')).replace(/%20/g,' ');
 				$search.val(queryText);
 				$search.trigger('keyup');
 			}
