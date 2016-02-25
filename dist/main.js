@@ -1005,10 +1005,11 @@
 		function searchTag(data) {
 			var singleId = data.singleId;
 			var sectionId = singleId.substring(singleId.indexOf('"')+1, singleId.lastIndexOf('"'));
-			console.log(sectionId);
+			var filesplit = data.link.split('/');
+			var fileName = filesplit[filesplit.length - 1].replace('.html','');
 			var link_part =  data.link.split('/');
 			data.version = link_part.length > 1 ? '<span class="result_record_version">'+link_part[1]+'</span>' : null;
-			data.folder = link_part.length > 2 ? '<span class="result_record_folder">'+link_part[2]+'</span>' : null;
+			data.folder = link_part.length > 2 ? '<span class="result_record_folder">'+fileName+'</span>' : null;
 			var	result_info = link_part.length > 1 ? $("<div>").addClass('result_record_info').append(data.folder).append(data.version) : null;	
 			var result_a = $('<a>').addClass('result_record_a pointer').attr({'link':data.link, 'sectionId':sectionId}).text(data.title).append(result_info);
 			var result_div = $('<div>').addClass('result_record').append(result_a);
