@@ -240,7 +240,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
     content: "";
     position: absolute;
     top: -6px;
-    left: 81px;
+    left: 137px;
     width: 28px;
     height: 28px;
     display: block;
@@ -251,7 +251,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
    content: "";
     position: absolute;
     top: -5px;
-    left: 82px;
+    left: 138px;
     width: 26px;
     height: 27px;
     display: block;
@@ -262,8 +262,11 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 .search-form{
     top: 8px !important;    
     position: absolute !important;
-    width: 200px;
+    width: 300px;
     right: 0; 
+}
+.search-form .twitter-typeahead{
+    width: 300px;
 }
 .result_record a{
     background: #fff;
