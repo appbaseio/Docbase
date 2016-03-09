@@ -462,79 +462,80 @@
     };
   };
 
-  Route.URLCtrl = function($scope, $location, $filter, data, commits) {
-    $location.path(data.locationPath);
-    $scope.index = false;
-    $scope.versions = data.versions;
-    $scope.currentVersion = data.currentVersion;
-    $scope.map = data.map;
-    $scope.github = data.github;
-    $scope.navbarHtml = Docbase.options.navbarHtml;
-    $scope.logoSrc = Docbase.options.logoSrc;
+  Route.URLCtrl = function($scope, $location, $filter, data, commits, $timeout) {
+    $timeout(function() {
+      $location.path(data.locationPath);
+      $scope.index = false;
+      $scope.versions = data.versions;
+      $scope.currentVersion = data.currentVersion;
+      $scope.map = data.map;
+      $scope.github = data.github;
+      $scope.navbarHtml = Docbase.options.navbarHtml;
+      $scope.logoSrc = Docbase.options.logoSrc;
 
-    function versionIn(folder) {
-      if (folder.name === data.currentFolder) {
-        $scope.indexList = folder.files;
-      }
-    }
-    //If index is true
-    if (data.index) {
-      $scope.index = true;
-      $scope.currentFolder = data.currentFolder;
-      $scope.indexList = [];
-
-      for (var version in data.map) {
-        if (version === data.currentVersion) {
-          if (data.map[version] !== null)
-            for (var j = 0; j < data.map[version].length; j++) {
-              versionIn(data.map[version][j]);
-            }
+      function versionIn(folder) {
+        if (folder.name === data.currentFolder) {
+          $scope.indexList = folder.files;
         }
       }
-    } else {
-      var contribut_array = [];
+      //If index is true
+      if (data.index) {
+        $scope.index = true;
+        $scope.currentFolder = data.currentFolder;
+        $scope.indexList = [];
 
-      if (!data.fail) {
-        var content = data.markdown;
-        $('[role="flatdoc-content"]').html(content.content.find('>*'));
-        $('[role="flatdoc-menu"]').html(Flatdoc.menuView(content.menu));
-
-        jWindow.trigger('flatdoc:ready');
-      }
-
-      var extra_container = $("<div>").addClass('extra_container');
-      if (commits.status == 200 && commits.data && commits.data.length) {
-        var commits_data = commits.data;
-        var commiter_data = $filter('date')(commits.data[0].commit.committer.date, 'mediumDate');
-        var last_date = $('<span>').addClass('pull-right modified-date').html('Last Modified On : <a href="' + commits.data[0].html_url + '">' + commiter_data + '</a>');
-
-        var contributors_data = commits_data;
-        var contributors = $('<div>').addClass('contributor-container');
-        for (var i = 0; i < contributors_data.length; i++) {
-          var contributor_d = contributors_data[i].committer;
-          if (contributor_d && jQuery.inArray(contributor_d.login, contribut_array) == -1) {
-            contribut_array.push(contributor_d.login);
-            var contributor_img = $('<img>').addClass('contributor_img img-rounded').attr({
-              'src': contributor_d.avatar_url,
-              'alt': contributor_d.login
-            });
-            var contributor = $('<a>').addClass('contributor').attr({
-              'href': contributor_d.html_url,
-              'title': contributor_d.login,
-              'target': '_blank'
-            }).append(contributor_img);
-            contributors.append(contributor);
+        for (var version in data.map) {
+          if (version === data.currentVersion) {
+            if (data.map[version] !== null)
+              for (var j = 0; j < data.map[version].length; j++) {
+                versionIn(data.map[version][j]);
+              }
           }
         }
-        var contributors_header = $('<div>').addClass('contributors_header').append('Contributors').append(last_date);
-        $(extra_container).prepend(contributors).prepend(contributors_header);
+      } else {
+        var contribut_array = [];
+        if (!data.fail) {
+          var content = data.markdown;
+          $('[role="flatdoc-content"]').html(content.content.find('>*'));
+          $('[role="flatdoc-menu"]').html(Flatdoc.menuView(content.menu));
+
+          jWindow.trigger('flatdoc:ready');
+        }
+
+        var extra_container = $("<div>").addClass('extra_container');
+        if (commits.status == 200 && commits.data && commits.data.length) {
+          var commits_data = commits.data;
+          var commiter_data = $filter('date')(commits.data[0].commit.committer.date, 'mediumDate');
+          var last_date = $('<span>').addClass('pull-right modified-date').html('Last Modified On : <a href="' + commits.data[0].html_url + '">' + commiter_data + '</a>');
+
+          var contributors_data = commits_data;
+          var contributors = $('<div>').addClass('contributor-container');
+          for (var i = 0; i < contributors_data.length; i++) {
+            var contributor_d = contributors_data[i].committer;
+            if (contributor_d && jQuery.inArray(contributor_d.login, contribut_array) == -1) {
+              contribut_array.push(contributor_d.login);
+              var contributor_img = $('<img>').addClass('contributor_img img-rounded').attr({
+                'src': contributor_d.avatar_url,
+                'alt': contributor_d.login
+              });
+              var contributor = $('<a>').addClass('contributor').attr({
+                'href': contributor_d.html_url,
+                'title': contributor_d.login,
+                'target': '_blank'
+              }).append(contributor_img);
+              contributors.append(contributor);
+            }
+          }
+          var contributors_header = $('<div>').addClass('contributors_header').append('Contributors').append(last_date);
+          $(extra_container).prepend(contributors).prepend(contributors_header);
 
 
+        }
+
+        var div2 = $('<div>').addClass('clearFix');
+        $('[role="flatdoc-content"]').prepend(div2).prepend(extra_container);
       }
-
-      var div2 = $('<div>').addClass('clearFix');
-      $('[role="flatdoc-content"]').prepend(div2).prepend(extra_container);
-    }
+    }.bind(this), 0);
   };
 
   Route.mainCtrl = function($scope, $location, $timeout, $rootScope) {
@@ -742,7 +743,7 @@
 
   var angApp = angular.module('docbaseApp', ['ngRoute'], function() {})
     .factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', '$http', Route.fetch])
-    .controller('URLCtrl', ['$scope', '$location', '$filter', 'data', 'commits', Route.URLCtrl])
+    .controller('URLCtrl', ['$scope', '$location', '$filter', 'data', 'commits', '$timeout', Route.URLCtrl])
     .controller('MainCtrl', ['$scope', '$location', '$timeout', '$rootScope', Route.mainCtrl])
     .config(['$routeProvider', '$locationProvider', Route.config])
     .run(
