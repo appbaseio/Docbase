@@ -326,7 +326,8 @@
 
     $rootScope.$on("$includeContentLoaded", function(event, templateName) {
       if ($.fn.searchAppbase && Docbase.options.useSearch) {
-        $('.search-form').searchAppbase(Docbase.options.searchIndexUrl);
+        //passing false as Htmlmode : false
+        $('.search-form').searchAppbase(Docbase.options.searchIndexUrl, false);
       }
     });
 

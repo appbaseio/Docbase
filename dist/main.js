@@ -353,7 +353,8 @@
 
     $rootScope.$on("$includeContentLoaded", function(event, templateName) {
       if ($.fn.searchAppbase && Docbase.options.useSearch) {
-        $('.search-form').searchAppbase(Docbase.options.searchIndexUrl);
+        //passing false as Htmlmode : false
+        $('.search-form').searchAppbase(Docbase.options.searchIndexUrl, false);
       }
     });
 
@@ -992,7 +993,7 @@
 
 // FILE: scripts/searchAppbase.js
 (function($) {
-	$.fn.searchAppbase = function(searchIndexUrl) {
+	$.fn.searchAppbase = function(searchIndexUrl, htmlMode) {
 		
 		//Create the search input element and insert it into html
 		var $search = $('<input>').attr({
@@ -1012,7 +1013,7 @@
 			data.version = link_part.length > 1 ? '<span class="result_record_version">'+link_part[1]+'</span>' : null;
 			data.folder = link_part.length > 2 ? '<span class="result_record_folder">'+fileName+'</span>' : null;
 			var	result_info = link_part.length > 1 ? $("<div>").addClass('result_record_info').append(data.folder).append(data.version) : null;	
-			var result_a = $('<a>').addClass('result_record_a pointer').attr({'link':data.link, 'sectionId':sectionId}).text(data.title).append(result_info);
+			var result_a = $('<a>').addClass('result_record_a pointer').attr({'link':data.link, 'sectionId':sectionId, 'spaLink': data.spaLink}).text(data.title).append(result_info);
 			var result_div = $('<div>').addClass('result_record').append(result_a);
 			result_a.on('click',function(){
 				gotoLink(this);
@@ -1069,8 +1070,9 @@
 			setQueryText();
 		};
 		//goto page with query string
-		var gotoLink = function(eve){
-			var fullLink = $(eve).attr('link')+'?q='+$search.val()+'#'+$(eve).attr('sectionId');
+		var gotoLink = function(eve) {
+			var linkMode = htmlMode ? $(eve).attr('link') : $(eve).attr('spaLink'); 
+			var fullLink = linkMode+'?q='+$search.val()+'#'+$(eve).attr('sectionId');
 			window.location.href = fullLink;
 		};
 		//set initial higlhight according to previous page query
