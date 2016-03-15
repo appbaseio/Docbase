@@ -5,7 +5,7 @@
     <div class="menu section" role="flatdoc-menu"></div>
   </div>
   <div role="flatdoc-content" class="content"></div>
-  <a class="edit" ng-href="{{github}}" target="_blank">
+  <a data-ng-if="docbaseOptions.method == 'github'" class="edit" ng-href="{{github}}" target="_blank">
     <span class="fa fa-pencil"> Edit</span>
   </a>
 </div>

@@ -475,6 +475,7 @@
       $scope.github = data.github;
       $scope.navbarHtml = Docbase.options.navbarHtml;
       $scope.logoSrc = Docbase.options.logoSrc;
+      $scope.docbaseOptions = Docbase.options;
 
       function versionIn(folder) {
         if (folder.name === data.currentFolder) {
@@ -542,6 +543,7 @@
   };
 
   Route.mainCtrl = function($scope, $location, $timeout, $rootScope) {
+    $scope.docbaseOptions = Docbase.options;
     if (Docbase.options.indexType === 'markdown') {
       var path = Docbase.options.indexSrc;
       if (endsWith(path, '.md')) {
