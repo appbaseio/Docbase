@@ -1,9 +1,9 @@
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700);
+ @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700);
 
 .navbar-brand img{
-	display: block;
-	margin-top: -7px;
-	height: 34px;
+  display: block;
+  margin-top: -7px;
+  height: 34px;
 }
 .navbar-default {
     z-index: 10000;
@@ -13,42 +13,34 @@
 }
 
 body {
-	font-family: 'Source Sans Pro', sans-serif;
-	font-weight: 400;
-	font-size: 1em;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 400;
+  font-size: 1em;
 }
 
 body:not(.no-literate) .content h1 {
-	display: block;
-	width: 550px;
+  display: block;
+  width: 550px;
 }
 
 .menu a.active:after {
-	top: 10px;
-	left: -15px;
-}
-
-.content {
-	max-width: 760px;
+  top: 10px;
+  left: -15px;
 }
 
 .content h1, .content h2, .content h3, .content h4, .content h5, .content h6, .menu {
-	font-family: 'Source Sans Pro';
-	font-weight: 700;
-}
-
-body.no-literate .content pre > code {
-	border: none;
+  font-family: 'Source Sans Pro';
+  font-weight: 700;
 }
 
 .menu a.level-1 {
-	font-family: 'Source Sans Pro';
-	font-weight: 700;
+  font-family: 'Source Sans Pro';
+  font-weight: 700;
 }
 
 .dropdown-menu.version-switcher {
-	min-width: 0;
-	width: 68px;
+  min-width: 0;
+  width: 68px;
 }
 
 .edit {
@@ -64,7 +56,7 @@ body.no-literate .content pre > code {
   color: #aaa;
   transition: all 0.3s ease;
   border-right: 1px solid #eee;
-	opacity: 0.4;
+  opacity: 0.4;
 }
 
 @media (min-width: 1350px) {
@@ -148,7 +140,7 @@ body.no-literate .content pre > code {
     padding-right: 0;
   }
   .content h1:before, .content h2:before, .content .big-heading:before, body.big-h3 .content h3:before {
-  	width: 900px;
+    width: 900px;
   }
 
   .edit {
@@ -177,15 +169,15 @@ body.no-literate .content pre > code {
 }
 
 @media (max-width: 768px) {
-	body .edit {
-		right: 80px;
-		left: initial;
-		border-left: 1px solid #eee;
-	}
-	body.edit:hover {
-		left: initial !important;
-		right: 80px;
-	}
+  body .edit {
+    right: 80px;
+    left: initial;
+    border-left: 1px solid #eee;
+  }
+  body.edit:hover {
+    left: initial !important;
+    right: 80px;
+  }
 }
 
 li.active {
@@ -217,11 +209,11 @@ li.active {
 
 .edit:hover{
   color: #444;
-	border: 1px solid #bbb !important;
-	opacity: 1;
-	padding-left: 10px;
-	-webkit-filter: brightness(110%);
-	filter: brightness(110%);
+  border: 1px solid #bbb !important;
+  opacity: 1;
+  padding-left: 10px;
+  -webkit-filter: brightness(110%);
+  filter: brightness(110%);
 }
 
 .edit:active, .edit:focus {
@@ -323,55 +315,10 @@ body.no-literate .content h1:first-child {
     border-top: none;
   }
 }
-.appbase-search{
-  /*border-radius: 0;
-  border: 0;*/
-}
-.result_record a{
-    background: #fff;
-    display: block;
-    padding: 7px 10px;
-    font-size: 0.9em;
-    line-height: 1.1em;
-}
-.result_record a:hover,
-.result_record.tt-cursor a{
-  text-decoration: none;
-  background: #eee;
-}
-.result_record,
-.appbase-search{
-    border-bottom: 1px solid #ccc;  
-}
-.tt-menu{
-  z-index: 2;
-  top: 40px !important;
-  width: 100%;
-  max-height: 230px;
-  overflow:auto; 
-}
-.search-form.open{
-  position: absolute !important;
-    display: inline-block;
-    width: 200px;
-    right: 0;
-    height: 280px;
-    padding: 5px;
-    top: 8px;
-    background: #fff;
-    border: 1px solid #ccc;
-}
-.highlight { background-color: yellow }
-.result_record_info{
-  color: #999;
-  padding-top: 10px;
-}
-.result_record_folder{
-  padding-right: 10px;
-    border-right: 1px solid;
-    margin-right: 10px;
-    float: left;
-}
-.pointer{
-  cursor: pointer;
+
+#navbar-collapse > ul.nav.navbar-nav.navbar-right > li.dropdown.search-dropdown > div > span > span:nth-child(2){
+    position: absolute !important;
+    display: inline-block !important;
+    top: 0px !important;
+    left: 0 !important;
 }

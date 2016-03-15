@@ -14,7 +14,7 @@
 			var singleId = data.singleId;
 			var sectionId = singleId.substring(singleId.indexOf('"')+1, singleId.lastIndexOf('"'));
 			var filesplit = data.link.split('/');
-			var fileName = filesplit[filesplit.length - 1].replace('.html','');
+			var fileName = htmlMode ? filesplit[filesplit.length - 1].replace('.html','') : filesplit[filesplit.length - 2];
 			var link_part =  data.link.split('/');
 			data.version = link_part.length > 1 ? '<span class="result_record_version">'+link_part[1]+'</span>' : null;
 			data.folder = link_part.length > 2 ? '<span class="result_record_folder">'+fileName+'</span>' : null;
