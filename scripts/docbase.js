@@ -174,13 +174,15 @@
           Events.bind();
         };
         if (!Docbase.versions) {
-          $.get(Docbase.options.map.path + '/' + Docbase.options.map.file)
-            .success(prepareMapFile)
-            .error(function(error) {
-              // no map available for labels
-              jWindow.trigger('mapped');
-              Events.bind();
-            });
+          jWindow.trigger('mapped');
+
+          // $.get(Docbase.options.map.path + '/' + Docbase.options.map.file)
+          //   .success(prepareMapFile)
+          //   .error(function(error) {
+          //     // no map available for labels
+          //     jWindow.trigger('mapped');
+          //     Events.bind();
+          //   });
         } else {
           prepareMapFile(Docbase.options.versions);
         }
@@ -658,7 +660,10 @@
 
     var baseurl = 'https://api.github.com/repos/' + options.user + '/' + options.repo + '/';
 
-    var url = baseurl + 'contents/' + path;
+    var url = baseurl + 'contents?ref=' + options.branch + path;
+    if (options.client_id && options.client_secret) {
+      url += '&client_id=' + options.client_id + '&client_secret=' + options.client_secret;
+    }
 
     $.get(url, {
         ref: options.branch
@@ -670,7 +675,12 @@
         });
         if (commitData[0]) {
           var sha = commitData[0].sha;
-          $.get(baseurl + 'git/trees/' + sha + '?recursive=1')
+          var treeUrl = baseurl + 'git/trees/' + sha + '?recursive=1';
+          if (options.client_id && options.client_secret) {
+            treeUrl += '&client_id=' + options.client_id + '&client_secret=' + options.client_secret;
+          }
+
+          $.get(treeUrl)
             .success(function(tree) {
               tree = tree.tree.filter(function(each) {
                 return endsWith(each.path, '.md');
@@ -716,8 +726,8 @@
                 }
               });
 
+              map = Docbase._index(map);
               callback(null, map);
-
             })
             .error(function(error) {
               callback(error);
