@@ -481,6 +481,9 @@
           if (options.github.client_id && options.github.client_secret) {
             urlToCommits += '&client_id=' + options.github.client_id + '&client_secret=' + options.github.client_secret;
           }
+          if (options.github.access_token) {
+            urlToCommits += '&access_token=' + options.github.access_token;
+          }
           resultPromise = $http.get(urlToCommits);
         } else {
           deferred = $q.defer();
@@ -693,6 +696,9 @@
     if (options.client_id && options.client_secret) {
       url += '&client_id=' + options.client_id + '&client_secret=' + options.client_secret;
     }
+    if (options.access_token) {
+      url += '&access_token=' + options.access_token;
+    }
 
     $.get(url, {
         ref: options.branch
@@ -707,6 +713,9 @@
           var treeUrl = baseurl + 'git/trees/' + sha + '?recursive=1';
           if (options.client_id && options.client_secret) {
             treeUrl += '&client_id=' + options.client_id + '&client_secret=' + options.client_secret;
+          }
+          if (options.access_token) {
+            treeUrl += '&access_token=' + options.access_token;
           }
 
           $.get(treeUrl)
