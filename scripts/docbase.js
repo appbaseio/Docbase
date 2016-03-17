@@ -451,9 +451,6 @@
         if (options.github.path) {
           var full_path = options.github.path + '/' + file_path.version + '/' + file_path.folder + '/' + file_path.file;
           var urlToCommits = 'https://api.github.com/repos/' + options.github.user + '/' + options.github.repo + '/commits?path=' + full_path + '.md';
-          if (options.github.client_id && options.github.client_secret) {
-            urlToCommits += '&client_id=' + options.github.client_id + '&client_secret=' + options.github.client_secret;
-          }
           if (options.github.access_token) {
             urlToCommits += '&access_token=' + options.github.access_token;
           }
@@ -666,9 +663,6 @@
     var baseurl = 'https://api.github.com/repos/' + options.user + '/' + options.repo + '/';
 
     var url = baseurl + 'contents?ref=' + options.branch + path;
-    if (options.client_id && options.client_secret) {
-      url += '&client_id=' + options.client_id + '&client_secret=' + options.client_secret;
-    }
     if (options.access_token) {
       url += '&access_token=' + options.access_token;
     }
@@ -684,9 +678,6 @@
         if (commitData[0]) {
           var sha = commitData[0].sha;
           var treeUrl = baseurl + 'git/trees/' + sha + '?recursive=1';
-          if (options.client_id && options.client_secret) {
-            treeUrl += '&client_id=' + options.client_id + '&client_secret=' + options.client_secret;
-          }
           if (options.access_token) {
             treeUrl += '&access_token=' + options.access_token;
           }
