@@ -17,8 +17,8 @@
 			</h1>
 		</div>
 		<ul class="row">
-			<li class="col-xs-12" data-ng-repeat="file in indexList">
-				<a href="{{file.name}}" class="col-xs-12">{{file.name}}</a>
+			<li class="col-xs-12" data-ng-repeat="file in indexList"  data-ng-if="file.name != 'index'">
+				<a href="#/{{currentVersion}}/{{currentFolder}}/{{file.name}}" class="col-xs-12">{{file.name}}</a>
 			</li>
 		</ul>
 	</div>
