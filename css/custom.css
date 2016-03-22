@@ -67,6 +67,7 @@ section {
 	padding: 0;
 	border: 0;
 	border-radius: 0;
+	background: transparent;
 }
 .codeContainer {
 	background: #fff;
@@ -82,8 +83,8 @@ section {
 	max-width: 300px;
 	margin: 0 auto;
 }
-.options, footer {
-	background: #eee;
+.darken, footer {
+	background: #f1f1f1;
 	color: #222;
 }
 .icon-container {
