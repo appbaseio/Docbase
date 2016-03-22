@@ -1,108 +1,143 @@
-<html><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}</style>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width">
-  <base href="/Docbase/">
-
-  <title>Documentation</title>
-
-  <link rel="stylesheet" type="text/css" href="/Docbase/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="/Docbase/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
-
-  <!-- Flatdoc -->
-  <script src="/Docbase/bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="/Docbase/bower_components/flatdoc/legacy.js"></script>
-  <script src="/Docbase/bower_components/flatdoc/flatdoc.js"></script>
-
-  <!-- Flatdoc theme -->
-  <link href="/Docbase/bower_components/flatdoc/theme-white/style.css" rel="stylesheet">
-  <script src="/Docbase/scripts/flatdoc-theme.js"></script>
-  <!-- Polyfill -->
-  <script src="/Docbase/scripts/polyfill.js"></script>
-  <!-- DocBase -->
-  <link rel="stylesheet" type="text/css" href="/Docbase/styles/main.css">
-  <script type="text/javascript" src="/Docbase/bower_components/angular/angular.js"></script>
-  <script type="text/javascript" src="/Docbase/bower_components/angular-route/angular-route.js"></script>
-  <script src="/Docbase/bower_components/google-code-prettify/bin/prettify.min.js"></script>
-
-  <script type="text/javascript" src="/Docbase/bower_components/js-schema/js-schema.min.js"></script>
-  <script src="/Docbase/scripts/docbase.js"></script>
-
-  <script type="text/javascript">
-    Docbase.run({
-      method: 'file',
-      file: {
-          src: '../map.json',
-          path: 'docs'
-      },
-      indexHtml: 'html/flatdoc.html',
-      html5mode: false
-    });
-  </script>
-
-  <style>
-  </style>
-</head>
-<body role="flatdoc">
-
-  <!-- ngView:  --><div ng-view="" class="ng-scope"><nav class="navbar navbar-default navbar-fixed-top ng-scope">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Documentation</a>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Docbase</title>
+    <meta name="description" content="The Elasticsearch data browser" />
+    <meta name="keywords" content="Dejavu, Elasticsearch data browser, data visualization" />
+    <meta name="author" content="Farhan Chauhan, appbase.io" />
+    <meta name="theme-color" content="#663fb5" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link href="bower_components/wow/css/libs/animate.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/custom.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <header class="row">
+        <div class="col-xs-12">
+          <span class="logo-container pull-left">
+            <img src="img/docbase_logo.png" alt="Docbase" class="img-responsive pull-left logo" />
+          </span>
+        </div>
+        <div class="container">
+          <div class="col-xs-12 summary">
+            <div class="col-xs-12 col-sm-6 summary-text  wow fadeInLeft">
+              <h1 class="col-xs-12 title pd-0">Docbase Title</h1>
+              <p class="col-xs-12 description pd-0">Lorem ipsum Ullamco fugiat cupidatat magna dolor ad ex et labore culpa eiusmod nisi sit. Lorem ipsum Nisi Ut dolore reprehenderit Ut magna in sed commodo id nisi qui irure ut ad ut eu ex exercitation sunt cupidatat. Lorem ipsum Velit cillum fugiat eiusmod quis incididunt mollit dolore exercitation aute. Lorem ipsum Veniam veniam deserunt mollit sint cillum in dolor.</p>
+            </div>
+            <div class="col-xs-12 col-sm-6 summary-video  wow fadeInRight" data-wow-duration="2s">
+              <iframe width="100%" src="https://www.youtube.com/embed/KjC7SXNiCAE" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </header>
+      <section class="features row">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12 section-heading text-center">
+              Features
+            </div>
+            <p class="col-xs-12  text-center">
+              Lorem ipsum Ullamco et amet in laborum do veniam eu dolor labore exercitation fugiat culpa. Lorem ipsum Mollit consequat culpa fugiat deserunt deserunt laboris sit qui sed cillum. Lorem ipsum Cillum aute commodo occaecat dolor dolor laboris.
+            </p>
+            <div class="col-xs-12 single-feature">
+              <div class="col-xs-12 col-sm-6 wow fadeInLeft">
+                <img src="img/folder1.png" alt="Folder" class="img-responsive img-container" />
+              </div>
+              <div class="col-xs-12 col-sm-6 wow fadeInRight" data-wow-duration="4s">
+                <div class="col-xs-12 title">Folder</div>
+                <div class="col-xs-12 description">Lorem ipsum Laborum minim esse qui laborum labore laborum et dolor ex. Lorem ipsum Excepteur irure culpa ex eu et aliquip id exercitation cupidatat officia veniam dolore. Lorem ipsum Esse enim laborum cillum reprehenderit cillum labore commodo. Lorem ipsum Deserunt nulla eiusmod id in eu adipisicing tempor labore ad dolore fugiat consequat.</div>
+              </div>
+            </div>
+            <div class="col-xs-12 single-feature">
+              <div class="col-xs-12 col-sm-6 pull-right  wow fadeInRight">
+                <img src="img/folder2.png" alt="Folder" class="img-responsive img-container" />
+              </div>
+              <div class="col-xs-12 col-sm-6 pull-left wow fadeInLeft" data-wow-duration="4s">
+                <div class="col-xs-12 title">Folder</div>
+                <div class="col-xs-12 description">Lorem ipsum Laborum minim esse qui laborum labore laborum et dolor ex. Lorem ipsum Excepteur irure culpa ex eu et aliquip id exercitation cupidatat officia veniam dolore. Lorem ipsum Esse enim laborum cillum reprehenderit cillum labore commodo. Lorem ipsum Deserunt nulla eiusmod id in eu adipisicing tempor labore ad dolore fugiat consequat.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="options row">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <span class="icon-container">
+                <i class="fa fa-github"></i>
+              </span>
+              <span class="icon-container">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="icon-container">
+                <i class="fa fa-external-link"></i>
+              </span>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <p class="col-xs-12">Lorem ipsum Reprehenderit proident reprehenderit sunt in incididunt Excepteur culpa consequat Excepteur incididunt elit dolor.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="demos row">
+        <div class="container">
+          <div class="row  text-center">
+            <div class="col-xs-12 section-heading">
+              Demos
+            </div>
+            <p class="col-xs-12">
+              Lorem ipsum Ullamco et amet in laborum do veniam eu dolor labore exercitation fugiat culpa. Lorem ipsum Mollit consequat culpa fugiat deserunt deserunt laboris sit qui sed cillum. Lorem ipsum Cillum aute commodo occaecat dolor dolor laboris.
+            </p>
+            <a href="#" class="single-project col-xs-12 col-sm-6 col-md-4">
+              <div class="single-project-container wow fadeInLeft">
+                <div class="img-bg" style="background-image:url('img/community-1.png')">
+                  <span class="project-title col-xs-12 text-center" >Emberjs</span>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="single-project col-xs-12 col-sm-6 col-md-4">
+              <div class="single-project-container wow fadeInDown" data-wow-duration="2s">
+                <div class="img-bg" style="background-image:url('img/community-1.png')">
+                  <span class="project-title col-xs-12 text-center" >Redis</span>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="single-project col-xs-12 col-sm-6 col-md-4">
+              <div class="single-project-container wow fadeInRight" data-wow-duration="4s">
+                <div class="img-bg" style="background-image:url('img/community-1.png')">
+                  <span class="project-title col-xs-12 text-center" >Emberjs</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+      <footer class="row">
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12 f-links">
+                <span class="pull-left">
+                  <a href="#" class="f-link">Compare</a>
+                  <a href="#" class="f-link">Roadmap</a>
+                </span>
+                <span class="pull-right built-with">
+                    Built with <i class="fa fa-heart theme-color"></i> by 
+                    <a href="#" class="appbase-link">Appbase</a>
+                </span>
+              </div>
+            </div>
+          </div>
+      </footer>
     </div>
-
-    <div class="collapse navbar-collapse" id="navbar-collapse">
-      <ul class="nav navbar-nav">
-      	<!-- ngRepeat: folder in map[currentVersion] --><li class="dropdown ng-scope" ng-repeat="folder in map[currentVersion]">
-      		<a ng-href="#/v1.0/folder1" class="dropdown-toggle ng-binding" data-toggle="dropdown" role="button" aria-expanded="false" ng-bind="folder.label" href="#/v1.0/folder1">Folder 1</a>
-      		<ul class="dropdown-menu">
-      		  <!-- ngRepeat: file in folder.files --><li ng-repeat="file in folder.files" class="ng-scope">
-      		  	<a ng-href=/Docbase/v1.0/folder1/file1.html ng-bind="file.label" class="ng-binding" href=/Docbase/v1.0/folder1/file1.html>File 1</a>
-      		  </li><!-- end ngRepeat: file in folder.files -->
-      		</ul>
-      	</li><!-- end ngRepeat: folder in map[currentVersion] --><li class="dropdown ng-scope" ng-repeat="folder in map[currentVersion]">
-      		<a ng-href="#/v1.0/folder2" class="dropdown-toggle ng-binding" data-toggle="dropdown" role="button" aria-expanded="false" ng-bind="folder.label" href="#/v1.0/folder2">Folder 2</a>
-      		<ul class="dropdown-menu">
-      		  <!-- ngRepeat: file in folder.files --><li ng-repeat="file in folder.files" class="ng-scope">
-      		  	<a ng-href=/Docbase/v1.0/folder2/file1.html ng-bind="file.label" class="ng-binding" href=/Docbase/v1.0/folder2/file1.html>File 1</a>
-      		  </li><!-- end ngRepeat: file in folder.files --><li ng-repeat="file in folder.files" class="ng-scope">
-      		  	<a ng-href=/Docbase/v1.0/folder2/file2.html ng-bind="file.label" class="ng-binding" href=/Docbase/v1.0/folder2/file2.html>File 2</a>
-      		  </li><!-- end ngRepeat: file in folder.files -->
-      		</ul>
-      	</li><!-- end ngRepeat: folder in map[currentVersion] -->
-      </ul>
-      
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-          	 <span ng-bind="currentVersion" class="ng-binding">v1.0</span> <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu version-switcher" role="menu">
-          	<!-- ngRepeat: version in versions --><li ng-repeat="version in versions" class="ng-scope">
-          		<a ng-href=/Docbase/v1.0.html ng-bind="version" class="ng-binding" href=/Docbase/v1.0.html>v1.0</a>
-          	</li><!-- end ngRepeat: version in versions --><li ng-repeat="version in versions" class="ng-scope">
-          		<a ng-href=/Docbase/v2.0.html ng-bind="version" class="ng-binding" href=/Docbase/v2.0.html>v2.0</a>
-          	</li><!-- end ngRepeat: version in versions -->
-          </ul>
-        </li>
-        <!-- <li><a href="#">Github</a></li> -->
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-<div role="flatdoc" class="content-root ng-scope">
-  <div class="menubar">
-    <div class="menu section" role="flatdoc-menu"></div>
-  </div>
-  <div role="flatdoc-content" class="content"></div>
-</div></div>
-
-  <script type="text/javascript" src="/Docbase/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-</body></html>
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/wow/dist/wow.min.js"></script>
+    
+    <script type="text/javascript" src="js/custom.js"></script>
+  </body>
+</html>

@@ -1,0 +1,154 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700);
+html, body {
+	font-family: 'Source Sans Pro', sans-serif;
+  	font-weight: 400;
+  	font-size: 16px;
+  	line-height: 26px;
+  	/*color: #305CCE;*/
+}
+header {
+	/*background: #663fb5 url(../img/bg-header.jpg) no-repeat center bottom;*/
+	/*background: rgba(0,0,0,1);
+	background: -moz-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 11%, rgba(29,98,122,1) 55%, rgba(46,154,191,1) 80%, rgba(59,199,246,1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,1)), color-stop(11%, rgba(0,0,0,1)), color-stop(55%, rgba(29,98,122,1)), color-stop(80%, rgba(46,154,191,1)), color-stop(100%, rgba(59,199,246,1)));
+	background: -webkit-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 11%, rgba(29,98,122,1) 55%, rgba(46,154,191,1) 80%, rgba(59,199,246,1) 100%);
+	background: -o-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 11%, rgba(29,98,122,1) 55%, rgba(46,154,191,1) 80%, rgba(59,199,246,1) 100%);
+	background: -ms-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 11%, rgba(29,98,122,1) 55%, rgba(46,154,191,1) 80%, rgba(59,199,246,1) 100%);
+	background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 11%, rgba(29,98,122,1) 55%, rgba(46,154,191,1) 80%, rgba(59,199,246,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#3bc7f6', GradientType=0 );
+	*/
+	background: rgba(34,34,34,1);
+	background: -moz-linear-gradient(top, rgba(34,34,34,1) 0%, rgba(34,34,34,1) 2%, rgba(48,92,206,1) 22%, rgba(48,92,206,1) 64%, rgba(48,92,206,1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(34,34,34,1)), color-stop(2%, rgba(34,34,34,1)), color-stop(22%, rgba(48,92,206,1)), color-stop(64%, rgba(48,92,206,1)), color-stop(100%, rgba(48,92,206,1)));
+	background: -webkit-linear-gradient(top, rgba(34,34,34,1) 0%, rgba(34,34,34,1) 2%, rgba(48,92,206,1) 22%, rgba(48,92,206,1) 64%, rgba(48,92,206,1) 100%);
+	background: -o-linear-gradient(top, rgba(34,34,34,1) 0%, rgba(34,34,34,1) 2%, rgba(48,92,206,1) 22%, rgba(48,92,206,1) 64%, rgba(48,92,206,1) 100%);
+	background: -ms-linear-gradient(top, rgba(34,34,34,1) 0%, rgba(34,34,34,1) 2%, rgba(48,92,206,1) 22%, rgba(48,92,206,1) 64%, rgba(48,92,206,1) 100%);
+	background: linear-gradient(to bottom, rgba(34,34,34,1) 0%, rgba(34,34,34,1) 2%, rgba(48,92,206,1) 22%, rgba(48,92,206,1) 64%, rgba(48,92,206,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222222', endColorstr='#305cce', GradientType=0 );
+	color: #fff;
+	padding-bottom: 20px;
+}
+.logo-container {
+	max-width: 150px;
+}
+header .summary {
+	padding-top: 40px;
+}
+header .video-container {
+	width: 100%;
+	height: 100%;
+}
+header .video-container video {
+	max-width: 100%;
+}
+section {
+	padding: 20px 0;
+}
+.single-feature {
+	padding: 60px 15px;
+}
+.summary .title,
+.single-feature .title,
+.section-heading {
+	font-size: 30px;
+	line-height: 40px;
+	padding-bottom: 20px;
+}
+.single-feature .description {
+	font-size: 16px;
+	line-height: 26px;
+}
+.single-feature .img-container {
+	max-width: 300px;
+	margin: 0 auto;
+}
+.options, footer {
+	background: #555;
+	color: #fff;
+}
+.icon-container {
+	border-radius: 50%;
+    font-size: 30px;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    display: inline-block;
+    background: #fff;
+    text-align: center;
+    margin-right: 30px;
+    color: #888;
+}
+.single-project{
+	font-size: 20px;
+	padding-bottom: 15px;
+   	padding-top: 15px;
+}
+.single-project-container{
+	border: 1px solid #e9e9e9;
+	background-color: #fff;
+	float: left;
+	width: 100%;
+}
+.single-project-container .img-bg {
+	height: 230px;    
+	background-position: center center;
+    background-repeat: no-repeat;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+	position: relative;
+	font-family:$font-light; 
+}
+.single-project-container .img-bg:before {
+  	width: 100%;
+    height: 42px;
+    background: rgba(0,0,0,0.5);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: "";
+}
+.project-summary .description {
+	padding:30px 12px 18px 12px;
+	display: block;
+	text-align: center;
+}
+.single-project .img-bg .project-title {
+	padding: 8px 12px;
+    display: inline-block;
+    position: absolute;
+    color: #fff;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+footer {
+	border-top: 1px solid #ccc;
+	padding: 20px 15px;
+}
+.f-links .f-link {
+	margin-right: 15px;
+    display: inline-block;
+    background: #222;
+    padding: 3px 10px;
+    color: #eee;
+}
+.built-with {
+	color: #ccc;
+}
+.built-with a,
+.fa-heart {
+	color: #fff;
+}
+.pd-0 {
+	padding: 0;
+}
+.p-l-0 {
+	padding-left: 0;
+}
+.p-r-0 {
+	padding-right: 0;
+}
+.m-0 {
+	margin: 0;
+}
