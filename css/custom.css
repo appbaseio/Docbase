@@ -50,9 +50,26 @@ section {
 .summary .title,
 .single-feature .title,
 .section-heading {
-	font-size: 30px;
-	line-height: 40px;
+	font-size: 40px;
+	line-height: 56px;
 	padding-bottom: 20px;
+	font-weight: normal;
+}
+.sub-heading {
+	font-size: 22px;
+    line-height: 30px;
+    padding: 6px 0;
+}
+.summary-text {
+	padding-bottom: 40px;
+}
+.codeSection {
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+}
+.codeContainer {
+	background: #102D42;
 }
 .single-feature .description {
 	font-size: 16px;
@@ -63,8 +80,8 @@ section {
 	margin: 0 auto;
 }
 .options, footer {
-	background: #555;
-	color: #fff;
+	background: #eee;
+	color: #222;
 }
 .icon-container {
 	border-radius: 50%;
@@ -141,14 +158,14 @@ footer {
 	color: #fff;
 }
 .pd-0 {
-	padding: 0;
+	padding: 0 !important;
 }
 .p-l-0 {
-	padding-left: 0;
+	padding-left: 0 !important;
 }
 .p-r-0 {
-	padding-right: 0;
+	padding-right: 0  !important;
 }
 .m-0 {
-	margin: 0;
+	margin: 0 !important;
 }
