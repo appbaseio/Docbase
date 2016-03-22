@@ -58,7 +58,7 @@ section {
 .sub-heading {
 	font-size: 22px;
     line-height: 30px;
-    padding: 6px 0;
+    padding: 6px 15px;
 }
 .summary-text {
 	padding-bottom: 40px;
@@ -69,7 +69,10 @@ section {
 	border-radius: 0;
 }
 .codeContainer {
-	background: #102D42;
+	background: #fff;
+}
+.codeContainer .sub-heading {
+	color: #305CCE;
 }
 .single-feature .description {
 	font-size: 16px;
