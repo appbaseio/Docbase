@@ -42,7 +42,7 @@ header .video-container video {
 	max-width: 100%;
 }
 section {
-	padding: 20px 0;
+	padding: 60px 0;
 }
 .single-feature {
 	padding: 60px 15px;
@@ -98,6 +98,10 @@ section {
     text-align: center;
     margin-right: 30px;
     color: #888;
+    border: 2px solid transparent;
+}
+.icon-container:hover {
+	border: 2px solid #aaa;
 }
 .single-project{
 	font-size: 20px;
