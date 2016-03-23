@@ -44,7 +44,8 @@
         repo: 'repo',*/
         path: '/',
         branch: 'gh-pages',
-        editGithubBtn: true
+        editGithubBtn: true,
+        access_token: ''
       },
       generic: {
         baseurl: '',
@@ -61,7 +62,9 @@
     };
 
     options = $.extend({}, defaults, options);
-
+    if(options.github.access_token) {
+      options.github.access_token = atob(options.github.access_token);
+    }
     if (options.method === 'github') {
       if (!options.github.user) {
         throw Error('Missing GitHub user info.');

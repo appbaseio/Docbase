@@ -172,7 +172,8 @@
 					skip = 1;
 				}
 			} else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)) {
-				for (var i = 0; i < node.childNodes.length; ++i) {
+				var childLength = node.childNodes.length < 100 ? node.childNodes.length : 100;
+				for (var i = 0; i < childLength; ++i) {
 					i += innerHighlight(node.childNodes[i], pat);
 				}
 			}
