@@ -35,4 +35,6 @@ $(document).ready(function() {
 	    	$('.owl-info-container .owl-info').eq(currentIndex).fadeIn();
 	    }
 	});
+
+	$('[data-toggle="tooltip"]').tooltip();
 });
