@@ -26,6 +26,7 @@
     "font-awesome": "~4.5.0",
     "bootstrap": "~3.3.6",
     "jquery": "~2.2.2",
-    "wow": "~1.1.2"
+    "wow": "~1.1.2",
+    "owl.carousel": "~2.0.0-beta.3"
   }
 }
