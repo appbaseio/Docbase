@@ -1,18 +1,18 @@
 {
-  "name": "land.io",
-  "homepage": "http://tatygrassini.github.io/landio-html/",
+  "name": "Docbase",
+  "homepage": "https://appbaseio.github.io/Docbase/",
   "authors": [
-    "Taty Grassini"
+    "Farhan Chauhan"
   ],
-  "description": "Landio is a responsive HTML template, built on top of Bootstrap 4 and based on the Land.io Sketch design by Peter Finlan. This template and the UI kit were coded by Taty Grassini.",
+  "description": "Docbase is a collaborative hub for .md files.",
   "main": "",
   "moduleType": [],
   "keywords": [
-    "Land.io",
-    "UI-kit",
-    "design"
+    "Docbase",
+    ".md",
+    "Documentation"
   ],
-  "license": "Codrops custom Licence",
+  "license": "MIT License",
   "ignore": [
     "**/.*",
     "node_modules",
