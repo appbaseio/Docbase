@@ -148,18 +148,19 @@ footer {
 	padding: 20px 15px;
 }
 .f-links .f-link {
-	margin-right: 15px;
+	    margin-right: 15px;
     display: inline-block;
-    background: #222;
     padding: 3px 10px;
-    color: #eee;
+    color: #555;
+    font-weight: bold;
 }
 .built-with {
-	color: #ccc;
+	color: #555;
 }
 .built-with a,
 .fa-heart {
-	color: #fff;
+	color: #000;
+    margin-right: 4px;
 }
 .owl-links {
 	list-style: none;
