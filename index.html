@@ -30,21 +30,37 @@
             <div class="container">
               <div class="col-xs-12 summary">
                 <div class="col-xs-12 summary-text text-center">
-                  <h1 class="col-xs-12 title pd-0">Docbase Title</h1>
-                  <p class="col-xs-12 description pd-0">Lorem ipsum Ullamco fugiat cupidatat magna dolor ad exet labore culpa eiusmod nisi sit.</p>
+                  <h1 class="col-xs-12 title pd-0">Docbase</h1>
+                  <p class="col-xs-12 description pd-0">Collaborative hub for your .md files.</p>
                 </div>
                 <div class="col-xs-12 col-sm-6 summary-text codeContainer wow fadeInLeft pd-0">
-                  <div class="col-xs-12 sub-heading">How to start</div>
+                  <div class="col-xs-12 sub-heading">Getting up and running takes only 5 minutes</div>
                   <div class="col-xs-12">
                     <pre class="codeSection">
-                      <code class="CoffeeScript">1. npm install
-2. bower install
-3. yo docbase</code>
+                      <code class="CoffeeScript">
+1. npm install -g yo
+
+2. npm install -g generator-docbase
+
+3. yo docbase
+  |
+  |____ Choose an execution mode - 1) HTML 2) SPA
+  |
+  |____ Choose a location for your .md files
+  |       1) Filesystem, 2) Github, 3) External URL
+  |
+  |____ Enter the path where your .md files are hosted
+  |
+  |____ Pick a theme color for your docs (like green, #abcdef)
+  |
+  |____ [Optional] Enter your github token for travis integration
+
+4. python -m SimpleHTTPServer 1234</code>
                     </pre>
                   </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 summary-video wow fadeInRight" data-wow-duration="2s">
-                  <iframe width="100%" src="https://www.youtube.com/embed/KjC7SXNiCAE" frameborder="0" allowfullscreen></iframe>
+                  <iframe src="https://player.vimeo.com/video/160070530" width="500" height="313" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
               </div>
             </div>
@@ -52,19 +68,19 @@
           <section class="options row darken">
             <div class="container">
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                  <span class="icon-container" data-toggle="tooltip" data-placement="bottom" title="Github">
-                    <i class="fa fa-github"></i>
-                  </span>
+                <div class="col-xs-12 col-sm-4">
                   <span class="icon-container" data-toggle="tooltip" data-placement="bottom" title="Folder">
                     <i class="fa fa-folder-o"></i>
                   </span>
+                  <span class="icon-container" data-toggle="tooltip" data-placement="bottom" title="Github">
+                    <i class="fa fa-github"></i>
+                  </span>
                   <span class="icon-container" data-toggle="tooltip" data-placement="bottom" title="External Links">
-                    <i class="fa fa-external-link"></i>
+                    <i class="fa fa-cloud"></i>
                   </span>
                 </div>
-                <div class="col-xs-12 col-sm-6">
-                  <p class="col-xs-12">Lorem ipsum Reprehenderit proident reprehenderit sunt in incididunt Excepteur culpa consequat Excepteur incididunt elit dolor.</p>
+                <div class="col-xs-12 col-sm-8">
+                  <p class="col-xs-12">Docbase can read .md files from a filesystem, github repository or any http:// server.</p>
                 </div>
               </div>
             </div>
@@ -72,37 +88,48 @@
           <section class="features row">
             <div class="container">
               <div class="row">
-                <div class="col-xs-12 section-heading text-center">Features</div>
-                <p class="col-xs-12 text-center">Lorem ipsum Ullamco et amet in laborum do veniam eu dolor labore exercitation fugiat culpa. Lorem ipsum Mollit consequat culpa fugiat deserunt deserunt laboris sit qui sed cillum. Lorem ipsum Cillum aute commodo occaecat dolor dolor laboris.</p>
                 <div class="col-xs-12 single-feature">
                   <div class="col-xs-12 col-sm-6 wow fadeInLeft">
                     <img src="img/folder2.png" alt="Folder" class="img-responsive img-container" />
                   </div>
                   <div class="col-xs-12 col-sm-6 wow fadeInRight" data-wow-duration="4s">
-                    <div class="col-xs-12 title">Folder</div>
-                    <div class="col-xs-12 description">Lorem ipsum Laborum minim esse qui laborum labore laborum et dolor ex. Lorem ipsum Excepteur irure culpa ex eu et aliquip id exercitation cupidatat officia veniam dolore. Lorem ipsum Esse enim laborum cillum reprehenderit cillum labore commodo. Lorem ipsum Deserunt nulla eiusmod id in eu adipisicing tempor labore ad dolore fugiat consequat.</div>
+                    <div class="col-xs-12 title">Organize .md with ease</div>
+                    <div class="col-xs-12 description">Docbase expects your .md documentation should confirm to a two-level layout: <br>
+                    1. Versioning: v1 / v2 ..., EN / BR / CN, <br>
+                    2. Topics: Organize .md files in folders of different topics.<br>
+                   It automatically reads the layout structure and renders it as a hub or you can optionally specify it in configuration.</div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-xs-12 single-feature">
+                    <div class="col-xs-12 col-sm-6 wow fadeInRight" data-wow-duration="4s">
+                      <div class="col-xs-12 title">Colorful</div>
+                      <div class="col-xs-12 description">Docbase can adapt the docs to your preferred color theme. Specify literal color values (like golden, green, blue) or hex codes for more precision.</div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 wow fadeInLeft">
+                      <img src="img/folder1.png" alt="Folder" class="img-responsive img-container" />
+                    </div>
+                  </div>
               </div>
             </div>
           </section>
           <section class="options row darken">
             <div class="container">
               <div class="row text-center p-b-40">
-                <div class="col-xs-12 section-heading">Example</div>
-                <p class="col-xs-12">Lorem ipsum Ullamco et amet in laborum do veniam eu dolor labore exercitation fugiat culpa. Lorem ipsum Mollit consequat culpa fugiat deserunt deserunt laboris sit qui sed cillum. Lorem ipsum Cillum aute commodo occaecat dolor dolor laboris.</p>
+                <div class="col-xs-12 section-heading">Examples</div>
+                <p class="col-xs-12">Some popular docs served with Docbase</p>
               </div>
               <div class="row">
                 <div class="col-xs-12">
                   <ul class="owl-links col-xs-12">
                     <li class="owl-single" >
-                      <a href="#ember">Ember</a>
+                      <a href="#ember">EmberJS</a>
                     </li>
                     <li class="owl-single" >
                       <a href="#redis">Redis</a>
                     </li>
                     <li class="owl-single">
-                      <a href="#airbnb">Airbnb</a>
+                      <a href="#airbnb">Airbnb JS guide</a>
                     </li>
                   </ul>
                 </div>
@@ -122,70 +149,38 @@
                 <div class="col-xs-12 col-sm-6 owl-info-container">
                   <div class="owl-info col-xs-12 pd-0">
                     <div class="col-xs-12 owl-heading p-b-20">
-                      Emberjs Documentation
+                      EmberJS Guide
                     </div>
                     <p class="col-xs-12 p-b-20">
-                      Lorem ipsum Ea nulla aliqua cillum nulla sit sint culpa quis minim sint id. Lorem ipsum Adipisicing ex non cupidatat cupidatat exercitation proident adipisicing ea non.
+                      EmberJS docs are written in a markdown folder structure supported by Docbase. We served them using Docbase.
                     </p>
                     <div class="col-xs-12">
-                      <a href="http://farhan687.github.io/emberjs" class="pull-left btn btn-info">Live SPA</a>
-                      <a href="http://farhan687.github.io/emberjs/docs_html" class="pull-right btn btn-info">Live Html</a>
+                      <a href="http://farhan687.github.io/emberjs" class="pull-left btn btn-info" target="_blank">Live Docs</a>
                     </div>
                   </div>
                   <div class="owl-info col-xs-12 pd-0">
                     <div class="col-xs-12 owl-heading p-b-20">
-                      Redis Documentation
+                      Redis Docs
                     </div>
                     <p class="col-xs-12 p-b-20">
-                      Lorem ipsum Ea nulla aliqua cillum nulla sit sint culpa quis minim sint id. Lorem ipsum Adipisicing ex non cupidatat cupidatat exercitation proident adipisicing ea non.
+                      Serving Redis.io's docs, one of the most popular datastructure DB out there.
                     </p>
                     <div class="col-xs-12">
-                      <a href="http://farhan687.github.io/redis" class="pull-left btn btn-info">Live SPA</a>
-                      <a href="http://farhan687.github.io/redis/docs_html" class="pull-right btn btn-info">Live Html</a>
+                      <a href="http://farhan687.github.io/redis" class="pull-left btn btn-info" target="_blank">Live Docs</a>
                     </div>
                   </div>
                   <div class="owl-info col-xs-12 pd-0">
                     <div class="col-xs-12 owl-heading p-b-20">
-                      Airbnb Documentation
+                      Airbnb JS style guide
                     </div>
                     <p class="col-xs-12 p-b-20">
                       Lorem ipsum Ea nulla aliqua cillum nulla sit sint culpa quis minim sint id. Lorem ipsum Adipisicing ex non cupidatat cupidatat exercitation proident adipisicing ea non.
                     </p>
                     <div class="col-xs-12">
-                      <a href="http://farhan687.github.io/airbnb" class="pull-left btn btn-info">Live SPA</a>
-                      <a href="http://farhan687.github.io/airbnb/docs_html" class="pull-right btn btn-info">Live Html</a>
+                      <a href="http://farhan687.github.io/airbnb" class="pull-left btn btn-info" target="_blank">Live Docs</a>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </section>
-          <section class="demos row">
-            <div class="container">
-              <div class="row text-center">
-                <div class="col-xs-12 section-heading">Demos</div>
-                <p class="col-xs-12">Lorem ipsum Ullamco et amet in laborum do veniam eu dolor labore exercitation fugiat culpa. Lorem ipsum Mollit consequat culpa fugiat deserunt deserunt laboris sit qui sed cillum. Lorem ipsum Cillum aute commodo occaecat dolor dolor laboris.</p>
-                <a href="http://farhan687.github.io/emberjs" class="single-project col-xs-12 col-sm-6 col-md-4">
-                  <div class="single-project-container wow fadeInLeft">
-                    <div class="img-bg" style="background-image:url('img/ember.png')">
-                      <span class="project-title col-xs-12 text-center" >Emberjs</span>
-                    </div>
-                  </div>
-                </a>
-                <a href="http://farhan687.github.io/redis" class="single-project col-xs-12 col-sm-6 col-md-4">
-                  <div class="single-project-container wow fadeInDown" data-wow-duration="2s">
-                    <div class="img-bg" style="background-image:url('img/redis.png')">
-                      <span class="project-title col-xs-12 text-center" >Redis</span>
-                    </div>
-                  </div>
-                </a>
-                <a href="http://farhan687.github.io/airbnb" class="single-project col-xs-12 col-sm-6 col-md-4">
-                  <div class="single-project-container wow fadeInRight" data-wow-duration="4s">
-                    <div class="img-bg" style="background-image:url('img/airbnb.png')">
-                      <span class="project-title col-xs-12 text-center" >Airbnb</span>
-                    </div>
-                  </div>
-                </a>
               </div>
             </div>
           </section>
