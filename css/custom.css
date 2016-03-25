@@ -108,11 +108,15 @@ section {
     background: #fff;
     text-align: center;
     margin-right: 30px;
+    margin-top: 15px;
     color: #888;
     border: 2px solid transparent;
 }
 .icon-container:hover {
 	border: 2px solid #aaa;
+}
+.feature-line {
+	padding-top: 32px;
 }
 .single-project{
 	font-size: 20px;
