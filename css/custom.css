@@ -184,6 +184,7 @@ footer {
 }
 .built-with {
 	color: #555;
+	padding: 3px 0;
 }
 .built-with a,
 .fa-heart {
@@ -269,5 +270,11 @@ footer {
     }
     .single-feature .title {
     	padding-top: 20px;
+    }
+    .owl-info {
+    	padding-top: 30px !important;
+    }
+    .f-links .f-link {
+		margin-right: 0;
     }
 }
