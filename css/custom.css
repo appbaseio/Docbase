@@ -86,6 +86,15 @@ section {
     font-size: 18px;
     text-align: center;
 }
+.cv-part {
+	padding-top: 15px;
+}
+.cv-part.summary-video {
+	padding-left: 40px;
+}
+.cv-part.code-part {
+	padding-right: 40px;
+}
 .single-feature .description {
 	font-size: 16px;
 	line-height: 26px;
@@ -237,4 +246,22 @@ footer {
 }
 .m-0 {
 	margin: 0 !important;
+}
+@media screen and (max-width: 768px){
+    .cv-part {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .options {
+    	text-align: center;
+    }
+    .single-feature {
+    	text-align: center;
+    }
+    .single-feature {
+    	text-align: center;
+    }
+    .single-feature .title {
+    	padding-top: 20px;
+    }
 }
