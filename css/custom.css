@@ -70,12 +70,21 @@ section {
 	background: transparent;
 }
 .codeContainer {
-	background: #000;
+	    background: #000;
+    border-radius: 4px;
+    border-radius: 7px;
+    -webkit-box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+    box-shadow: 0px 5px 30px rgba(0,0,0,0.3);
 }
 .codeContainer .sub-heading {
 	color: #305CCE;
-	color: #fff;
-	font-weight: bold;
+    background-image: -webkit-linear-gradient(top, #f7f7f7 0%, #cfcfcf 7%, #aaa 100%);
+    border-radius: 5px 5px 0 0;
+    color: #444;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    font-size: 18px;
+    text-align: center;
 }
 .single-feature .description {
 	font-size: 16px;
