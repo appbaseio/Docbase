@@ -248,9 +248,15 @@ footer {
 	margin: 0 !important;
 }
 @media screen and (max-width: 768px){
+    .summary-text {
+    	padding-bottom: 0;
+    }
     .cv-part {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
+        padding: 0 !important;
+    	padding-top: 15px !important;
+    }
+    .cv-part.summary-video {
+    	padding-top: 30px !important;
     }
     .options {
     	text-align: center;
