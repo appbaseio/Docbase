@@ -49,7 +49,7 @@ section {
 }
 .summary .title,
 .single-feature .title,
-.section-heading {
+.section-heading, .sub-title {
 	font-size: 40px;
 	line-height: 56px;
 	padding-bottom: 20px;
@@ -126,6 +126,7 @@ section {
 }
 .feature-line {
 	padding-top: 32px;
+	font-size: 24px;
 }
 .single-project{
 	font-size: 20px;
@@ -139,14 +140,14 @@ section {
 	width: 100%;
 }
 .single-project-container .img-bg {
-	height: 230px;    
+	height: 230px;
 	background-position: center center;
     background-repeat: no-repeat;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
 	position: relative;
-	font-family:$font-light; 
+	font-family:$font-light;
 }
 .single-project-container .img-bg:before {
   	width: 100%;
@@ -206,7 +207,7 @@ footer {
 	font-size: 20px;
 	border-bottom: 3px solid transparent;
 }
-.owl-links li a:hover, 
+.owl-links li a:hover,
 .owl-links li a:active,
 .owl-links li.active a {
 	color: #555;
@@ -262,7 +263,7 @@ footer {
     }
 }
 @media screen and (max-width: 768px){
-    
+
     .options {
     	text-align: center;
     }
