@@ -239,6 +239,8 @@ body.no-literate .content h1:first-child {
 
 .navbar .dropdown-menu{
   z-index: 2001;
+  max-height: 500px;
+  overflow: auto;
 }
 
 .landing{
