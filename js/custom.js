@@ -6,8 +6,10 @@ $(document).ready(function() {
 		var height = $(window).height();
 		$('header').css('min-height',height);
 		var videoWidth = $('iframe').width();
-		$('iframe').attr('height', videoWidth); 
-		$('.codeContainer').css('min-height', videoWidth);
+		var videoHeight = videoWidth*(3/4);
+		var subheading = $('.codeContainer .sub-heading').height() + 15;
+		$('iframe').attr('height', videoHeight); 
+		$('.codeScroll').css('height', videoHeight-subheading);
 	}
 	resize();
 	$(window).resize(function() {

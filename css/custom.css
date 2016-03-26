@@ -47,6 +47,9 @@ section {
 .single-feature {
 	padding: 60px 15px;
 }
+.codeScroll {
+	overflow: auto;
+}
 .summary .title,
 .single-feature .title,
 .section-heading, .sub-title {
