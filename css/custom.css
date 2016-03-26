@@ -232,6 +232,14 @@ footer {
 	border: 4px solid #aaa;
     border-radius: 6px;
 }
+.fork_link {
+	z-index: 999999;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 149px;
+    height: 149px;
+}
 
 .pd-0 {
 	padding: 0 !important;
@@ -265,7 +273,6 @@ footer {
     }
 }
 @media screen and (max-width: 768px){
-
     .options {
     	text-align: center;
     }
@@ -283,5 +290,8 @@ footer {
     }
     .f-links .f-link {
 		margin-right: 0;
+    }
+    .feature-line {
+    	padding-top: 40px;
     }
 }

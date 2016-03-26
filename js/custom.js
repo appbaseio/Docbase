@@ -10,11 +10,12 @@ $(document).ready(function() {
 		var subheading = $('.codeContainer .sub-heading').height() + 15;
 		$('iframe').attr('height', videoHeight); 
 		$('.codeScroll').css('height', videoHeight-subheading);
-		//debugger
-		var optionHeight = $('.options').outerHeight();
-		var feature_line = $('.feature-line').height();
-		var optionPadding = parseInt(((optionHeight-120)/2) - (feature_line/2)) + 10;
-		$('.feature-line').css('padding-top', optionPadding);
+		if($(window).width() > 768) {
+			var optionHeight = $('.options').outerHeight();
+			var feature_line = $('.feature-line').height();
+			var optionPadding = parseInt(((optionHeight-120)/2) - (feature_line/2)) + 10;
+			$('.feature-line').css('padding-top', optionPadding);
+		}
 	}
 	resize();
 	$(window).resize(function() {
