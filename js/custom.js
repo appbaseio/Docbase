@@ -6,10 +6,15 @@ $(document).ready(function() {
 		var height = $(window).height();
 		$('header').css('min-height',height);
 		var videoWidth = $('iframe').width();
-		var videoHeight = videoWidth*(3/4);
+		var videoHeight = parseInt(videoWidth*(3/4));
 		var subheading = $('.codeContainer .sub-heading').height() + 15;
 		$('iframe').attr('height', videoHeight); 
 		$('.codeScroll').css('height', videoHeight-subheading);
+		//debugger
+		var optionHeight = $('.options').outerHeight();
+		var feature_line = $('.feature-line').height();
+		var optionPadding = parseInt(((optionHeight-120)/2) - (feature_line/2)) + 10;
+		$('.feature-line').css('padding-top', optionPadding);
 	}
 	resize();
 	$(window).resize(function() {
