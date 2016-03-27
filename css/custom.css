@@ -103,7 +103,7 @@ section {
 	line-height: 26px;
 }
 .single-feature .img-container {
-	max-width: 300px;
+	max-width: 400px;
 	margin: 0 auto;
 }
 .darken, footer {
@@ -271,6 +271,9 @@ footer {
     .cv-part.summary-video {
     	padding-top: 30px !important;
     }
+		.single-feature .img-container {
+			max-width: 300px;
+		}
 }
 @media screen and (max-width: 768px){
     .options {
