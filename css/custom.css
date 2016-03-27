@@ -264,6 +264,18 @@ footer {
 	margin: 0 !important;
 }
 
+@media screen and (min-width: 1800px) {
+	.vimeo-video {
+		width: 1000px;
+		height: 625px;
+	}
+}
+@media screen and (min-width: 1400px) and (max-width: 1799px) {
+	.vimeo-video {
+		width: 800px;
+		height: 500px;
+	}
+}
 @media screen and (max-width: 992px) {
 		.summary-text {
     	padding-bottom: 0;
