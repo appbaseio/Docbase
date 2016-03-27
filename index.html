@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>Docbase</title>
-    <meta name="description" content="Turn markdown files into a collaborative documentation hub" />
+    <meta name="description" content="Turn markdown files into a beautiful documentation hub" />
     <meta name="keywords" content="Docbase, markdown, documentation" />
     <meta name="author" content="Farhan Chauhan, appbase.io" />
     <meta name="theme-color" content="#663fb5" />
@@ -31,7 +31,7 @@
               <div class="col-xs-12 summary">
                 <div class="col-xs-12 summary-text text-center">
                   <h1 class="col-xs-12 title pd-0"><img src="img/docbase_logo.png" alt="Docbase" class="img-responsive logo" style="width:400px;margin:auto;"/></h1>
-                  <p class="col-xs-12 sub-title pd-0">Turn markdown files into a collaborative documentation hub.</p>
+                  <p class="col-xs-12 sub-title pd-0">Turn markdown files into a beautiful documentation hub.</p>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-4 cv-part code-part">
                   <div class="col-xs-12 pd-0 summary-text codeContainer wow fadeInLeft">
@@ -89,7 +89,7 @@ Welcome to
                   </span>
                 </div>
                 <div class="col-xs-12 col-sm-8">
-                  <p class="col-xs-12 feature-line">Docbase can read .md files from local filesystem, github or any URL.</p>
+                  <p class="col-xs-12 feature-line">Docbase can read markdown from filesystem, github or a URL.</p>
                 </div>
               </div>
             </div>
@@ -102,11 +102,9 @@ Welcome to
                     <img src="img/folder2.png" alt="Folder" class="img-responsive img-container" />
                   </div>
                   <div class="col-xs-12 col-sm-6 wow fadeInRight" data-wow-duration="4s">
-                    <div class="col-xs-12 title">Read .md files with flexibility</div>
-                    <div class="col-xs-12 description">Docbase expects your .md documentation should confirm to a two-level layout: <br>
-                    1. Versioning: v1 / v2 ..., EN / BR / CN, <br>
-                    2. Topics: Organize .md files in folders of different topics.<br>
-                   It automatically reads the layout structure and renders it as a hub or you can optionally specify it in configuration.</div>
+                    <div class="col-xs-12 title">Easy markdown organization</div>
+                    <div class="col-xs-12 description">Docbase can read all .md files from a root directory. Additionally, files can be organized into sub-directories to denote: <br> 1. multiple versions (like v1.0, v1.1 or EN, ES, PT) and <br>2. organize files into topics.<br><br>
+                   Docbase infers the documentation layout, or one can be optionally provided in the configuration.</div>
                   </div>
                 </div>
                 <div class="row">
@@ -115,8 +113,8 @@ Welcome to
                       <img src="img/Search.gif" alt="Folder" class="img-responsive img-container" />
                     </div>
                     <div class="col-xs-12 col-sm-6 wow fadeInRight pull-left" data-wow-duration="4s">
-                      <div class="col-xs-12 title">Search</div>
-                      <div class="col-xs-12 description">Docbase can adapt the docs to your preferred color theme. Specify literal color values (like golden, green, blue) or hex codes for more precision.</div>
+                      <div class="col-xs-12 title">Built-in realtime search</div>
+                      <div class="col-xs-12 description">Docbase generates an offline search index for the docs. When published, it creates a beautiful search bar with realtime (<span class="fa fa-bolt"></span>) auto completion and <span style="background:yellow">highlighting support</span>.</div>
                     </div>
                   </div>
                 </div>
@@ -126,8 +124,9 @@ Welcome to
                       <img src="img/FolderGif.gif" alt="Folder" class="img-responsive img-container" />
                     </div>
                     <div class="col-xs-12 col-sm-6 wow fadeInRight pull-right" data-wow-duration="4s">
-                      <div class="col-xs-12 title">Colorful</div>
-                      <div class="col-xs-12 description">Docbase can adapt the docs to your preferred color theme. Specify literal color values (like golden, green, blue) or hex codes for more precision.</div>
+                      <div class="col-xs-12 title">It's colorful</div>
+                      <div class="col-xs-12 description">Docs should look beautiful. Docbase is designed with customization in mind so it can adapt to your theme colors.<br>
+                      Just <span style="background:#efefef">yo docbase</span> and provide a valid css color for your theme (like <span style="color:green">green</span>, <span style="color:rgb(100,150,200)">rgb(100,150,200)</span>, <span style="color:#ffb14c">#ffb14c</span>)</div>
                     </div>
                   </div>
               </div>
@@ -173,7 +172,7 @@ Welcome to
                       EmberJS Guide
                     </div>
                     <p class="col-xs-12 p-b-20">
-                      EmberJS is a popular Javascript MVC framework. Their docs are written in  markdown and organized in a structure that can be supported by Docbase. Check them out below.
+                      EmberJS is a popular Javascript MVC framework. Their docs are written in  markdown and organized in a structure that can be supported by Docbase. Check them below.
                     </p>
                     <div class="col-xs-12">
                       <a href="http://farhan687.github.io/emberjs" class="pull-left btn btn-info" target="_blank">Live Docs</a>
@@ -184,7 +183,7 @@ Welcome to
                       Redis Docs
                     </div>
                     <p class="col-xs-12 p-b-20">
-                      Serving Redis.io's docs, one of the most popular datastructure database out there.
+                      Redis is one of the most popular datastructure database out there. With 250+ commands and numerous topics, we thought Redis.io's docs are ideal to test docbase's limits.
                     </p>
                     <div class="col-xs-12">
                       <a href="http://farhan687.github.io/redis" class="pull-left btn btn-info" target="_blank">Live Docs</a>
@@ -211,7 +210,7 @@ Welcome to
                 <div class="col-xs-12 f-links pd-0">
                   <span class="pull-left">
                     <a href="#" class="f-link">Why another documentation tool?</a>
-                    <a href="#" class="f-link">Roadmap</a>
+                    <a href="#" class="f-link">Read the manual</a>
                   </span>
                   <span class="pull-right built-with">Built with
                     <i class="fa fa-heart theme-color"></i>by folks at
