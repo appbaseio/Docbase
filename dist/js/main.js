@@ -307,9 +307,8 @@
         resolve: resolve
       })
       .when('/:version', {
-        templateUrl: flatdocURL,
-        controller: 'URLCtrl',
-        resolve: resolve
+        templateUrl: mainURL,
+        controller: 'VersionCtrl'
       })
       .when('/', {
         templateUrl: mainURL,
@@ -601,7 +600,36 @@
       }
     }
   };
+  Route.VersionCtrl = function($scope, $route, $location, $filter, $timeout, $rootScope) {
+    $scope.docbaseOptions = Docbase.options;
 
+    if (Docbase.options.indexType === 'markdown') {
+      var path = Docbase.options.indexSrc;
+      if (endsWith(path, '.md')) {
+        path = path.substring(0, path.length - 3);
+      }
+      if (path.charAt(0) !== '/') {
+        path = '/' + path;
+      }
+
+      $location.path(path);
+    } else {
+      var onMapped = function() {
+        $timeout(function() {
+          $rootScope.navbarHtml = Docbase.options.navbarHtml;
+          $rootScope.logoSrc = Docbase.options.logoSrc;
+          $scope.map = Docbase.map;
+          $scope.versions = Object.keys($scope.map);
+          $scope.currentVersion = $route.current.params.version;
+        });
+      };
+      if (Docbase.map) {
+        onMapped();
+      } else {
+        jWindow.on('mapped', onMapped);
+      }
+    }
+  };
   Route.updatePath = function(params) {
     var map = Docbase.map;
     var version = params.version;
@@ -787,6 +815,7 @@
   var angApp = angular.module('docbaseApp', ['ngRoute'], function() {})
     .factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', '$http', Route.fetch])
     .controller('URLCtrl', ['$scope', '$location', '$filter', 'data', 'commits', '$timeout', Route.URLCtrl])
+    .controller('VersionCtrl', ['$scope',  '$route', '$location', '$filter', '$timeout', '$rootScope', Route.VersionCtrl])
     .controller('MainCtrl', ['$scope', '$location', '$timeout', '$rootScope', Route.mainCtrl])
     .config(['$routeProvider', '$locationProvider', Route.config])
     .run(
