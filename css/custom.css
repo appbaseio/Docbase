@@ -98,6 +98,10 @@ section {
 .cv-part.code-part {
 	padding-right: 40px;
 }
+.vimeo-video {
+	width: 700px;
+	height: 438px;
+}
 .single-feature .description {
 	font-size: 16px;
 	line-height: 26px;
@@ -261,7 +265,7 @@ footer {
 }
 
 @media screen and (max-width: 992px) {
-	.summary-text {
+		.summary-text {
     	padding-bottom: 0;
     }
     .cv-part {
@@ -271,6 +275,10 @@ footer {
     .cv-part.summary-video {
     	padding-top: 30px !important;
     }
+		.vimeo-video {
+			width: 600px;
+			height: 375px;
+		}
 		.single-feature .img-container {
 			max-width: 300px;
 		}
