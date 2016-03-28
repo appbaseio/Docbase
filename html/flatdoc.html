@@ -1,13 +1,13 @@
 <nav class="navbar navbar-default navbar-fixed-top" ng-include="navbarHtml">
 </nav>
-<div role="flatdoc" class="content-root" data-ng-if="!index">
+<div role="flatdoc" class="content-root" data-ng-show="!index">
   <div class="menubar">
     <div class="menu section" role="flatdoc-menu"></div>
   </div>
-  <div class="content">
-  	<div role="flatdoc-content"></div>
-	
-	<div class="footer">
+  <div role="flatdoc-content" class="content"></div>
+  <a data-ng-if="docbaseOptions.method == 'github'" class="edit" ng-href="{{github}}" target="_blank">  <span class="fa fa-pencil"> Edit</span>
+  </a>
+  	<div class="footer content">
 		<div class="row">
 			<div class="col-xs-12">	
 				<span data-ng-class="{disabled: paginationLinks.prev == null}" class=" pull-left">
@@ -19,10 +19,6 @@
 			</div>
 		</div>
 	</div>
-  </div>
-  <a data-ng-if="docbaseOptions.method == 'github'" class="edit" ng-href="{{github}}" target="_blank">
-    <span class="fa fa-pencil"> Edit</span>
-  </a>
 </div>
 <div class="index-container" data-ng-if="index">
 	<div class="container">
@@ -31,8 +27,8 @@
 				{{currentFolder}}
 			</h1>
 		</div>
-		<ul class="row">
-			<li class="col-xs-12" data-ng-repeat="file in indexList"  data-ng-if="file.name != 'index'">
+		<ul class="row indexList">
+			<li class="col-xs-12 indexLi" data-ng-repeat="file in indexList" data-ng-if="file.name != 'index'">
 				<a href="#/{{currentVersion}}/{{currentFolder}}/{{file.name}}" class="col-xs-12">{{file.name}}</a>
 			</li>
 		</ul>
