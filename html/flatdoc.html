@@ -4,7 +4,22 @@
   <div class="menubar">
     <div class="menu section" role="flatdoc-menu"></div>
   </div>
-  <div role="flatdoc-content" class="content"></div>
+  <div class="content">
+  	<div role="flatdoc-content"></div>
+	
+	<div class="footer">
+		<div class="row">
+			<div class="col-xs-12">	
+				<span data-ng-class="{disabled: paginationLinks.prev == null}" class=" pull-left">
+					<a href="{{paginationLinks.prev}}"  class="paginationLink pull-left">Previous</a>
+				</span>
+				<span data-ng-class="{disabled: paginationLinks.next == null}" class="pull-right">
+					<a href="{{paginationLinks.next}}" class="paginationLink pull-right">Next</a>
+				</span>
+			</div>
+		</div>
+	</div>
+  </div>
   <a data-ng-if="docbaseOptions.method == 'github'" class="edit" ng-href="{{github}}" target="_blank">
     <span class="fa fa-pencil"> Edit</span>
   </a>

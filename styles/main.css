@@ -323,3 +323,31 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
     background: #f0f0f0;
     text-decoration: none;
 }
+.footer {
+  padding-top: 40px;
+}
+.paginationLink {
+  padding: 5px 10px;
+  border: 1px solid #50BAEF;
+  border-radius: 2px;
+}
+.paginationLink:hover {
+  background: #50BAEF;
+  color: #fff;
+  border-color: #21a8eb;
+  text-decoration: none;
+}
+.disabled {
+  cursor: not-allowed;
+  position: relative;
+  opacity: 0.5;
+}
+.disabled:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
