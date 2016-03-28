@@ -352,6 +352,6 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
     z-index: 2;
 }
 body:not(.no-literate) .footer {
-    width: 100%;
-    padding: 40px;
+    width: 100% !important;
+    padding: 40px !important;
 }
