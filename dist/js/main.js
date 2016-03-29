@@ -563,7 +563,7 @@
             }
           }
           var contributors_header = $('<div>').addClass('contributors_header').append('Contributors').append(last_date);
-          var contributors_footer = $('<div>').addClass('contributors_header').append("<a class='edit-btn' href='"+$scope.github+"' target='_blank'><span class='fa fa-pencil'> Edit</span></a>");
+          var contributors_footer = $('<div>').addClass('contributors_header').append("<a class='edit-btn' href='"+$scope.github+"' target='_blank'><span class='fa fa-pencil'> Edit this page on Github </span></a>");
           $(extra_container).prepend(contributors_footer).prepend(contributors).prepend(contributors_header);
         }
 
