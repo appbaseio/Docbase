@@ -41,20 +41,8 @@ body:not(.no-literate) .content h1 {
   width: 68px;
 }
 
-.edit {
-  border-bottom: 1px solid #eee;
-  display: block;
-  position: fixed;
-  top: 60px;
-  background: white;
-  left: 230px;
-  padding: 5px 5px 5px 8px;
-  line-height: 1.5em;
-  border-top: 1px solid #eee;
-  color: #aaa;
-  transition: all 0.3s ease;
-  border-right: 1px solid #eee;
-  opacity: 0.4;
+.edit-btn {
+  color: #505050
 }
 
 @media (min-width: 1350px) {
@@ -239,8 +227,6 @@ body.no-literate .content h1:first-child {
 
 .navbar .dropdown-menu{
   z-index: 2001;
-  max-height: 500px;
-  overflow: auto;
 }
 
 .landing{
