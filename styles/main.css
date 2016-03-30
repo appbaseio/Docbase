@@ -176,6 +176,9 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
     font-size: 20px;
     line-height: 34px;
 }
+.contributors_header.nobg {
+    background: transparent;
+}
 .modified-date{
     font-size: 12px;
 }

@@ -42,7 +42,10 @@ body:not(.no-literate) .content h1 {
 }
 
 .edit-btn {
-  color: #505050
+  color: #505050;
+  font-size: 12px; 
+  padding-right: 10px; 
+  float: right;
 }
 
 @media (min-width: 1350px) {
