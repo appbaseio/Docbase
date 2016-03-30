@@ -1118,6 +1118,8 @@
 // FILE: scripts/megaMenu.js
 (function($) {
 	$.fn.megaMenu = function() {
+		$('.folder-li li.dropdown').show(0);
+		$('.category-li').hide();
 		var width_array = [];
 		var current_folder_width = $('.folder-li').width();
 		$('.folder-li li.dropdown').each(function(key, val) {
