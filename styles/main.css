@@ -379,6 +379,9 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
   line-height: 1.428571429;
   color: #333333;
   white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 4px 0;
 }
 .megamenu> li ul > li > a:hover,
 .megamenu> li ul > li > a:focus {
@@ -403,9 +406,11 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
   color: #428bca;
   font-size: 18px;
 }
-.folder-li li.dropdown a {
+.folder-li li.dropdown > a {
     max-width: 150px;
+    max-height: 40px;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 .dropdown-header {
     padding: 0;
