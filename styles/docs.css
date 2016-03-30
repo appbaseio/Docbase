@@ -79,7 +79,8 @@ body:not(.no-literate) .content h1 {
   body:not(.no-literate) .content > h5,
   body:not(.no-literate) .content > h6,
   body:not(.no-literate) .content > pre,
-  body:not(.no-literate) .content > blockquote {
+  body:not(.no-literate) .content > blockquote,
+  body:not(.no-literate) .content.footer {
     width: 550px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
