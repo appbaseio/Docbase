@@ -479,6 +479,9 @@
       $scope.logoSrc = Docbase.options.logoSrc;
       $scope.docbaseOptions = Docbase.options;
 
+      setTimeout(function(){
+        $('#folder-navbar').megaMenu();
+      },200);
 
       function versionIn(folder) {
         if (folder.name === data.currentFolder) {
@@ -566,7 +569,11 @@
           $scope.map = Docbase.map;
           $scope.versions = Object.keys($scope.map);
           $scope.currentVersion = $scope.docbaseOptions.default_version && $scope.docbaseOptions.default_version !== null ? $scope.docbaseOptions.default_version: $scope.versions[0];
-    
+          
+          setTimeout(function(){
+            $('#folder-navbar').megaMenu();
+          },200);
+
         });
       };
       if (Docbase.map) {
@@ -597,6 +604,9 @@
           $scope.map = Docbase.map;
           $scope.versions = Object.keys($scope.map);
           $scope.currentVersion = $route.current.params.version;
+          setTimeout(function(){
+            $('#folder-navbar').megaMenu();
+          },200);
         });
       };
       if (Docbase.map) {
