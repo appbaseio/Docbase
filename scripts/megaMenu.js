@@ -52,7 +52,18 @@
 				$('.folder-li li.dropdown').show();
 				$('.category-li').hide();
 			}
+			if(total_width < 768) {
+				adjust_searchbar();
+			}
 		}
+
+		function adjust_searchbar() {
+			var total_width = $(window).width();
+			var search_width = 300;
+			var right_margin = parseInt((total_width - search_width)/2);
+			$('.search-form').css('right', right_margin+'px');
+		}
+
 		menu_set();
 		$(window).resize(menu_set);
 	};

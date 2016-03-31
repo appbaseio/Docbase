@@ -427,6 +427,15 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
     font-size: 16px;
     border-bottom: 1px solid #ccc;
 }
+.p-l-0 {
+  padding-left: 0;
+}
+.p-r-0 {
+  padding-right: 0;
+}
+.pd-0 {
+  padding: 0;
+}
 @media (max-width: 768px) {
   .megamenu{
     margin-left: 0 ;
@@ -451,5 +460,8 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
   }
   .dropdown-header {
     padding: 3px 0;
+  }
+  .mobile-nav {
+    margin-top: 55px;
   }
 }
