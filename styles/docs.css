@@ -43,8 +43,8 @@ body:not(.no-literate) .content h1 {
 
 .edit-btn {
   color: #505050;
-  font-size: 14px; 
-  padding: 10px; 
+  font-size: 14px;
+  padding: 10px 0px 10px 10px; 
   float: right;
 }
 
