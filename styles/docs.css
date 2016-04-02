@@ -48,6 +48,10 @@ body:not(.no-literate) .content h1 {
   float: right;
 }
 
+p img, a img {
+  max-width: 700px;
+}
+
 @media (min-width: 1350px) {
   body:not(.no-literate) .content-root {
     background-color: #f3f6fb;
