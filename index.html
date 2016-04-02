@@ -60,9 +60,9 @@ Welcome to
 
 ...
 
-4. python -m SimpleHTTPServer 1234
-
 ████████████████████
+
+Docbase site live at http://localhost:1234
 </code>
                       </pre>
                     </div>
@@ -89,7 +89,7 @@ Welcome to
                   </span>
                 </div>
                 <div class="col-xs-12 col-sm-8">
-                  <p class="col-xs-12 feature-line">Docbase can read markdown from filesystem, github or a URL.</p>
+                  <p class="col-xs-12 feature-line">Docbase can read markdown projects from github or local filesystem.</p>
                 </div>
               </div>
             </div>
@@ -99,12 +99,19 @@ Welcome to
               <div class="col-xs-12 pd-0">
                 <div class="col-xs-12 single-feature">
                   <div class="col-xs-12 col-sm-6 wow fadeInLeft">
-                    <img src="img/folder2.png" alt="Folder" class="img-responsive img-container" />
+                    <img src="img/github_awesome.png" alt="Folder" class="img-responsive img-container" />
                   </div>
                   <div class="col-xs-12 col-sm-6 wow fadeInRight" data-wow-duration="4s">
-                    <div class="col-xs-12 title">Easy markdown organization</div>
-                    <div class="col-xs-12 description">Docbase can read all .md files from a root directory. Additionally, files can be organized into sub-directories to denote: <br> 1. multiple versions (like v1.0, v1.1 or EN, ES, PT) and <br>2. organize files into topics.<br><br>
-                   Docbase infers the documentation layout, or one can be optionally provided in the configuration.</div>
+                    <div class="col-xs-12 title">A github first workflow</div>
+                    <div class="col-xs-12 description">
+                      Docbase is designed to work well with your github workflow. It can:<br><br>
+                      <ol>
+                        <li>read markdown projects from a github repository.</li>
+                        <li>deploy docbase to gh-pages.</li>
+                        <li>provide github enabled editing.</li>
+                        <li>integrate with travis-ci for continuous deployment.</li>
+                      </ol>
+                    </div>
                   </div>
                 </div>
                 <div class="row">
@@ -125,7 +132,7 @@ Welcome to
                     </div>
                     <div class="col-xs-12 col-sm-6 wow fadeInRight pull-right" data-wow-duration="4s">
                       <div class="col-xs-12 title">It's colorful</div>
-                      <div class="col-xs-12 description">Docs should look beautiful. Docbase is designed with customization in mind so it can adapt to your theme colors.<br>
+                      <div class="col-xs-12 description">Docs should look beautiful. Docbase is designed with customization in mind so it can adapt to your theme colors.<br><br>
                       Just <span style="background:#efefef">yo docbase</span> and provide a valid css color for your theme (like <span style="color:green">green</span>, <span style="color:rgb(100,150,200)">rgb(100,150,200)</span>, <span style="color:#ffb14c">#ffb14c</span>)</div>
                     </div>
                   </div>
@@ -209,12 +216,11 @@ Welcome to
               <div class="row">
                 <div class="col-xs-12 f-links pd-0">
                   <span class="pull-left">
-                    <a href="#" class="f-link">Why another documentation tool?</a>
-                    <a href="#" class="f-link">Read the manual</a>
+                    <a href="http://appbaseio.github.io/docbase-manual/" target="_blank" class="f-link">Read the manual</a>
                   </span>
                   <span class="pull-right built-with">Built with
                     <i class="fa fa-heart theme-color"></i>by folks at
-                    <a href="http://docs.appbase.io" class="appbase-link">appbase.io</a>
+                    <a href="https://appbase.io" class="appbase-link">appbase.io</a>
                   </span>
                 </div>
               </div>
