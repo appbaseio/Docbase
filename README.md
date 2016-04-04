@@ -34,12 +34,15 @@ Welcome to
 Docbase is live at: http://127.0.0.1:1234
 ```
 
-[![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Ic_book_48px.svg/48px-Ic_book_48px.svg.png)](https://appbaseio.github.io/docbase-manual) Read the manual!
+##  [Read the manual](https://appbaseio.github.io/docbase-manual) [![](http://businessxlerator.com/wp-content/themes/busxl-2015/images/content/icons/book.png)](https://appbaseio.github.io/docbase-manual)
 
 
-### Used by:
+### Who uses docbase
 
-[![](http://app.zeedhi.com/teknisa/docs/images/log.png)](http://app.zeedhi.com/teknisa/docs/#/) [![](http://i.imgur.com/0MwyOZL.png?1)](http://docs.appbase.io)
+- [appbase.io](http://docs.appbase.io)
+- [Zeedhi](http://app.zeedhi.com/teknisa/docs/#/)
+ 
+Send a PR with your name here.
 
 
 ## History
@@ -53,23 +56,23 @@ v0.2.56 Apr 2 '16
 - Show github contributors on each documentation page
 - Colorful themes baked in
 
-.
-.  (54 more releases)
-.
+.  
+.  (54 more releases)  
+.  
 
 v0.0.2 Aug 7 '15
 - All flatdoc theme options supported
 - Customizable root path
 
-v0.0.1 Feb 10 '15
-Initial release
+v0.0.1 Feb 10 '15  
+- Initial release
 
 ## Credits
 
-Henrique Sa (@henriquesa),
-Mateus Freira (@mateusfreira),
-Farhan Chauhan (@farhan687),
-Siddharth Kothari (@siddharthlatest).
+Henrique Sa (@henriquesa),  
+Mateus Freira (@mateusfreira),  
+Farhan Chauhan (@farhan687),  
+Siddharth Kothari (@siddharthlatest)  
 
 ## License
 
