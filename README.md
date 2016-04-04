@@ -1,7 +1,10 @@
 # Docbase
 [![Build Status](https://travis-ci.org/appbaseio/Docbase.svg?branch=master)](https://travis-ci.org/appbaseio/Docbase)
 
-Turn .md files into a beautiful documentation hub with versioning and beautifully rendered menus, your files can be hosted on github, locally or on any http:// server.
+Turn .md files into a beautiful documentation hub with versioning and beautifully rendered menus. 
+
+* Docbase can read files that are hosted on github, locally or a http:// server.
+* It can publish documentation hubs to github pages (via travis) or locally which can be served with as static files with a http:// server.
 
 Docbase comes with a yeoman generator that turns the installation and configuration process into a piece of cake.
 
