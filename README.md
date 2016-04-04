@@ -3,7 +3,7 @@
 
 Turn .md files into a beautiful documentation hub with versioning and beautifully rendered menus, your files can be hosted on github, locally or on any http:// server.
 
-Docbase comes with a yeoman generator that turns the installation and configuration process a piece of cake.
+Docbase comes with a yeoman generator that turns the installation and configuration process into a piece of cake.
 
 ## Installation
 
