@@ -36,6 +36,8 @@ Docbase is live at: http://127.0.0.1:1234
 
 ##  [Read the manual](https://appbaseio.github.io/docbase-manual) [![](http://businessxlerator.com/wp-content/themes/busxl-2015/images/content/icons/book.png)](https://appbaseio.github.io/docbase-manual)
 
+The manual walks through the generator options, and explains docbase options and features. The manual itself is served with docbase.
+
 
 ### Who uses docbase
 
