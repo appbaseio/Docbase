@@ -8,6 +8,8 @@ Turn .md files into a beautiful documentation hub with versioning and beautifull
 
 Docbase comes with a yeoman generator that turns the installation and configuration process into a piece of cake.
 
+![A rendered documentation site](http://g.recordit.co/Odu27H3nAm.gif)
+
 ## Installation
 
 ```
