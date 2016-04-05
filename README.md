@@ -10,6 +10,12 @@ Docbase comes with a yeoman generator that turns the installation and configurat
 
 ![A rendered documentation site](http://g.recordit.co/Odu27H3nAm.gif)
 
+### Example Hubs built with Docbase
+
+1. [Airbnb JS Style guide](https://farhan687.github.io/airbnb)  
+2. [Redis Docs](https://farhan687.github.io/redis)  
+3. [EmberJS Guide](https://farhan687.github.io/emberjs)
+
 ## Installation
 
 ```
