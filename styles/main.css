@@ -436,6 +436,13 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 .pd-0 {
   padding: 0;
 }
+.powered-by {
+  padding: 15px;
+  background: #eee;
+}
+.powered-by img{
+  max-width: 160px;
+}
 @media (max-width: 768px) {
   .megamenu{
     margin-left: 0 ;

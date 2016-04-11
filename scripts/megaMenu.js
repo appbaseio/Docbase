@@ -64,6 +64,12 @@
 			$('.search-form').css('right', right_margin+'px');
 		}
 
+		function footer_at_bottom() {
+			var content_height = $(window).height() - $('.navbar').height() - $('.powered-by').height() - 30;
+			$('.docbase-main').css({'min-height': content_height+'px'});
+		}
+
+		footer_at_bottom();
 		menu_set();
 		$(window).resize(menu_set);
 	};
