@@ -1176,6 +1176,7 @@
 			if(total_width < 768) {
 				adjust_searchbar();
 			}
+			footer_at_bottom();
 		}
 
 		function adjust_searchbar() {
@@ -1190,7 +1191,6 @@
 			$('.docbase-main').css({'min-height': content_height+'px'});
 		}
 
-		footer_at_bottom();
 		menu_set();
 		$(window).resize(menu_set);
 	};
