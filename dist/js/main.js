@@ -57,6 +57,7 @@
     options.versions = Docbase._index(options.versions);
     var defaults = {
       method: 'github',
+      title: 'Doc<b>base</b>',
       useSearch: true,
       searchIndexUrl: 'search-index.json',
       map: {
@@ -279,7 +280,7 @@
   Route.config = function($routeProvider, $location, $rootScope, $anchorScroll, FlatdocService) {
     if (!Docbase.options) {
       if (angular.isUndefined(docbaseConfig)) {
-        throw Error("docbaseConfig var is not defined! Check if your condif file is included in index.html");
+        throw Error("docbaseConfig var is not defined! Check if your config file is included in index.html");
       } else {
         Docbase.run(docbaseConfig);
       }
@@ -580,6 +581,7 @@
 
   Route.mainCtrl = function($scope, $location, $timeout, $rootScope) {
     $scope.docbaseOptions = Docbase.options;
+    console.log($scope.docbaseOptions); // [stan]
     if (Docbase.options.indexType === 'markdown') {
       var path = Docbase.options.indexSrc;
       if (endsWith(path, '.md')) {
@@ -598,7 +600,8 @@
           $scope.map = Docbase.map;
           $scope.versions = Object.keys($scope.map);
           $scope.currentVersion = $scope.docbaseOptions.default_version && $scope.docbaseOptions.default_version !== null && $scope.docbaseOptions.default_version !== '' ? $scope.docbaseOptions.default_version: $scope.versions[0];
-          
+          $scope.title = $scope.docbaseOptions.title;
+
           setTimeout(function(){
             $('#folder-navbar').megaMenu();
           },200);
@@ -893,7 +896,7 @@
     return lastIndex !== -1 && lastIndex === position;
   }
 
-  var angApp = angular.module('docbaseApp', ['ngRoute'], function() {})
+  var angApp = angular.module('docbaseApp', ['ngRoute', 'ngSanitize'], function() {})
     .factory('FlatdocService', ['$q', '$route', '$location', '$anchorScroll', '$http', Route.fetch])
     .service('Pagination', [Route.pagination])
     .controller('URLCtrl', ['$scope', '$route', '$location', '$filter', 'data', 'commits', '$timeout', 'Pagination', Route.URLCtrl])
