@@ -554,7 +554,6 @@
 
   Route.mainCtrl = function($scope, $location, $timeout, $rootScope) {
     $scope.docbaseOptions = Docbase.options;
-    console.log($scope.docbaseOptions); // [stan]
     if (Docbase.options.indexType === 'markdown') {
       var path = Docbase.options.indexSrc;
       if (endsWith(path, '.md')) {
