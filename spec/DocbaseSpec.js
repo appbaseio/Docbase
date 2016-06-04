@@ -35,6 +35,7 @@ describe("Docbase", function() {
       Docbase.run('spec/json/docbase-sample-nonexistent.json');
     }).toThrowError(/exists/);
   });
+  
   it("Should throw an exception when config file is invalid", function() {
     expect(function(){
       Docbase.run('spec/json/docbase-sample-invalid-json.json');
@@ -72,6 +73,7 @@ describe("Docbase", function() {
 
     });
     expect(Docbase.options['name']).toBe("objConfig");
+    expect(Docbase.options['github']['user']).toBe("appbaseio");
   });
 
 });
