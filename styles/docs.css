@@ -22,7 +22,7 @@ body:not(.no-literate) .content h1 {
 }
 
 .menu a.active:after {
-  top: 10px;
+  top: 13px;
   left: -15px;
 }
 
@@ -329,7 +329,7 @@ body.no-literate .content pre > code {
   border-radius: 0;
   font-size: 14px;
 }
-.content li > strong, ul li > strong {
+.content li > strong.li-title, ul li > strong.li-title {
   height: 32px;
   line-height: 32px;
   margin-right: 20px;
@@ -341,4 +341,15 @@ body.no-literate .content pre > code {
 }
 .menu a.active {
   font-weight: normal !important;
+}
+.content ul > li {
+      list-style-type: circle; 
+}
+.content ul > li:before {
+  width: 0;
+  height: 0;
+  border: 0; 
+}
+.content code {
+  background: transparent;
 }

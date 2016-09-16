@@ -39,6 +39,14 @@
       }
     });
 
+    $('.content li').each(function() {
+      var content = JSON.stringify($(this).html());
+      console.log(content.indexOf('<strong>'));
+      if(content.indexOf('<strong>') === 1) {
+        $(this).find('strong').eq(0).addClass('li-title');
+      }
+    });
+
     var $sidebar = $('.menubar');
     var elTop;
 
