@@ -318,3 +318,21 @@ body.no-literate .content h1:first-child {
     top: 0px !important;
     left: 0 !important;
 }
+
+body.no-literate .content pre > code {
+  display: block;
+  overflow-x: auto;
+  padding: .5em;
+  color: #333;
+  background: #f8f8f8;
+  border: 0;
+  border-radius: 0;
+  font-size: 14px;
+}
+.content li > strong {
+  height: 32px;
+  line-height: 32px;
+  margin-right: 20px;
+  font-weight: 600;
+  font-size: 20px;
+}
