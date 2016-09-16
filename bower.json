@@ -19,11 +19,11 @@
     "flatdoc": "https://github.com/appbaseio/flatdoc.git#0.10.0",
     "jquery": "~2.1.3",
     "bootstrap": "~3.3.2",
-    "angular": "~1.5.6",
-    "angular-route": "~1.5.6",
+    "angular": "~1.4.9",
+    "angular-route": "~1.4.9",
     "google-code-prettify": "~1.0.4",
     "js-schema": "~0.7.2",
     "font-awesome": "~4.5.0",
-    "angular-sanitize": "^1.5.3"
+    "angular-sanitize": "~1.4.9"
   }
 }
