@@ -372,10 +372,12 @@
     $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
       jWindow.on('docbase:ready', function() {
         $anchorScroll();
-        $('.content').find('pre code').each(function() {
+        $('.content').find('pre code').each(function(i, block) {
           $(this).addClass("prettyprint");
+           // hljs.highlightBlock(block);
         });
         prettyPrint();
+        // hljs.initHighlightingOnLoad();
       });
     });
   };
@@ -954,9 +956,19 @@
 
     $('.content li').each(function() {
       var content = JSON.stringify($(this).html());
-      console.log(content.indexOf('<strong>'));
-      if(content.indexOf('<strong>') === 1) {
-        $(this).find('strong').eq(0).addClass('li-title');
+      var self = this;
+      if(content.indexOf('<p>') === 1 && content.indexOf('<strong>') === 4) {
+        setTitle();
+      }
+      else if(content.indexOf('<strong>') === 1) {
+        setTitle();
+      }
+      function setTitle() {
+        $(self).find('strong').eq(0).addClass('li-title');
+        var strongClose = '</strong>';
+        if(content.indexOf(strongClose) + strongClose.length + 1 === content.indexOf('<code>')) {
+          $(self).find('code').eq(0).addClass('code-with-title');  
+        }
       }
     });
 

@@ -327,14 +327,21 @@ body.no-literate .content pre > code {
   background: #f8f8f8;
   border: 0;
   border-radius: 0;
-  font-size: 14px;
+  font-size: 16px;
+  letter-spacing: 0;
 }
-.content li > strong.li-title, ul li > strong.li-title {
+body.no-literate .content pre > code span {
+
+}
+.content li > strong.li-title, ul li > strong.li-title, ul li > p > strong.li-title, strong.li-title  {
   height: 32px;
   line-height: 32px;
-  margin-right: 20px;
   font-weight: 600;
   font-size: 20px;
+  color: #777;
+}
+.code-with-title {
+	margin: 0 15px; 
 }
 .menu a, .menu a:visited {
   color: #333;

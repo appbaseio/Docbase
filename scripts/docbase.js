@@ -345,10 +345,12 @@
     $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
       jWindow.on('docbase:ready', function() {
         $anchorScroll();
-        $('.content').find('pre code').each(function() {
+        $('.content').find('pre code').each(function(i, block) {
           $(this).addClass("prettyprint");
+           // hljs.highlightBlock(block);
         });
         prettyPrint();
+        // hljs.initHighlightingOnLoad();
       });
     });
   };
