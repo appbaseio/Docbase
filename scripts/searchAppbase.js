@@ -146,6 +146,7 @@
 
 		var jquery_js = new Loader();
 		jquery_js.require([
+				"https://code.jquery.com/jquery-2.2.4.min.js",
 				"https://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"
 			],
 			function() {
