@@ -29,6 +29,7 @@ body:not(.no-literate) .content h1 {
 .content h1, .content h2, .content h3, .content h4, .content h5, .content h6, .menu {
   font-family: 'Source Sans Pro';
   font-weight: 700;
+  padding-bottom: 20px;
 }
 
 .menu a.level-1 {
@@ -350,7 +351,8 @@ body.no-literate .content pre > code span {
   font-weight: normal !important;
 }
 .content ul > li {
-      list-style-type: circle; 
+  list-style-type: circle; 
+  margin-bottom: 20px;
 }
 .content ul > li:before {
   width: 0;
