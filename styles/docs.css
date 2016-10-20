@@ -32,6 +32,23 @@ body:not(.no-literate) .content h1 {
   padding-bottom: 20px;
 }
 
+.content h1 {
+  font-size: 2em;
+}
+.content h2 {
+  font-size: 1.7em;
+}
+.content h3 {
+  font-size: 1.5em;
+}
+.content h4 {
+  font-size: 1.1em;
+}
+.content li > strong.li-title, ul li > strong.li-title, ul li > p > strong.li-title, strong.li-title  {
+  font-size: 1.2em;
+  line-height: 1.4em;
+  height: 1.4em;
+}
 .menu a.level-1 {
   font-family: 'Source Sans Pro';
   font-weight: 700;
@@ -335,14 +352,11 @@ body.no-literate .content pre > code span {
 
 }
 .content li > strong.li-title, ul li > strong.li-title, ul li > p > strong.li-title, strong.li-title  {
-  height: 32px;
-  line-height: 32px;
   font-weight: 600;
-  font-size: 20px;
   color: #777;
 }
 .code-with-title {
-	margin: 0 15px; 
+  margin: 0 15px; 
 }
 .menu a, .menu a:visited {
   color: #333;
