@@ -1,13 +1,23 @@
 <nav class="navbar navbar-default navbar-fixed-top" ng-include="navbarHtml">
 </nav>
 <div role="flatdoc" class="content-root" data-ng-show="!index">
-  <div class="menubar">
-    <div class="menu section" role="flatdoc-menu"></div>
-  </div>
-  <div role="flatdoc-content" class="content"></div>
-  	<div class="footer content">
+	<div class="menubar">
+		<div class="menu section" role="flatdoc-menu"></div>
+	</div>
+	<div role="flatdoc-content" class="content"></div>
+	<div class="rightSidebar menubar" data-ng-if="!threeColumns && navigationSidebar">
+		<ul class="menu section" ng-repeat="folder in map[currentVersion]" data-ng-if="folder.name === currentFolder">
+			<li>
+				<a class="level-1" ng-href="#/{{currentVersion}}/{{currentFolder}}/index" ng-bind="folder.name"></a>
+			</li>
+			<li ng-repeat="file in folder.files" data-ng-if="file.name !== 'index'">
+				<a class="level-2" data-ng-class="{'active': file.name === currentFile}" ng-href="#/{{currentVersion}}/{{currentFolder}}/{{file.name}}" ng-bind="file.label"></a>
+			</li>
+		</ul>
+	</div>
+	<div class="footer content">
 		<div class="row">
-			<div class="col-xs-12">	
+			<div class="col-xs-12">
 				<span data-ng-class="{disabled: paginationLinks.prev == null}" class=" pull-left">
 					<a href="{{paginationLinks.prev}}"  class="paginationLink pull-left">Previous</a>
 				</span>
@@ -24,14 +34,14 @@
 			<h1 class="col-xs-12">
 				{{currentFolder}} ({{indexList.length - 1}} files)
 			</h1>
-		</div>	
+		</div>
 		<div class="row indexLinkContainer">
 			<ul class="col-xs-12 col-sm-6">
 				<li class="col-xs-12" data-ng-repeat="(key, file) in indexList" data-ng-if="file.name != 'index' && (key+1) <= indexList.length/2">
 					<a href="#/{{currentVersion}}/{{currentFolder}}/{{file.name}}" class="col-xs-12"> {{file.name}}</a>
 				</li>
 			</ul>
-			<ul  class="col-xs-12 col-sm-6">
+			<ul class="col-xs-12 col-sm-6">
 				<li class="col-xs-12" data-ng-repeat="(key, file) in indexList" data-ng-if="file.name != 'index' && (key+1) > indexList.length/2">
 					<a href="#/{{currentVersion}}/{{currentFolder}}/{{file.name}}" class="col-xs-12"> {{file.name}}</a>
 				</li>
