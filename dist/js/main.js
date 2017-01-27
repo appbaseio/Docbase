@@ -512,8 +512,8 @@
       $scope.navbarHtml = Docbase.options.navbarHtml;
       $scope.logoSrc = Docbase.options.logoSrc;
       $scope.docbaseOptions = Docbase.options;
-      $scope.threeColumns = data.threeColumns;
-      $scope.navigationSidebar = data.navigationSidebar;
+      $scope.threeColumns = data.threeColumns ? data.threeColumns : false;
+      $scope.navigationSidebar = data.navigationSidebar ? data.navigationSidebar : true;
       var urlSplit = data.locationPath.split('/');
       var tempFolder = urlSplit[urlSplit.length-2];
       var tempFile = urlSplit[urlSplit.length-1];
