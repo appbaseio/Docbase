@@ -8,6 +8,9 @@
 	<div class="rightSidebar menubar" data-ng-if="!threeColumns && navigationSidebar">
 		<ul class="menu section" ng-repeat="folder in map[currentVersion]" data-ng-if="folder.name === currentFolder">
 			<li>
+				<div class="other-pages">Other pages in</div>
+			</li>
+			<li>
 				<a class="level-1" ng-href="#/{{currentVersion}}/{{currentFolder}}/index" ng-bind="folder.name"></a>
 			</li>
 			<li ng-repeat="file in folder.files" data-ng-if="file.name !== 'index'">

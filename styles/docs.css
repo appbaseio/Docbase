@@ -420,6 +420,11 @@ strong.li-title {
 	padding-top: 50px;
 }
 
+.rightSidebar .other-pages {
+	font-size: 13px;
+	font-weight: normal;
+}
+
 .rightSidebar .menu a.active:after {
 	display: none;
 }
