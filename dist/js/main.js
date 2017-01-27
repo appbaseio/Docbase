@@ -437,12 +437,14 @@
             } catch (e) {
               markdown.unshift(obj);
               obj = {
-                'threeColumns': false
+                'threeColumns': false,
+                'navigationSidebar': true
               };
             }
 
             markdown = markdown.join('\n');
-
+            retObj.threeColumns = obj.threeColumns;
+            retObj.navigationSidebar = obj.navigationSidebar;
             if (obj.threeColumns) {
               $('body').removeClass('no-literate');
             } else {
@@ -510,7 +512,13 @@
       $scope.navbarHtml = Docbase.options.navbarHtml;
       $scope.logoSrc = Docbase.options.logoSrc;
       $scope.docbaseOptions = Docbase.options;
-
+      $scope.threeColumns = data.threeColumns;
+      $scope.navigationSidebar = data.navigationSidebar;
+      var urlSplit = data.locationPath.split('/');
+      var tempFolder = urlSplit[urlSplit.length-2];
+      var tempFile = urlSplit[urlSplit.length-1];
+      $scope.currentFolder = data.currentFolder ? data.currentFolder : tempFolder;
+      $scope.currentFile = data.currentFile ? data.currentFile : tempFile;
       setTimeout(function(){
         $('#folder-navbar').megaMenu();
       },200);
@@ -523,7 +531,6 @@
       //If index is true
       if (data.index) {
         $scope.index = true;
-        $scope.currentFolder = data.currentFolder;
         $scope.indexList = [];
 
         for (var version in data.map) {
