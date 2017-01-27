@@ -420,6 +420,11 @@ strong.li-title {
 	padding-top: 50px;
 }
 
+.rightSidebar .menu {
+	height: 100%;
+	overflow: auto;
+}
+
 .rightSidebar .other-pages {
 	font-size: 13px;
 	font-weight: normal;
