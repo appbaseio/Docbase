@@ -1,5 +1,5 @@
 # Docbase
-[![Build Status](https://travis-ci.org/appbaseio/Docbase.svg?branch=master)](https://travis-ci.org/appbaseio/Docbase) [![Github Stars](https://labs.turbo.run/git-brag?user=appbaseio&repo=Docbase&maxn=7)](https://github.com/appbaseio/Docbase/stargazers)
+[![Build Status](https://travis-ci.org/appbaseio/Docbase.svg?branch=master)](https://travis-ci.org/appbaseio/Docbase) [![NPM](https://nodei.co/npm/grunt-docbase.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/grunt-docbase/)
 
 Turn .md files into a beautiful documentation hub with versioning and beautifully rendered menus. 
 
@@ -52,13 +52,20 @@ The manual walks through the generator options, and explains docbase options and
 
 ### Who uses docbase
 
-- [appbase.io](http://docs.appbase.io)
-- [Zeedhi](http://app.zeedhi.com/teknisa/docs/#/)
- 
+- [appbase.io](https://docs.appbase.io)
+- [Reactive Maps](https://opensource.appbase.io/reactivemaps/manual)
+
 Send a PR with your name here.
 
 
 ## History
+
+v0.3.0 Feb 27 '17
+- Phantom.js dependency upgrade
+- Compatibility with Node v6.9.x
+- Uses scroll in code blocks
+- Fixes mobile read view
+- Adds a feature to see other pages in the directory
 
 v0.2.56 Apr 2 '16
 - Comes with a yeoman generator ``yo docbase``
