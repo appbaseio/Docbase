@@ -372,6 +372,8 @@
     $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
       jWindow.on('docbase:ready', function() {
         $anchorScroll();
+        $('p:contains("{% raw %}")').remove();
+        $('p:contains("{% endraw %}")').remove();
         $('.content').find('pre code').each(function(i, block) {
           $(this).addClass("prettyprint");
            // hljs.highlightBlock(block);
