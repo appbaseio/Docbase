@@ -53,18 +53,6 @@ module.exports = function(grunt) {
 					specs: testePath,
 					helpers: 'spec/*Helper.js',
 					vendor: libPaths,
-					/*
-										 template: require('grunt-template-jasmine-istanbul'),
-										 templateOptions: {
-												 coverage: 'bin/coverage/coverage.json',
-												 report: 'bin/coverage',
-												 thresholds: {// we will use this soon
-														 lines: 100,
-														 statements: 100,
-														 branches: 100,
-														 functions: 100
-												 }
-										 }*/
 				}
 			}
 		},
