@@ -27,6 +27,10 @@ body:not(.no-literate) .content h1 {
 	left: -15px;
 }
 
+.content table {
+	float: none;
+}
+
 .content h1,
 .content h2,
 .content h3,
