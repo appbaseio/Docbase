@@ -345,6 +345,7 @@
     $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
       jWindow.on('docbase:ready', function() {
         $anchorScroll();
+        $('code').css('white-space', 'pre');
         $('p:contains("{% raw %}")').remove();
         $('p:contains("{% endraw %}")').remove();
         $('.content').find('pre code').each(function(i, block) {
