@@ -1,6 +1,8 @@
 # Docbase
 [![Build Status](https://travis-ci.org/appbaseio/Docbase.svg?branch=master)](https://travis-ci.org/appbaseio/Docbase) [![NPM](https://nodei.co/npm/grunt-docbase.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/grunt-docbase/)
 
+### We are no longer actively maintaining Docbase, we instead recommend using [gatsbyjs](https://gatsbyjs.org).
+
 Turn .md files into a beautiful documentation hub with versioning and beautifully rendered menus. 
 
 * Docbase can read files that are hosted on github, locally or a http:// server.
